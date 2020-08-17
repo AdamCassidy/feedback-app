@@ -1,28 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <v-toolbar>
+      <v-toolbar-title>Feedback</v-toolbar-title>
+      <v-app-bar-nav-icon @click="sideNav = !sideNav"></v-app-bar-nav-icon>
+    </v-toolbar>
+    <v-navigation-drawer v-model="sideNav"></v-navigation-drawer>
+
+    <main></main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  name: "App",
+  data() {
+    return {
+      sideNav: false
+    };
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
