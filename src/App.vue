@@ -7,7 +7,9 @@
     <router-view />
     <v-toolbar>
       <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>Feedback</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/">Feedback</router-link>
+      </v-toolbar-title>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer">
       <v-list flat>
@@ -17,7 +19,7 @@
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
-              <router-link :to="{ name: '/{{ item.route }}', params: { title: item.route} }">
+              <router-link :to="item.route">
                 <v-list-item-title>{{ item.title}}</v-list-item-title>
               </router-link>
             </v-list-item-content>
