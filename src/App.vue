@@ -8,20 +8,18 @@
     <v-toolbar>
       <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <router-link to="/">Feedback</router-link>
+        <router-link to="/" tag="span" style="cursor: pointer">Feedback</router-link>
       </v-toolbar-title>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer">
       <v-list flat>
         <v-list-item-group>
-          <v-list-item v-for="item in drawerItems" :key="item.key">
+          <v-list-item v-for="item in drawerItems" :key="item.key" router :to="item.link">
             <v-list-item-content>
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
-              <router-link :to="item.route">
-                <v-list-item-title>{{ item.title}}</v-list-item-title>
-              </router-link>
+              <v-list-item-title>{{ item.title}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -36,9 +34,9 @@ export default {
     return {
       openDrawer: false,
       drawerItems: [
-        { icon: "house", title: "Home Projects", route: "/homeProjects" },
-        { icon: "sports_basketball", title: "Sports", route: "/sports" },
-        { icon: "restaurant", title: "Cooking", route: "/cooking" }
+        { icon: "house", title: "Home Projects", link: "/homeProjects" },
+        { icon: "sports_basketball", title: "Sports", link: "/sports" },
+        { icon: "restaurant", title: "Cooking", link: "/cooking" }
       ]
     };
   }
