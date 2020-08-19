@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
     <v-toolbar>
       <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
         <router-link to="/" tag="span" style="cursor: pointer">Feedback</router-link>
       </v-toolbar-title>
     </v-toolbar>
-    <v-navigation-drawer v-model="openDrawer">
+    <v-navigation-drawer v-model="openDrawer" absolute>
       <v-list flat>
         <v-list-item-group>
           <v-list-item v-for="item in drawerItems" :key="item.key" router :to="item.link">
@@ -25,6 +20,11 @@
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
+    <div id="nav">
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>
+    </div>
+    <router-view />
   </div>
 </template>
 
