@@ -12,15 +12,7 @@ new Vue({
   router,
   render: (h) => h(App),
   created() {
-    var firebaseConfig = {
-      apiKey: "AIzaSyBSsZg6JeXjGmv7RUfCbGGEqTeZ79Cefvs",
-      authDomain: "feedback-app-c65f1.firebaseapp.com",
-      databaseURL: "https://feedback-app-c65f1.firebaseio.com",
-      projectId: "feedback-app-c65f1",
-      storageBucket: "feedback-app-c65f1.appspot.com",
-      messagingSenderId: "736695479450",
-      appId: "1:736695479450:web:d314fed4c3a7dc7614c323",
-    };
+    var firebaseConfig = {};
     firebase.initializeApp(firebaseConfig);
   },
 }).$mount("#app");
