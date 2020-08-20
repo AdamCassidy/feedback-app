@@ -5,6 +5,12 @@
       <v-toolbar-title>
         <router-link to="/" tag="span" style="cursor: pointer">Feedback</router-link>
       </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items>
+        <v-btn>
+          <v-icon left>person_add</v-icon>Sign-up
+        </v-btn>
+      </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" absolute>
       <v-list flat>
@@ -33,6 +39,7 @@ export default {
   data: () => {
     return {
       openDrawer: false,
+      toolTip: true,
       drawerItems: [
         { icon: "house", title: "Home Projects", link: "/homeProjects" },
         { icon: "sports_basketball", title: "Sports", link: "/sports" },
