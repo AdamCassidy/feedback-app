@@ -10,6 +10,9 @@
         <v-btn>
           <v-icon left>person_add</v-icon>Sign-up
         </v-btn>
+        <v-btn>
+          <v-icon left>lock_open</v-icon>Sign-in
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" absolute>
