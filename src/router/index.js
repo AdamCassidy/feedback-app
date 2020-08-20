@@ -34,6 +34,11 @@ const routes = [
     name: "Cooking",
     component: () => import("../views/Cooking.vue"),
   },
+  {
+    path: "/sign-up",
+    name: "Sign-up",
+    component: () => import("../views/Sign-up.vue"),
+  },
 ];
 
 const router = new VueRouter({

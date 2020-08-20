@@ -7,7 +7,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn>
+        <v-btn to="/sign-up">
           <v-icon left>person_add</v-icon>Sign-up
         </v-btn>
         <v-btn>
