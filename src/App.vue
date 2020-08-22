@@ -3,14 +3,14 @@
     <v-toolbar>
       <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
       <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">Feedback</router-link>
+        <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn to="/sign-up">
           <v-icon left>person_add</v-icon>Sign-up
         </v-btn>
-        <v-btn>
+        <v-btn to="sign-in">
           <v-icon left>lock_open</v-icon>Sign-in
         </v-btn>
       </v-toolbar-items>
@@ -46,10 +46,12 @@ export default {
       drawerItems: [
         { icon: "house", title: "Home Projects", link: "/homeProjects" },
         { icon: "sports_basketball", title: "Sports", link: "/sports" },
-        { icon: "restaurant", title: "Cooking", link: "/cooking" }
-      ]
+        { icon: "restaurant", title: "Cooking", link: "/cooking" },
+        { icon: "content_cut", title: "Hairstyle", link: "/hairstyle" },
+        { icon: "drive_eta", title: "Automotive", link: "/automotive" },
+      ],
     };
-  }
+  },
 };
 </script>
 

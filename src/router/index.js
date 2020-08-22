@@ -39,6 +39,16 @@ const routes = [
     name: "Sign-up",
     component: () => import("../views/Sign-up.vue"),
   },
+  {
+    path: "/hairstyle",
+    name: "Hairstyle",
+    component: () => import("../views/Hairstyle.vue"),
+  },
+  {
+    path: "/automotive",
+    name: "Automotive",
+    component: () => import("../views/Automotive.vue"),
+  },
 ];
 
 const router = new VueRouter({

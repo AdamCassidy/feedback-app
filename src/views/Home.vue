@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <h1>Feedback</h1>
+    <h1>Second Opinion</h1>
   </div>
 </template>
 
@@ -9,6 +9,6 @@
 
 export default {
   name: "Home",
-  components: {}
+  components: {},
 };
 </script>
