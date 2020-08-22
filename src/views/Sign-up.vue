@@ -15,27 +15,32 @@
                         :error-messages="nameErrors"
                         label="Name"
                         required
-                        @input="v.name.$touch()"
-                        @blur="v.name.$touch()"
+                        type="name"
                       ></v-text-field>
                       <v-text-field
                         v-model="email"
                         :error-messages="emailErrors"
                         label="E-mail"
                         required
-                        @input="v.email.$touch()"
-                        @blur="v.email.$touch()"
+                        type="email"
                       ></v-text-field>
                       <v-text-field
                         v-model="password"
                         :error-messages="passwordErrors"
                         label="Password"
                         required
-                        @input="v.password.$touch()"
-                        @blur="v.password.$touch()"
+                        type="password"
                       ></v-text-field>
-                      <v-btn @click="submit">Submit</v-btn>
-                      <v-btn @click="clear">Clear</v-btn>
+                      <v-text-field
+                        v-model="confirmPassword"
+                        :error-messages="confirmPasswordErrors"
+                        label="Confirm Password"
+                        required
+                        type="password"
+                        :rules="[passwordVerified]"
+                      ></v-text-field>
+                      <v-btn @click="submit" right>Submit</v-btn>
+                      <v-btn @click="clear" left>Clear</v-btn>
                     </v-col>
                   </v-row>
                 </form>
@@ -52,9 +57,23 @@
 export default {
   data() {
     return {
-      show1: true,
+      name: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
     };
+  },
+  computed: {
+    passwordVerified() {
+      return this.password != this.confirmPassword
+        ? "Passwords do not match"
+        : "";
+    },
+  },
+  methods: {
+    addToStore() {
+      });
+    },
   },
 };
 </script>
-
