@@ -1,49 +1,60 @@
 <template>
   <div class="signUp">
-    <!--<v-container>
+    <h1>Sign-up</h1>
+    <v-container>
       <v-row>
-        <v-flex>
+        <v-col>
           <v-card>
             <v-card-text>
               <v-container>
                 <form>
-                  <h1>Sign-up</h1>
-                  <v-text-field
-                    v-model="name"
-                    :error-messages="nameErrors"
-                    label="Name"
-                    required
-                    @input="v.name.$touch()"
-                    @blur="v.name.$touch()"
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="email"
-                    :error-messages="emailErrors"
-                    label="E=mail"
-                    required
-                    @input="v.email.$touch()"
-                    @blur="v.email.$touch()"
-                  ></v-text-field>
-                  <v-text-field
-                    v-model="password"
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[rules.required, rules.min]"
-                    :type="show1 ? 'text' : 'password'"
-                    name="input-10-1"
-                    label="Normal with hint text"
-                    hint="At least 8 characters"
-                    counter
-                    @click:append="show1 = !show1"
-                  ></v-text-field>
-                  <v-btn @click="submit">Submit</v-btn>
-                  <v-btn @click="clear">Clear</v-btn>
+                  <v-row>
+                    <v-col>
+                      <v-text-field
+                        v-model="name"
+                        :error-messages="nameErrors"
+                        label="Name"
+                        required
+                        @input="v.name.$touch()"
+                        @blur="v.name.$touch()"
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="email"
+                        :error-messages="emailErrors"
+                        label="E-mail"
+                        required
+                        @input="v.email.$touch()"
+                        @blur="v.email.$touch()"
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="password"
+                        :error-messages="passwordErrors"
+                        label="Password"
+                        required
+                        @input="v.password.$touch()"
+                        @blur="v.password.$touch()"
+                      ></v-text-field>
+                      <v-btn @click="submit">Submit</v-btn>
+                      <v-btn @click="clear">Clear</v-btn>
+                    </v-col>
+                  </v-row>
                 </form>
               </v-container>
             </v-card-text>
           </v-card>
-        </v-flex>
+        </v-col>
       </v-row>
-    </v-container>-->
+    </v-container>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      show1: true,
+    };
+  },
+};
+</script>
 
