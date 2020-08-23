@@ -9,10 +9,9 @@
 
 export default {
   name: "Home",
-  components: {},
   computed: {
     posts() {
-      return this.$store.getPosts;
+      return this.$store.getters.posts;
     },
   },
 };

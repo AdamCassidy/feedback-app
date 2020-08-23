@@ -4,12 +4,14 @@ import "material-design-icons-iconfont/dist/material-design-icons.css";
 import vuetify from "./plugins/vuetify";
 import router from "./router";
 import * as firebase from "firebase";
+import { store } from "./store";
 
 Vue.config.productionTip = false;
 
 new Vue({
   vuetify,
   router,
+  store,
   render: (h) => h(App),
   created() {
     var firebaseConfig = {

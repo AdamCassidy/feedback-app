@@ -14,3 +14,13 @@
     </v-container>
   </v-div>
 </template>
+
+<script>
+export default {
+  computed: {
+    post() {
+      return this.$store.getters.post;
+    },
+  },
+};
+</script>

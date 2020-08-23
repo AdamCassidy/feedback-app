@@ -1,27 +1,27 @@
 import Vue from "vue";
-import VueX from "vuex";
+import Vuex from "vuex";
 
-Vue.use(VueX);
+Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    posts: {},
+    posts: [{}],
     user: {
       id: 1,
-      posts: {},
+      posts: [{}],
     },
   },
   mutations: {},
   actions: {},
   getters: {
-    getPosts(state) {
-      return this.state.posts.sort((postA, postB) => {
+    posts(state) {
+      return state.posts.sort((postA, postB) => {
         return postA.date > postB.date;
       });
     },
-    getPost(state) {
+    post(state) {
       return (postId) => {
-        return this.state.posts.find((postId) => {
+        return state.posts.find((post) => {
           return post.id === postId;
         });
       };
