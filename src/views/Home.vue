@@ -10,5 +10,10 @@
 export default {
   name: "Home",
   components: {},
+  computed: {
+    posts() {
+      return this.$store.getPosts;
+    },
+  },
 };
 </script>
