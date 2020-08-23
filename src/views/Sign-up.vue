@@ -7,40 +7,21 @@
           <v-card>
             <v-card-text>
               <v-container>
-                <form>
+                <form @submit.prevent="addToStore">
                   <v-row>
                     <v-col>
-                      <v-text-field
-                        v-model="name"
-                        :error-messages="nameErrors"
-                        label="Name"
-                        required
-                        type="name"
-                      ></v-text-field>
-                      <v-text-field
-                        v-model="email"
-                        :error-messages="emailErrors"
-                        label="E-mail"
-                        required
-                        type="email"
-                      ></v-text-field>
-                      <v-text-field
-                        v-model="password"
-                        :error-messages="passwordErrors"
-                        label="Password"
-                        required
-                        type="password"
-                      ></v-text-field>
+                      <v-text-field v-model="name" label="Name" required type="name"></v-text-field>
+                      <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
+                      <v-text-field v-model="password" label="Password" required type="password"></v-text-field>
                       <v-text-field
                         v-model="confirmPassword"
-                        :error-messages="confirmPasswordErrors"
                         label="Confirm Password"
                         required
                         type="password"
                         :rules="[passwordVerified]"
                       ></v-text-field>
-                      <v-btn @click="submit" right>Submit</v-btn>
-                      <v-btn @click="clear" left>Clear</v-btn>
+                      <v-btn type="submit">Submit</v-btn>
+                      <v-btn type="clear">Clear</v-btn>
                     </v-col>
                   </v-row>
                 </form>
@@ -72,6 +53,11 @@ export default {
   },
   methods: {
     addToStore() {
+      console.log({
+        name: this.name,
+        email: this.email,
+        password: this.password,
+        confirmPassword: this.confirmPassword,
       });
     },
   },
