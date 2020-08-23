@@ -35,9 +35,24 @@ const routes = [
     component: () => import("../views/Cooking.vue"),
   },
   {
+    path: "/post",
+    name: "Post",
+    component: () => import("../views/Post/Post.vue"),
+  },
+  {
+    path: "/posts",
+    name: "Posts",
+    component: () => import("../views/Post/Posts.vue"),
+  },
+  {
     path: "/sign-up",
     name: "Sign-up",
-    component: () => import("../views/Sign-up.vue"),
+    component: () => import("../views/User/Sign-up.vue"),
+  },
+  {
+    path: "/sign-in",
+    name: "Sign-in",
+    component: () => import("../views/User/Sign-in.vue"),
   },
   {
     path: "/hairstyle",

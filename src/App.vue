@@ -7,6 +7,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
+        <v-btn to="/posts">
+          <v-icon left>dynamic_feed</v-icon>Posts
+        </v-btn>
         <v-btn to="/sign-up">
           <v-icon left>person_add</v-icon>Sign-up
         </v-btn>
@@ -18,7 +21,7 @@
     <v-navigation-drawer v-model="openDrawer" absolute>
       <v-list flat>
         <v-list-item-group>
-          <v-list-item v-for="item in drawerItems" :key="item.key" router :to="item.link">
+          <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
             <v-list-item-content>
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
