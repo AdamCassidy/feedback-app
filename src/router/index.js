@@ -36,8 +36,8 @@ const routes = [
   },
   {
     path: "/post/new",
-    name: "newPost",
-    component: () => import("../views/Post/NewPost.vue"),
+    name: "createPost",
+    component: () => import("../views/Post/CreatePost.vue"),
   },
   {
     path: "/post/:id",
@@ -61,9 +61,9 @@ const routes = [
     component: () => import("../views/User/Sign-in.vue"),
   },
   {
-    path: "/hairstyle",
-    name: "Hairstyle",
-    component: () => import("../views/Hairstyle.vue"),
+    path: "/style",
+    name: "Style",
+    component: () => import("../views/Style.vue"),
   },
   {
     path: "/automotive",

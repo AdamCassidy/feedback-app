@@ -17,7 +17,7 @@
           <v-icon left>lock_open</v-icon>Sign-in
         </v-btn>
         <v-btn to="/post/new">
-          <v-icon left>post_add</v-icon>New Post
+          <v-icon left>post_add</v-icon>Create Post
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -53,7 +53,7 @@ export default {
         { icon: "house", title: "Home Projects", link: "/homeProjects" },
         { icon: "sports_basketball", title: "Sports", link: "/sports" },
         { icon: "restaurant", title: "Cooking", link: "/cooking" },
-        { icon: "content_cut", title: "Hairstyle", link: "/hairstyle" },
+        { icon: "content_cut", title: "Style", link: "/style" },
         { icon: "drive_eta", title: "Automotive", link: "/automotive" },
       ],
     };

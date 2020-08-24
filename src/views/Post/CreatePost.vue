@@ -1,6 +1,6 @@
 <template>
-  <div class="signUp">
-    <h1>Sign-up</h1>
+  <div class="createPost">
+    <h1>Create Post</h1>
     <v-container>
       <v-row>
         <v-flex>
@@ -10,8 +10,8 @@
                 <form @submit.prevent="addToUsers">
                   <v-row>
                     <v-flex>
-                      <v-text-field v-model="image" label="Image" required type="image"></v-text-field>
-                      <v-text-field v-model="text" label="Question" required></v-text-field>
+                      <v-file-input label="Upload Image" outlined prepend-icon="image"></v-file-input>
+                      <v-text-field v-model="text" label="Title" required></v-text-field>
                       <v-text-field v-model="text" label="Context"></v-text-field>
                       <v-btn type="submit">Submit</v-btn>
                       <v-btn type="clear">Clear</v-btn>
