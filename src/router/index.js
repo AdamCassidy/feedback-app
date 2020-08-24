@@ -35,8 +35,14 @@ const routes = [
     component: () => import("../views/Cooking.vue"),
   },
   {
-    path: "/post",
-    name: "Post",
+    path: "/post/new",
+    name: "newPost",
+    component: () => import("../views/Post/NewPost.vue"),
+  },
+  {
+    path: "/post/:id",
+    name: "post",
+    props: true,
     component: () => import("../views/Post/Post.vue"),
   },
   {

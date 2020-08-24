@@ -17,9 +17,10 @@
 
 <script>
 export default {
+  props: ["id"],
   computed: {
     post() {
-      return this.$store.getters.post;
+      return this.$store.getters.post(this.id);
     },
   },
 };

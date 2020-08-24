@@ -16,6 +16,9 @@
         <v-btn to="sign-in">
           <v-icon left>lock_open</v-icon>Sign-in
         </v-btn>
+        <v-btn to="/post/new">
+          <v-icon left>post_add</v-icon>New Post
+        </v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" absolute>
