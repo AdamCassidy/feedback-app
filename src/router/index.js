@@ -34,17 +34,7 @@ const routes = [
     name: "Cooking",
     component: () => import("../views/Cooking.vue"),
   },
-  {
-    path: "/post/new",
-    name: "createPost",
-    component: () => import("../views/Post/CreatePost.vue"),
-  },
-  {
-    path: "/post/:id",
-    name: "post",
-    props: true,
-    component: () => import("../views/Post/Post.vue"),
-  },
+
   {
     path: "/posts",
     name: "Posts",
@@ -69,6 +59,17 @@ const routes = [
     path: "/automotive",
     name: "Automotive",
     component: () => import("../views/Automotive.vue"),
+  },
+  {
+    path: "/post/new",
+    name: "createPost",
+    component: () => import("../views/Post/CreatePost.vue"),
+  },
+  {
+    path: "/post/:id",
+    name: "post",
+    props: true,
+    component: () => import("../views/Post/Post.vue"),
   },
 ];
 

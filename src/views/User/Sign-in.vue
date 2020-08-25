@@ -7,7 +7,7 @@
           <v-card>
             <v-card-text>
               <v-container>
-                <form @submit.prevent="addToUsers">
+                <form @submit.prevent="correctPassword">
                   <v-row>
                     <v-flex>
                       <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
@@ -35,14 +35,10 @@ export default {
     };
   },
   methods: {
-    passwordVerified() {
-      return this.password != "" ? "Incorrect email or password" : "";
-    },
-    addToUsers() {
-      console.log({
-        email: this.email,
-        password: this.password,
-      });
+    correctPassword() {
+      return this.password != /*getUserId(this.email)*/ ""
+        ? "Incorrect email or password"
+        : "";
     },
   },
 };

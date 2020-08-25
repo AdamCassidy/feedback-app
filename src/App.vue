@@ -13,7 +13,7 @@
         <v-btn to="/sign-up">
           <v-icon left>person_add</v-icon>Sign-up
         </v-btn>
-        <v-btn to="sign-in">
+        <v-btn to="/sign-in">
           <v-icon left>lock_open</v-icon>Sign-in
         </v-btn>
         <v-btn to="/post/new">
@@ -21,7 +21,7 @@
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    <v-navigation-drawer v-model="openDrawer" absolute>
+    <v-navigation-drawer v-model="openDrawer" temporary absolute>
       <v-list flat>
         <v-list-item-group>
           <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">

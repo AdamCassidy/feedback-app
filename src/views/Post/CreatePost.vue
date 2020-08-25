@@ -7,12 +7,12 @@
           <v-card>
             <v-card-text>
               <v-container>
-                <form @submit.prevent="addToUsers">
+                <form @submit.prevent="addPost">
                   <v-row>
                     <v-flex>
+                      <v-text-field label="Title" required></v-text-field>
+                      <v-text-field multi-line label="Context"></v-text-field>
                       <v-file-input label="Upload Image" outlined prepend-icon="image"></v-file-input>
-                      <v-text-field v-model="text" label="Title" required></v-text-field>
-                      <v-text-field v-model="text" label="Context"></v-text-field>
                       <v-btn type="submit">Submit</v-btn>
                       <v-btn type="clear">Clear</v-btn>
                     </v-flex>
@@ -31,19 +31,17 @@
 export default {
   data() {
     return {
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      title: "",
+      context: "",
+      image: "",
     };
   },
   methods: {
-    addToUsersPosts() {
+    addPost() {
       console.log({
-        name: this.name,
-        email: this.email,
-        password: this.password,
-        confirmPassword: this.confirmPassword,
+        title: this.title,
+        context: this.context,
+        image: this.image,
       });
     },
   },
