@@ -10,8 +10,8 @@
                 <form @submit.prevent="addPost">
                   <v-row>
                     <v-flex>
-                      <v-text-field label="Title" required></v-text-field>
-                      <v-text-field multi-line label="Context"></v-text-field>
+                      <v-text-field label="Title" single-line required></v-text-field>
+                      <v-textarea label="Context" auto-grow></v-textarea>
                       <v-file-input label="Upload Image" outlined prepend-icon="image"></v-file-input>
                       <v-btn type="submit">Submit</v-btn>
                       <v-btn type="clear">Clear</v-btn>
