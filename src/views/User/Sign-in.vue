@@ -1,18 +1,18 @@
 <template>
   <div class="signIn">
-    <h1>Sign-in</h1>
+    <h1>Sign in</h1>
     <v-container>
       <v-row>
         <v-flex>
           <v-card>
             <v-card-text>
               <v-container>
-                <form @submit.prevent="correctPassword">
+                <form @submit.prevent="onSignIn">
                   <v-row>
                     <v-flex>
                       <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
                       <v-text-field v-model="password" label="Password" required type="password"></v-text-field>
-                      <v-btn type="submit">Submit</v-btn>
+                      <v-btn type="submit">Sign in</v-btn>
                       <v-btn type="clear">Clear</v-btn>
                     </v-flex>
                   </v-row>
@@ -35,7 +35,7 @@ export default {
     };
   },
   methods: {
-    correctPassword() {
+    onSignIn() {
       return this.password != /*getUserId(this.email)*/ ""
         ? "Incorrect email or password"
         : "";

@@ -7,7 +7,7 @@
           <v-card>
             <v-card-text>
               <v-container>
-                <form @submit.prevent="addPost">
+                <form @submit.prevent="onCreatePost">
                   <v-row>
                     <v-flex>
                       <v-text-field v-model="title" label="Title" single-line required></v-text-field>
@@ -41,6 +41,7 @@ export default {
       image: "",
     };
   },
+
   computed: {
     validForm() {
       return this.title != "" && this.context != "" && this.image != "";
@@ -48,7 +49,7 @@ export default {
   },
 
   methods: {
-    addPost() {
+    onCreatePost() {
       const postData = {
         title: this.title,
         context: this.context,

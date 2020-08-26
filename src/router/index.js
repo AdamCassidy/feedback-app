@@ -41,12 +41,12 @@ const routes = [
     component: () => import("../views/Post/Posts.vue"),
   },
   {
-    path: "/sign-up",
+    path: "/signup",
     name: "Sign-up",
     component: () => import("../views/User/Sign-up.vue"),
   },
   {
-    path: "/sign-in",
+    path: "/signin",
     name: "Sign-in",
     component: () => import("../views/User/Sign-in.vue"),
   },

@@ -10,11 +10,11 @@
         <v-btn to="/posts">
           <v-icon left>dynamic_feed</v-icon>Posts
         </v-btn>
-        <v-btn to="/sign-up">
-          <v-icon left>person_add</v-icon>Sign-up
+        <v-btn to="/signup">
+          <v-icon left>person_add</v-icon>Sign up
         </v-btn>
-        <v-btn to="/sign-in">
-          <v-icon left>lock_open</v-icon>Sign-in
+        <v-btn to="/signin">
+          <v-icon left>lock_open</v-icon>Sign in
         </v-btn>
         <v-btn to="/post/new">
           <v-icon left>post_add</v-icon>Create Post
