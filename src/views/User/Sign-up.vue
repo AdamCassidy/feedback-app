@@ -58,6 +58,7 @@ export default {
         email: this.email,
         password: this.password,
         confirmPassword: this.confirmPassword,
+        date: new Date(),
       });
     },
   },

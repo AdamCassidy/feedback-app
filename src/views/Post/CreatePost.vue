@@ -41,18 +41,22 @@ export default {
       image: "",
     };
   },
-  methods: {
-    addPost() {
-      console.log({
-        title: this.title,
-        context: this.context,
-        image: this.image,
-      });
-    },
-  },
   computed: {
     validForm() {
       return this.title != "" && this.context != "" && this.image != "";
+    },
+  },
+
+  methods: {
+    addPost() {
+      const postData = {
+        title: this.title,
+        context: this.context,
+        image: this.image,
+        date: new Date(),
+      };
+
+      this.$store.dispatch("createPost", postData);
     },
   },
 };

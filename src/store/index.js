@@ -12,7 +12,18 @@ export const store = new Vuex.Store({
     },
   },
   mutations: {},
-  actions: {},
+  actions: {
+    createPost({ commit }, payload) {
+      const post = {
+        title: payload.title,
+        context: payload.context,
+        image: payload.image,
+        date: payload.date,
+      };
+
+      commit("createPost", post);
+    },
+  },
   getters: {
     posts(state) {
       return state.posts.sort((postA, postB) => {
