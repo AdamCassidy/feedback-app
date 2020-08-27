@@ -49,6 +49,16 @@ export default {
         ? "Passwords do not match"
         : "";
     },
+    user() {
+      return this.$store.getters.user;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== undefined && value !== null) {
+        this.$router.push("/");
+      }
+    },
   },
   methods: {
     onSignUp() {

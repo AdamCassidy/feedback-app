@@ -6,11 +6,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    posts: [{}],
-    user: {
-      id: 1,
-      posts: [{}],
-    },
+    posts: null,
+    user: null,
   },
   mutations: {
     createPost(state, payload) {
@@ -27,6 +24,7 @@ export const store = new Vuex.Store({
         context: payload.context,
         image: payload.image,
         date: payload.date,
+        id: "qtertwmrtymrd453",
       };
 
       commit("createPost", post);
@@ -36,9 +34,9 @@ export const store = new Vuex.Store({
       firebase
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
+        .then((userCredential) => {
           const newUser = {
-            id: user.uid,
+            id: userCredential.user.uid,
             posts: [],
           };
           commit("setUser", newUser);
@@ -60,6 +58,9 @@ export const store = new Vuex.Store({
           return post.id === postId;
         });
       };
+    },
+    user(state) {
+      return state.user;
     },
   },
 });

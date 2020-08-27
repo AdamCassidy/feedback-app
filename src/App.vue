@@ -7,17 +7,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn to="/posts">
-          <v-icon left>dynamic_feed</v-icon>Posts
-        </v-btn>
-        <v-btn to="/signup">
-          <v-icon left>person_add</v-icon>Sign up
-        </v-btn>
-        <v-btn to="/signin">
-          <v-icon left>lock_open</v-icon>Sign in
-        </v-btn>
-        <v-btn to="/post/new">
-          <v-icon left>post_add</v-icon>Create Post
+        <v-btn v-for="item in toolbarItems" :key="item.key" :to="item.link">
+          <v-icon>{{ item.icon }}</v-icon>
+          {{ item.title }}
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -57,6 +49,28 @@ export default {
         { icon: "drive_eta", title: "Automotive", link: "/automotive" },
       ],
     };
+  },
+  computed: {
+    userIsAuth() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+    toolbarItems() {
+      let toolbarItems = [
+        { icon: "dynamic_feed", title: "Posts", link: "/posts" },
+        { icon: "post_add", title: "Create Posts", link: "/posts/new" },
+      ];
+      if (!this.userIsAuth) {
+        toolbarItems = [
+          { icon: "dynamic_feed", title: "Posts", link: "/posts" },
+          { icon: "person_add", title: "Sign up", link: "/signup" },
+          { icon: "lock_open", title: "Sign in", link: "/signin" },
+        ];
+      }
+      return toolbarItems;
+    },
   },
 };
 </script>
