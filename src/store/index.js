@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    posts: null,
+    posts: [],
     user: null,
   },
   mutations: {
@@ -31,9 +31,25 @@ export const store = new Vuex.Store({
     },
 
     addUser({ commit }, payload) {
+      console.log("made it here");
       firebase
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.password)
+        .then((userCredential) => {
+          const newUser = {
+            id: userCredential.user.uid,
+            posts: [],
+          };
+          commit("setUser", newUser);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    signInUser({ commit }, payload) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(payload.email, payload.password)
         .then((userCredential) => {
           const newUser = {
             id: userCredential.user.uid,

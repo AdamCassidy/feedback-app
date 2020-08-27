@@ -34,11 +34,24 @@ export default {
       password: "",
     };
   },
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
+  watch: {
+    user(value) {
+      if (value !== undefined && value !== null) {
+        this.$router.push("/");
+      }
+    },
+  },
   methods: {
     onSignIn() {
-      return this.password != /*getUserId(this.email)*/ ""
-        ? "Incorrect email or password"
-        : "";
+      this.$store.dispatch("signInUser", {
+        email: this.email,
+        password: this.password,
+      });
     },
   },
 };
