@@ -24,7 +24,14 @@
                         type="password"
                         :rules="[comparePasswords]"
                       ></v-text-field>
-                      <v-btn type="submit">Sign up</v-btn>
+                      <v-btn type="submit" :loading="loading" :disabled="loading">
+                        Sign Up
+                        <template v-slot:loader>
+                          <span class="custom-loader">
+                            <v-icon light>cached</v-icon>
+                          </span>
+                        </template>
+                      </v-btn>
                       <v-btn type="clear">Clear</v-btn>
                     </v-flex>
                   </v-row>
@@ -59,6 +66,9 @@ export default {
     },
     user() {
       return this.$store.getters.user;
+    },
+    loading() {
+      return this.$store.getters.loading;
     },
   },
   watch: {

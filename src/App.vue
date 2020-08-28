@@ -60,7 +60,7 @@ export default {
     toolbarItems() {
       let toolbarItems = [
         { icon: "dynamic_feed", title: "Posts", link: "/posts" },
-        { icon: "post_add", title: "Create Posts", link: "/posts/new" },
+        { icon: "post_add", title: "Create Post", link: "/post/new" },
       ];
       if (!this.userIsAuth) {
         toolbarItems = [
@@ -94,6 +94,42 @@ export default {
     &.router-link-exact-active {
       color: #42b983;
     }
+  }
+}
+.custom-loader {
+  animation: loader 1s infinite;
+  display: flex;
+}
+@-moz-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

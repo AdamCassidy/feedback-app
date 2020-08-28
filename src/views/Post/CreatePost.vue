@@ -18,7 +18,14 @@
                         outlined
                         prepend-icon="image"
                       ></v-file-input>
-                      <v-btn type="submit" :disabled="!validForm">Submit</v-btn>
+                      <v-btn type="submit" :loading="loading" :disabled="!validForm || loading">
+                        Create Post
+                        <template v-slot:loader>
+                          <span class="custom-loader">
+                            <v-icon light>cached</v-icon>
+                          </span>
+                        </template>
+                      </v-btn>
                       <v-btn type="clear">Clear</v-btn>
                     </v-flex>
                   </v-row>
@@ -45,6 +52,9 @@ export default {
   computed: {
     validForm() {
       return this.title != "" && this.context != "" && this.image != "";
+    },
+    loading() {
+      return this.$store.getters.loading;
     },
   },
 

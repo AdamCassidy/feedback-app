@@ -12,7 +12,14 @@
                     <v-flex>
                       <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
                       <v-text-field v-model="password" label="Password" required type="password"></v-text-field>
-                      <v-btn type="submit">Sign in</v-btn>
+                      <v-btn type="submit" :loading="loading" :disabled="loading">
+                        Sign In
+                        <template v-slot:loader>
+                          <span class="custom-loader">
+                            <v-icon light>cached</v-icon>
+                          </span>
+                        </template>
+                      </v-btn>
                       <v-btn type="clear">Clear</v-btn>
                     </v-flex>
                   </v-row>
@@ -37,6 +44,9 @@ export default {
   computed: {
     user() {
       return this.$store.getters.user;
+    },
+    loading() {
+      return this.$store.getters.loading;
     },
   },
   watch: {
