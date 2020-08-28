@@ -8,6 +8,8 @@ export const store = new Vuex.Store({
   state: {
     posts: [],
     user: null,
+    loading: false,
+    authError: null,
   },
   mutations: {
     createPost(state, payload) {
@@ -15,6 +17,15 @@ export const store = new Vuex.Store({
     },
     setUser(state, payload) {
       state.user = payload;
+    },
+    setLoading(state, payload) {
+      state.loading = payload;
+    },
+    setAuthError(state, payload) {
+      state.authError = payload;
+    },
+    clearAuthError(state) {
+      state.authError = null;
     },
   },
   actions: {
@@ -31,11 +42,14 @@ export const store = new Vuex.Store({
     },
 
     addUser({ commit }, payload) {
-      console.log("made it here");
+      commit("setLoading", true);
+      commit("clearAuthError");
+
       firebase
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.password)
         .then((userCredential) => {
+          commit("setLoading", false);
           const newUser = {
             id: userCredential.user.uid,
             posts: [],
@@ -43,14 +57,19 @@ export const store = new Vuex.Store({
           commit("setUser", newUser);
         })
         .catch((error) => {
+          commit("setLoading", false);
+          commit("setAuthError", error);
           console.log(error);
         });
     },
     signInUser({ commit }, payload) {
+      commit("setLoading", true);
       firebase
         .auth()
         .signInWithEmailAndPassword(payload.email, payload.password)
         .then((userCredential) => {
+          commit("setLoading", false);
+
           const newUser = {
             id: userCredential.user.uid,
             posts: [],
@@ -58,8 +77,13 @@ export const store = new Vuex.Store({
           commit("setUser", newUser);
         })
         .catch((error) => {
+          commit("setLoading", false);
+          commit("setAuthError", error);
           console.log(error);
         });
+    },
+    clearAuthError({ commit }) {
+      commit("clearAuthError");
     },
   },
   getters: {
@@ -77,6 +101,12 @@ export const store = new Vuex.Store({
     },
     user(state) {
       return state.user;
+    },
+    loading(state) {
+      return state.loading;
+    },
+    authError(state) {
+      return state.authError;
     },
   },
 });

@@ -2,6 +2,11 @@
   <div class="signUp">
     <h1>Sign up</h1>
     <v-container>
+      <v-row v-if="authError">
+        <v-flex>
+          <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+        </v-flex>
+      </v-row>
       <v-row>
         <v-flex>
           <v-card>
@@ -49,6 +54,9 @@ export default {
         ? "Passwords do not match"
         : "";
     },
+    authError() {
+      return this.$store.getters.authError;
+    },
     user() {
       return this.$store.getters.user;
     },
@@ -66,6 +74,9 @@ export default {
         email: this.email,
         password: this.password,
       });
+    },
+    onDismissed() {
+      this.$store.dispatch("clearAuthError");
     },
   },
 };
