@@ -2,6 +2,11 @@
   <div class="createPost">
     <h1>Create Post</h1>
     <v-container>
+      <v-row v-if="authError">
+        <v-flex>
+          <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+        </v-flex>
+      </v-row>
       <v-row>
         <v-flex>
           <v-card>
@@ -56,6 +61,9 @@ export default {
     loading() {
       return this.$store.getters.loading;
     },
+    authError() {
+      return this.$store.getters.authError;
+    },
   },
 
   methods: {
@@ -68,6 +76,9 @@ export default {
       };
 
       this.$store.dispatch("createPost", postData);
+    },
+    onDismissed() {
+      this.$store.dispatch("clearAuthError");
     },
   },
 };

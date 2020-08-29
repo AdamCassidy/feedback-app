@@ -1,4 +1,4 @@
-<template>
+<template refs="alertComponent">
   <v-alert prominent type="error" dismissible @input="onClose" :value="true">{{ text }}</v-alert>
 </template>
 

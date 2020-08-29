@@ -2,6 +2,11 @@
   <div class="signIn">
     <h1>Sign in</h1>
     <v-container>
+      <v-row v-if="authError">
+        <v-flex>
+          <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+        </v-flex>
+      </v-row>
       <v-row>
         <v-flex>
           <v-card>
@@ -48,6 +53,9 @@ export default {
     loading() {
       return this.$store.getters.loading;
     },
+    authError() {
+      return this.$store.getters.authError;
+    },
   },
   watch: {
     user(value) {
@@ -62,6 +70,9 @@ export default {
         email: this.email,
         password: this.password,
       });
+    },
+    onDismissed() {
+      this.$store.dispatch("clearAuthError");
     },
   },
 };

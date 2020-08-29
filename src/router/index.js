@@ -4,6 +4,12 @@ import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
+Vue.mixin({
+  beforeRouteLeave(to, from, next) {
+    this.$store.dispatch("clearAuthError");
+    next();
+  },
+});
 const routes = [
   {
     path: "/",
