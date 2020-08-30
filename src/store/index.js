@@ -30,15 +30,31 @@ export const store = new Vuex.Store({
   },
   actions: {
     createPost({ commit }, payload) {
+      commit("setLoading", true);
       const post = {
         title: payload.title,
         context: payload.context,
         image: payload.image,
-        date: payload.date,
-        id: "qtertwmrtymrd453",
+        date: payload.date.toISOString(),
       };
-
-      commit("createPost", post);
+      fetch("https://feedback-project-20f04.firebaseio.com/posts.json", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(post),
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          commit("setLoading", false);
+          commit("createPost", data);
+        })
+        .catch((error) => {
+          commit("setLoading", false);
+          console.log(error);
+        });
     },
 
     addUser({ commit }, payload) {
