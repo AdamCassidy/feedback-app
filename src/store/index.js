@@ -32,31 +32,43 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
-    createPost({ commit }, payload) {
+    createPost({ commit, getters }, payload) {
       commit("setLoading", true);
       const post = {
-        id: this.getters.user.uid,
         title: payload.title,
         context: payload.context,
         image: payload.image,
         date: payload.date.toISOString(),
+        creatorId: getters.user.id,
       };
-      fetch("https://feedback-project-20f04.firebaseio.com/posts.json", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(post),
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => {
-          commit("setLoading", false);
-          commit("createPost", data);
+      firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then((idToken) => {
+          fetch(
+            "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+              idToken,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(post),
+            }
+          )
+            .then((res) => {
+              return res.json();
+            })
+            .then((data) => {
+              commit("setLoading", false);
+              commit("createPost", data);
+            })
+            .catch((error) => {
+              commit("setLoading", false);
+              console.log(error);
+            });
         })
         .catch((error) => {
-          commit("setLoading", false);
           console.log(error);
         });
     },
