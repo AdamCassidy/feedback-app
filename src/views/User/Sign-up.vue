@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     onSignUp() {
-      this.$store.dispatch("addUser", {
+      this.$store.dispatch("createUser", {
         email: this.email,
         password: this.password,
       });

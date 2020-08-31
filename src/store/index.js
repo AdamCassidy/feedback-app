@@ -27,11 +27,15 @@ export const store = new Vuex.Store({
     clearAuthError(state) {
       state.authError = null;
     },
+    clearUser(state) {
+      state.user = null;
+    },
   },
   actions: {
     createPost({ commit }, payload) {
       commit("setLoading", true);
       const post = {
+        id: this.getters.user.uid,
         title: payload.title,
         context: payload.context,
         image: payload.image,
@@ -57,7 +61,7 @@ export const store = new Vuex.Store({
         });
     },
 
-    addUser({ commit }, payload) {
+    createUser({ commit }, payload) {
       commit("setLoading", true);
       commit("clearAuthError");
 
@@ -78,7 +82,7 @@ export const store = new Vuex.Store({
           console.log(error);
         });
     },
-    signInUser({ commit }, payload) {
+    signIn({ commit }, payload) {
       commit("setLoading", true);
       firebase
         .auth()
@@ -100,6 +104,10 @@ export const store = new Vuex.Store({
     },
     clearAuthError({ commit }) {
       commit("clearAuthError");
+    },
+    signOut({ commit }) {
+      firebase.auth().signOut();
+      commit("clearUser");
     },
   },
   getters: {

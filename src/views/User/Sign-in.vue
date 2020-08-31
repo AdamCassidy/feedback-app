@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     onSignIn() {
-      this.$store.dispatch("signInUser", {
+      this.$store.dispatch("signIn", {
         email: this.email,
         password: this.password,
       });
