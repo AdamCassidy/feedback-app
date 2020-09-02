@@ -53,7 +53,7 @@ export default {
 
     computed: {
         validForm() {
-            return this.title != "" && this.context != "" && this.image != "";
+            return this.title != "" && this.context != "" && this.image != null;
         },
         loading() {
             return this.$store.getters.loading;
@@ -65,6 +65,9 @@ export default {
 
     methods: {
         onCreatePost() {
+            if (!this.validForm) {
+                return;
+            }
             const postData = {
                 title: this.title,
                 context: this.context,
