@@ -5,7 +5,7 @@ import vuetify from "./plugins/vuetify";
 import router from "./router";
 import * as firebase from "firebase";
 import { store } from "./store";
-import AlertCmp from "./Shared/Alert.vue";
+import AlertCmp from "./views/Shared/Alert.vue";
 
 Vue.config.productionTip = false;
 Vue.component("authError-alert", AlertCmp);
