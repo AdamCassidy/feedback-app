@@ -41,6 +41,9 @@ export const store = new Vuex.Store({
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
       };
+      let key;
+      let imageURL;
+
       firebase
         .auth()
         .currentUser.getIdToken(true)
@@ -57,11 +60,43 @@ export const store = new Vuex.Store({
             }
           )
             .then((res) => {
+              for (let k in res) {
+                console.log(k + " " + res.k);
+              }
               return res.json();
             })
             .then((data) => {
+              for (let k in data) {
+                console.log(k + " " + data.k);
+              }
+              key = data.name;
+              return key;
+            })
+            .then((key) => {
+              const filename = payload.image.name;
+              const ext = filename.slice(filename.lastIndexOf(".") + 1);
+              return firebase
+                .storage()
+                .ref("posts/" + key + "." + ext)
+                .put(payload.image);
+            })
+            .then((fileData) => fileData.ref.getDownloadURL())
+            .then((URL) => {
+              console.log(key);
+              imageURL = URL;
+              firebase
+                .database()
+                .ref()
+                .child("posts/" + key)
+                .update({ imageURL: imageURL });
+            })
+            .then(() => {
+              commit("createPost", {
+                ...post,
+                imageURL: imageURL,
+                id: key,
+              });
               commit("setLoading", false);
-              commit("createPost", data);
             })
             .catch((error) => {
               commit("setLoading", false);
