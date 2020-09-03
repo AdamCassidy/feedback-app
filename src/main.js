@@ -6,9 +6,11 @@ import router from "./router";
 import * as firebase from "firebase";
 import { store } from "./store";
 import AlertCmp from "./views/Shared/Alert.vue";
+import EditPostContextDialog from "./views/Post/Edit/EditPostContext.vue";
 
 Vue.config.productionTip = false;
 Vue.component("authError-alert", AlertCmp);
+Vue.component("edit-post-context-dialog", EditPostContextDialog);
 
 new Vue({
   vuetify,
