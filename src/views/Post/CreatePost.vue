@@ -3,18 +3,18 @@
     <h1>Create Post</h1>
     <v-container>
         <v-row v-if="authError">
-            <v-flex>
+            <v-col>
                 <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
-            </v-flex>
+            </v-col>
         </v-row>
         <v-row>
-            <v-flex>
+            <v-col>
                 <v-card>
                     <v-card-text>
                         <v-container>
                             <form @submit.prevent="onCreatePost">
                                 <v-row>
-                                    <v-flex>
+                                    <v-col>
                                         <v-text-field v-model="title" label="Title" single-line required></v-text-field>
                                         <v-textarea v-model="context" label="Context" auto-grow></v-textarea>
                                         <v-file-input v-model="image" label="Upload Image" outlined prepend-icon="image" accept="image/*" @change="onFilePicked"></v-file-input>
@@ -28,13 +28,13 @@
                                             </template>
                                         </v-btn>
                                         <v-btn type="clear">Clear</v-btn>
-                                    </v-flex>
+                                    </v-col>
                                 </v-row>
                             </form>
                         </v-container>
                     </v-card-text>
                 </v-card>
-            </v-flex>
+            </v-col>
         </v-row>
     </v-container>
 </div>
