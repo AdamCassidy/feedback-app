@@ -11,7 +11,7 @@
                 <v-icon>{{ item.icon }}</v-icon>
                 {{ item.title }}
             </v-btn>
-            <v-btn v-if="userIsAuth" @click="onSignOut">
+            <v-btn v-if="userIsAuthenticated" @click="onSignOut">
                 <v-icon>exit_to_app</v-icon>Sign out
             </v-btn>
         </v-toolbar-items>
@@ -73,7 +73,7 @@ export default {
         };
     },
     computed: {
-        userIsAuth() {
+        userIsAuthenticated() {
             return (
                 this.$store.getters.user !== null &&
                 this.$store.getters.user !== undefined
@@ -91,7 +91,7 @@ export default {
                     link: "/post/new",
                 },
             ];
-            if (!this.userIsAuth) {
+            if (!this.userIsAuthenticated) {
                 toolbarItems = [{
                         icon: "dynamic_feed",
                         title: "Posts",
