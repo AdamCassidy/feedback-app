@@ -6,11 +6,14 @@ import router from "./router";
 import * as firebase from "firebase";
 import { store } from "./store";
 import AlertCmp from "./views/Shared/Alert.vue";
-import EditPostContextDialog from "./views/Post/Edit/EditPostContext.vue";
+import EditPost from "./views/Post/Edit/EditPost.vue";
+import DateFilter from "./views/filters/date.js";
 
 Vue.config.productionTip = false;
+Vue.filter("date", DateFilter);
+
 Vue.component("authError-alert", AlertCmp);
-Vue.component("edit-post-context-dialog", EditPostContextDialog);
+Vue.component("edit-post-dialog", EditPost);
 
 new Vue({
   vuetify,
