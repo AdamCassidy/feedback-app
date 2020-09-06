@@ -8,12 +8,14 @@ import { store } from "./store";
 import AlertCmp from "./views/Shared/Alert.vue";
 import EditPost from "./views/Post/Edit/EditPost.vue";
 import DateFilter from "./views/filters/date.js";
+import CommentInput from "./views/Shared/Comments/CommentInput.vue";
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
 
 Vue.component("authError-alert", AlertCmp);
 Vue.component("edit-post-dialog", EditPost);
+Vue.component("comment-input", CommentInput);
 
 new Vue({
   vuetify,
