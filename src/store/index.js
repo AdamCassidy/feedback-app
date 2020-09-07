@@ -32,6 +32,36 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
+    updatePost({ commit }, payload) {
+      commit("setLoading", true);
+      var updateObj = {};
+      if (payload.title) {
+        updateObj.title = payload.title;
+      }
+      if (payload.context) {
+        updateObj.context = payload.context;
+      }
+      if (payload.comments) {
+        updateObj.comments = firebase.firestore.FieldValue.arrayUnion(
+          payload.comments
+        );
+      }
+
+      firebase
+        .database()
+        .ref("posts")
+        .child(payload.id)
+        .update(updateObj)
+        .then(() => {
+          commit("setLoading", false);
+          commit("updatePost", payload);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+
     createPost({ commit, getters }, payload) {
       commit("setLoading", true);
       const post = {
