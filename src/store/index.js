@@ -6,14 +6,48 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    posts: [],
+    posts: [{ comments: [{ replies: [] }] }],
     user: null,
     loading: false,
     authError: null,
   },
+
   mutations: {
     createPost(state, payload) {
       state.posts.push(payload);
+    },
+    createComment(state, payload) {
+      state.posts
+        .find((post) => {
+          return payload.postId === post.postId;
+        })
+        .commets.push(payload);
+    },
+    createReply(state, payload) {
+      state.posts
+        .find((post) => {
+          return payload.postId === post.postId;
+        })
+        .find((comment) => {
+          return payload.commentId === comment.commentId;
+        })
+        .replies.push(payload);
+    },
+    updatePost(state, payload) {
+      const post = state.posts.find((post) => {
+        return payload.id === post.id;
+      });
+
+      if (payload.title) {
+        post.title = payload.title;
+      }
+      if (payload.context) {
+        post.context = payload.context;
+      }
+      if (payload.comments) {
+        //Appends 1 comment
+        post.comments.push(payload.comments);
+      }
     },
     setUser(state, payload) {
       state.user = payload;
@@ -31,6 +65,7 @@ export const store = new Vuex.Store({
       state.user = null;
     },
   },
+
   actions: {
     updatePost({ commit }, payload) {
       commit("setLoading", true);
@@ -70,6 +105,7 @@ export const store = new Vuex.Store({
         image: payload.image,
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
+        comments: [],
       };
       let key;
       let imageURL;
@@ -90,15 +126,12 @@ export const store = new Vuex.Store({
             }
           )
             .then((res) => {
-              for (let k in res) {
-                console.log(k + " " + res.k);
+              if (!res.ok) {
+                throw new Error("Error: Can't post to database.");
               }
               return res.json();
             })
             .then((data) => {
-              for (let k in data) {
-                console.log(k + " " + data.k);
-              }
               key = data.name;
               return key;
             })
@@ -112,7 +145,6 @@ export const store = new Vuex.Store({
             })
             .then((fileData) => fileData.ref.getDownloadURL())
             .then((URL) => {
-              console.log(key);
               imageURL = URL;
               firebase
                 .database()
@@ -135,6 +167,109 @@ export const store = new Vuex.Store({
         })
         .catch((error) => {
           console.log(error);
+          commit("setLoading", false);
+        });
+    },
+
+    createComment({ commit, getters }, payload) {
+      commit("setLoading", true);
+      const comment = {
+        // Add the new single comment to be posted
+        comment: payload.comment,
+        date: payload.date.toISOString(),
+        creatorId: getters.user.id,
+        postId: payload.postId,
+        replies: [],
+      };
+      let key;
+      firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then((idToken) => {
+          fetch(
+            "https://feedback-project-20f04.firebaseio.com/posts/" +
+              payload.postId +
+              "/comments.json ? auth = " +
+              idToken,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(comment),
+            }
+          )
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error("Error: Can't post to database.");
+              }
+              return res.json();
+            })
+            .then((data) => {
+              key = data.name;
+              comment.id = key;
+              commit("createComment", payload);
+              commit("setLoading", false);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    createReply({ commit, getters }, payload) {
+      commit("setLoading", true);
+      const reply = {
+        // Add the new single reply to be posted
+        reply: payload.reply,
+        date: payload.date.toISOString(),
+        creatorId: getters.user.id,
+        postId: payload.postId,
+        commentId: payload.commentId,
+        replies: [],
+      };
+      let key;
+      firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then((idToken) => {
+          fetch(
+            "https://feedback-project-20f04.firebaseio.com/posts/" +
+              payload.postId +
+              "/comments/" +
+              payload.commentId +
+              "/replies.json ? auth = " +
+              idToken,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(reply),
+            }
+          )
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error("Error: Can't post to database.");
+              }
+              return res.json();
+            })
+            .then((data) => {
+              key = data.name;
+              reply.id = key;
+              commit("createReply", payload);
+              commit("setLoading", false);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
         });
     },
 
@@ -198,6 +333,56 @@ export const store = new Vuex.Store({
         return state.posts.find((post) => {
           return post.id === postId;
         });
+      };
+    },
+    comments(state) {
+      return (postId) => {
+        return state.posts
+          .find((post) => {
+            return post.id === postId;
+          })
+          .comments.sort((commentA, commentB) => {
+            return commentA.date > commentB.date;
+          });
+      };
+    },
+    comment(state) {
+      return (postId, commentId) => {
+        return state.posts
+          .find((post) => {
+            return post.id === postId;
+          })
+          .comments.find((comment) => {
+            return comment.id === commentId;
+          });
+      };
+    },
+    replies(state) {
+      return (postId, commentId) => {
+        return state.posts
+          .find((post) => {
+            return post.id === postId;
+          })
+          .comments.find((comment) => {
+            return comment.id === commentId;
+          })
+          .replies.sort((commentA, commentB) => {
+            return commentA.date > commentB.date;
+          });
+      };
+    },
+    reply(state) {
+      return (postId, commentId, replyId) => {
+        return state.posts
+          .find((post) => {
+            return post.id === postId;
+          })
+          .comments.find((comment) => {
+            return comment.id === commentId;
+          })
+          .replies.find((reply) => {
+            return reply.id === replyId;
+          });
       };
     },
     user(state) {

@@ -9,6 +9,9 @@ import AlertCmp from "./views/Shared/Alert.vue";
 import EditPost from "./views/Post/Edit/EditPost.vue";
 import DateFilter from "./views/filters/date.js";
 import CommentInput from "./views/Shared/Comments/CommentInput.vue";
+import CommentSection from "./views/Shared/Comments/CommentSection.vue";
+import Comment from "./views/Shared/Comments/Comment.vue";
+import Reply from "./views/Shared/Comments/Reply.vue";
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
@@ -16,6 +19,9 @@ Vue.filter("date", DateFilter);
 Vue.component("authError-alert", AlertCmp);
 Vue.component("edit-post-dialog", EditPost);
 Vue.component("comment-input", CommentInput);
+Vue.component("comment-section", CommentSection);
+Vue.component("comment", Comment);
+Vue.component("reply", Reply);
 
 new Vue({
   vuetify,
