@@ -6,7 +6,9 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    posts: [{ comments: [{ replies: [] }] }],
+    comments: [],
+    replies: [],
+    posts: [],
     user: null,
     loading: false,
     authError: null,
@@ -17,21 +19,10 @@ export const store = new Vuex.Store({
       state.posts.push(payload);
     },
     createComment(state, payload) {
-      state.posts
-        .find((post) => {
-          return payload.postId === post.postId;
-        })
-        .commets.push(payload);
+      state.comments.push(payload);
     },
-    createReply(state, payload) {
-      state.posts
-        .find((post) => {
-          return payload.postId === post.postId;
-        })
-        .find((comment) => {
-          return payload.commentId === comment.commentId;
-        })
-        .replies.push(payload);
+    createReplies(state, payload) {
+      state.posts.push(payload);
     },
     updatePost(state, payload) {
       const post = state.posts.find((post) => {
@@ -43,10 +34,6 @@ export const store = new Vuex.Store({
       }
       if (payload.context) {
         post.context = payload.context;
-      }
-      if (payload.comments) {
-        //Appends 1 comment
-        post.comments.push(payload.comments);
       }
     },
     setUser(state, payload) {
@@ -76,11 +63,6 @@ export const store = new Vuex.Store({
       if (payload.context) {
         updateObj.context = payload.context;
       }
-      if (payload.comments) {
-        updateObj.comments = firebase.firestore.FieldValue.arrayUnion(
-          payload.comments
-        );
-      }
 
       firebase
         .database()
@@ -105,7 +87,6 @@ export const store = new Vuex.Store({
         image: payload.image,
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
-        comments: [],
       };
       let key;
       let imageURL;
@@ -179,7 +160,6 @@ export const store = new Vuex.Store({
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
         postId: payload.postId,
-        replies: [],
       };
       let key;
       firebase
@@ -187,9 +167,7 @@ export const store = new Vuex.Store({
         .currentUser.getIdToken(true)
         .then((idToken) => {
           fetch(
-            "https://feedback-project-20f04.firebaseio.com/posts/" +
-              payload.postId +
-              "/comments.json ? auth = " +
+            "https://feedback-project-20f04.firebaseio.com/comments.json?auth=" +
               idToken,
             {
               method: "POST",
@@ -208,7 +186,7 @@ export const store = new Vuex.Store({
             .then((data) => {
               key = data.name;
               comment.id = key;
-              commit("createComment", payload);
+              commit("createComment", comment);
               commit("setLoading", false);
             })
             .catch((error) => {
@@ -229,7 +207,6 @@ export const store = new Vuex.Store({
         creatorId: getters.user.id,
         postId: payload.postId,
         commentId: payload.commentId,
-        replies: [],
       };
       let key;
       firebase
@@ -237,11 +214,7 @@ export const store = new Vuex.Store({
         .currentUser.getIdToken(true)
         .then((idToken) => {
           fetch(
-            "https://feedback-project-20f04.firebaseio.com/posts/" +
-              payload.postId +
-              "/comments/" +
-              payload.commentId +
-              "/replies.json ? auth = " +
+            "https://feedback-project-20f04.firebaseio.com/replies.json?auth=" +
               idToken,
             {
               method: "POST",
@@ -260,7 +233,7 @@ export const store = new Vuex.Store({
             .then((data) => {
               key = data.name;
               reply.id = key;
-              commit("createReply", payload);
+              commit("createReply", reply);
               commit("setLoading", false);
             })
             .catch((error) => {
@@ -337,52 +310,38 @@ export const store = new Vuex.Store({
     },
     comments(state) {
       return (postId) => {
-        return state.posts
-          .find((post) => {
-            return post.id === postId;
+        return state.comments
+          .filter((comment) => {
+            return comment.postId === postId;
           })
-          .comments.sort((commentA, commentB) => {
-            return commentA.date > commentB.date;
+          .sort((replyA, commentB) => {
+            return replyA.date > commentB.date;
           });
       };
     },
     comment(state) {
-      return (postId, commentId) => {
-        return state.posts
-          .find((post) => {
-            return post.id === postId;
-          })
-          .comments.find((comment) => {
-            return comment.id === commentId;
-          });
+      return (commentId) => {
+        return state.comments.find((comment) => {
+          return comment.id === commentId;
+        });
       };
     },
     replies(state) {
-      return (postId, commentId) => {
-        return state.posts
-          .find((post) => {
-            return post.id === postId;
+      return (commentId) => {
+        return state.replies
+          .filter((reply) => {
+            return reply.commentId === commentId;
           })
-          .comments.find((comment) => {
-            return comment.id === commentId;
-          })
-          .replies.sort((commentA, commentB) => {
-            return commentA.date > commentB.date;
+          .sort((replyA, replyB) => {
+            return replyA.date > replyB.date;
           });
       };
     },
     reply(state) {
-      return (postId, commentId, replyId) => {
-        return state.posts
-          .find((post) => {
-            return post.id === postId;
-          })
-          .comments.find((comment) => {
-            return comment.id === commentId;
-          })
-          .replies.find((reply) => {
-            return reply.id === replyId;
-          });
+      return (replyId) => {
+        return state.replies.find((reply) => {
+          return reply.id === replyId;
+        });
       };
     },
     user(state) {

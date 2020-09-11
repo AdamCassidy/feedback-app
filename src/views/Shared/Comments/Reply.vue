@@ -1,5 +1,5 @@
 <template>
-<div v-if="reply">
+<div v-if="reply && !loading">
     <div>{{ reply.comment }}</div>
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
     <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false"></comment-input>
@@ -9,11 +9,24 @@
 <script>
 export default {
     props: {
-        comment: {
-            type: Object,
+        id: {
+            type: String,
+            required: true,
         },
-        reply: {
-            type: Object,
+        commentId: {
+            type: String,
+            required: true,
+        },
+    },
+    computed: {
+        loading() {
+            return this.$store.getters.loading;
+        },
+        comment() {
+            return this.$store.getters.comment(this.commentId);
+        },
+        reply() {
+            return this.$store.getters.reply(this.id);
         },
     },
     data() {
@@ -23,7 +36,7 @@ export default {
     },
     methods: {
         onSend(replyObj) {
-            replyObj.commentId = this.comment.id;
+            replyObj.commentId = this.commentId;
             this.$emit("send", replyObj);
         },
     },

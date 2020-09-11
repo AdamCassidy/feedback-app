@@ -1,36 +1,41 @@
 <template>
-<div v-if="post">
+  <div v-if="post && !loading">
     <comment-input @send="(commentObj) => onSend(commentObj)" :post="post"></comment-input>
     <div v-if="comments">
-        <comment v-for="comment in comments" :key="comment.id" v-bind:comment="comment" @send="(replyObj) => onReplySend(replyObj)"></comment>
+      <comment
+        v-for="comment in comments"
+        :key="comment.id"
+        :id="comment.id"
+        @send="(replyObj) => onReplySend(replyObj)"
+      ></comment>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        post: {
-            type: Object,
-        },
+  props: {
+    post: {
+      type: Object,
+      required: true,
     },
-    computed: {
-        comments: function () {
-            if (this.post) {
-                return this.$store.getters.comments(this.post.id);
-            }
-            return [];
-        },
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
     },
-    methods: {
-        onSend(commentObj) {
-            console.log(commentObj);
-            this.$store.dispatch("createComment", commentObj);
-        },
-        onReplySend(replyObj) {
-            replyObj.postId = this.post.id;
-            this.$store.dispatch("createReply", replyObj);
-        },
+    comments() {
+      return this.$store.getters.comments(this.post.id);
     },
+  },
+  methods: {
+    onSend(commentObj) {
+      this.$store.dispatch("createComment", commentObj);
+    },
+    onReplySend(replyObj) {
+      replyObj.postId = this.post.id;
+      this.$store.dispatch("createReply", replyObj);
+    },
+  },
 };
 </script>
