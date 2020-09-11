@@ -28,9 +28,6 @@
 export default {
     computed: {
         posts() {
-            /*if (this.$store.getters.user) {
-                                                                                                                                                                                          this.$store.dispatch("getPosts");
-                                                                                                                                                                                          }*/
             return this.$store.getters.posts;
         },
     },
