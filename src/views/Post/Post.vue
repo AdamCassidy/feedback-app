@@ -19,8 +19,8 @@
                     </v-col>
                 </v-row>
                 <v-img :src="post.imageURL"></v-img>
+                <comment-section :post="post"></comment-section>
             </v-card>
-            <comment-section :post="post"></comment-section>
         </v-col>
     </v-row>
 </v-container>

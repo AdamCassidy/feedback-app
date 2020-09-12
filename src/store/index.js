@@ -21,8 +21,8 @@ export const store = new Vuex.Store({
     createComment(state, payload) {
       state.comments.push(payload);
     },
-    createReplies(state, payload) {
-      state.posts.push(payload);
+    createReply(state, payload) {
+      state.replies.push(payload);
     },
     updatePost(state, payload) {
       const post = state.posts.find((post) => {
@@ -202,7 +202,7 @@ export const store = new Vuex.Store({
       commit("setLoading", true);
       const reply = {
         // Add the new single reply to be posted
-        reply: payload.reply,
+        reply: payload.comment,
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
         postId: payload.postId,

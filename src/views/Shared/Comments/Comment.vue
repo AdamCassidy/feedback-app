@@ -4,9 +4,9 @@
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
     <v-btn v-if="!loadReplies" @click="loadReplies = true">Load Replies</v-btn>
     <v-btn v-if="loadReplies" @click="loadReplies = false">Close Replies</v-btn>
-    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false"></comment-input>
-    <div v-if="loadReplies" class="ml-2">
-        <reply v-for="reply in replies" :key="reply.id" :id="reply.id" :commentId="this.id"></reply>
+    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :post="post"></comment-input>
+    <div v-if="loadReplies" class="ml-4">
+        <reply v-for="reply in replies" :key="reply.id" :id="reply.id" :post="post" :commentId="id"></reply>
     </div>
 </div>
 </template>
@@ -14,6 +14,10 @@
 <script>
 export default {
     props: {
+        post: {
+            type: Object,
+            required: true,
+        },
         id: {
             type: String,
             required: true,

@@ -1,11 +1,13 @@
 <template>
   <div v-if="post && !loading">
     <comment-input @send="(commentObj) => onSend(commentObj)" :post="post"></comment-input>
+    <v-divider class="my-4"></v-divider>
     <div v-if="comments">
       <comment
         v-for="comment in comments"
         :key="comment.id"
         :id="comment.id"
+        :post="post"
         @send="(replyObj) => onReplySend(replyObj)"
       ></comment>
     </div>

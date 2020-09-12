@@ -1,14 +1,18 @@
 <template>
-<div v-if="reply && !loading">
-    <div>{{ reply.comment }}</div>
+<div v-if="reply && !loading" class="ml-4">
+    <p>{{ reply.reply }}</p>
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
-    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false"></comment-input>
+    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :post="post"></comment-input>
 </div>
 </template>
 
 <script>
 export default {
     props: {
+        post: {
+            type: Object,
+            required: true,
+        },
         id: {
             type: String,
             required: true,
