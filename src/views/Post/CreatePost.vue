@@ -17,6 +17,19 @@
                                     <v-col>
                                         <v-text-field v-model="title" label="Title" single-line required></v-text-field>
                                         <v-textarea v-model="context" label="Context" auto-grow></v-textarea>
+                                        <div class="text-center">
+                                            <v-menu offset-y>
+                                                <template v-slot:activator="{ on, attrs }">
+                                                    <v-btn v-bind="attrs" v-on="on">Category</v-btn>
+                                                </template>
+                                                <v-list>
+                                                    <v-list-item v-for="item in drawerItems" :key="item.key" @click="onCategoryPick(item.title)">
+                                                        <v-list-item-title>{{ item.title}}</v-list-item-title>
+                                                    </v-list-item>
+                                                </v-list>
+                                            </v-menu>
+                                        </div>
+                                        <h5 v-if="categoryPicked">{{ category }}</h5>
                                         <v-file-input v-model="image" label="Upload Image" outlined prepend-icon="image" accept="image/*" @change="onFilePicked"></v-file-input>
                                         <v-img :src="imageURL" aspect-ratio="1"></v-img>
                                         <v-btn type="submit" :loading="loading" :disabled="!validForm || loading">
@@ -48,12 +61,40 @@ export default {
             context: "",
             image: null,
             imageURL: "",
+            category: "",
+            drawerItems: [{
+                    icon: "house",
+                    title: "Home Projects",
+                },
+                {
+                    icon: "sports_basketball",
+                    title: "Sports",
+                },
+                {
+                    icon: "restaurant",
+                    title: "Cooking",
+                },
+                {
+                    icon: "content_cut",
+                    title: "Style",
+                },
+                {
+                    icon: "drive_eta",
+                    title: "Automotive",
+                },
+            ],
+            categoryPicked: false,
         };
     },
 
     computed: {
         validForm() {
-            return this.title != "" && this.context != "" && this.image != null;
+            return (
+                this.title != "" &&
+                this.context != "" &&
+                this.image != null &&
+                this.categoryPicked
+            );
         },
         loading() {
             return this.$store.getters.loading;
@@ -73,6 +114,7 @@ export default {
                 context: this.context,
                 image: this.image,
                 date: new Date(),
+                category: this.category,
             };
 
             this.$store.dispatch("createPost", postData);
@@ -86,6 +128,10 @@ export default {
                 this.imageURL = fileReader.result;
             });
             fileReader.readAsDataURL(this.image);
+        },
+        onCategoryPicked(itemTitle) {
+            this.categoryPicked = true;
+            this.category = itemTitle;
         },
     },
 };

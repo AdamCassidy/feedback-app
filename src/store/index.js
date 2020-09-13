@@ -87,6 +87,7 @@ export const store = new Vuex.Store({
         image: payload.image,
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
+        category: payload.category,
       };
       let key;
       let imageURL;
@@ -296,6 +297,17 @@ export const store = new Vuex.Store({
     },
   },
   getters: {
+    categorizedPosts(state) {
+      return (category) => {
+        return state.posts
+          .filter((post) => {
+            return post.category === category;
+          })
+          .sort((postA, postB) => {
+            return postA.date > postB.date;
+          });
+      };
+    },
     posts(state) {
       return state.posts.sort((postA, postB) => {
         return postA.date > postB.date;
