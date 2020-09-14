@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Post/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -40,12 +40,6 @@ const routes = [
     name: "Cooking",
     component: () => import("../views/Cooking.vue"),
   },
-
-  {
-    path: "/posts",
-    name: "Posts",
-    component: () => import("../views/Post/Posts.vue"),
-  },
   {
     path: "/signup",
     name: "Sign-up",
@@ -62,12 +56,12 @@ const routes = [
     component: () => import("../views/Automotive.vue"),
   },
   {
-    path: "/post/new",
+    path: "/new",
     name: "createPost",
     component: () => import("../views/Post/CreatePost.vue"),
   },
   {
-    path: "/post/:id",
+    path: "/:id",
     name: "post",
     props: true,
     component: () => import("../views/Post/Post.vue"),

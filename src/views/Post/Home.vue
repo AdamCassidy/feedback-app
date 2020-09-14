@@ -1,5 +1,8 @@
 <template>
 <v-container>
+    <v-container>
+        <h1>Second Opinion</h1>
+    </v-container>
     <v-row>
         <v-col v-for="post in posts" :key="post.id" cols="10">
             <v-card>
