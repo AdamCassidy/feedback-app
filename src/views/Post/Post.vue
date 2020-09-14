@@ -1,6 +1,7 @@
 <template>
 <v-container>
     <v-row v-if="!loading && post">
+        <edit-post-dialog :post="post"></edit-post-dialog>
         <v-col>
             <v-card>
                 <v-row>

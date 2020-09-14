@@ -18,12 +18,15 @@
                                         <v-text-field v-model="title" label="Title" single-line required></v-text-field>
                                         <v-textarea v-model="context" label="Context" auto-grow></v-textarea>
                                         <div class="text-center">
-                                            <v-menu offset-y>
-                                                <template v-slot:activator="{ on, attrs }">
-                                                    <v-btn v-bind="attrs" v-on="on">Category</v-btn>
+                                            <v-menu open-on-hover>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn v-on="on">Category</v-btn>
                                                 </template>
                                                 <v-list>
-                                                    <v-list-item v-for="item in drawerItems" :key="item.key" @click="onCategoryPick(item.title)">
+                                                    <v-list-item v-for="item in categories" :key="item.key" @click="onCategoryPick(item.title)">
+                                                        <v-list-item-icon>
+                                                            <v-icon v-text="item.icon"></v-icon>
+                                                        </v-list-item-icon>
                                                         <v-list-item-title>{{ item.title}}</v-list-item-title>
                                                     </v-list-item>
                                                 </v-list>
@@ -62,7 +65,7 @@ export default {
             image: null,
             imageURL: "",
             category: "",
-            drawerItems: [{
+            categories: [{
                     icon: "house",
                     title: "Home Projects",
                 },
@@ -73,10 +76,6 @@ export default {
                 {
                     icon: "restaurant",
                     title: "Cooking",
-                },
-                {
-                    icon: "content_cut",
-                    title: "Style",
                 },
                 {
                     icon: "drive_eta",
@@ -90,10 +89,8 @@ export default {
     computed: {
         validForm() {
             return (
-                this.title != "" &&
-                this.context != "" &&
-                this.image != null &&
-                this.categoryPicked
+                this.title != "" && this.context != "" && this.image != null //&&
+                //this.categoryPicked
             );
         },
         loading() {
@@ -114,7 +111,7 @@ export default {
                 context: this.context,
                 image: this.image,
                 date: new Date(),
-                category: this.category,
+                category: "placeholder",
             };
 
             this.$store.dispatch("createPost", postData);

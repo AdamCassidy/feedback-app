@@ -33,6 +33,6 @@ export default {
         posts() {
             return this.$store.getters.categorizedPosts("Automotive");
         },
-    }
-}
+    },
+};
 </script>

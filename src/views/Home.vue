@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1>Second Opinion</h1>
+  <div class="my-4">
+    <h1 class="my-4">Second Opinion</h1>
   </div>
 </template>
 
@@ -16,3 +16,6 @@ export default {
   },
 };
 </script>
+
+<style lang="">
+</style>

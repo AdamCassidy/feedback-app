@@ -57,11 +57,6 @@ const routes = [
     component: () => import("../views/User/Sign-in.vue"),
   },
   {
-    path: "/style",
-    name: "Style",
-    component: () => import("../views/Style.vue"),
-  },
-  {
     path: "/automotive",
     name: "Automotive",
     component: () => import("../views/Automotive.vue"),

@@ -1,12 +1,12 @@
 <template>
 <div class="text-center">
-    <v-dialog v-model="dialog">
-        <template v-slot:activator="{ on, attrs }">
-            <v-btn fab v-bind="attrs" v-on="on" @click="isActive = true">
+    <v-dialog width="350px">
+        <template v-slot:activator="{ on }">
+            <v-btn fab v-on="on">
                 <v-icon>edit</v-icon>
             </v-btn>
         </template>
-        <v-card fullscreen="true">
+        <v-card>
             <v-card-title>Edit Post</v-card-title>
             <v-divider></v-divider>
             <v-card-text>
@@ -15,7 +15,7 @@
                 <v-text-field v-model="editedContext"></v-text-field>
             </v-card-text>
             <v-card-actions>
-                <v-btn @click="dialog = false">Cancel</v-btn>
+                <v-btn>Cancel</v-btn>
                 <v-btn type="save" @click="onSave">Save</v-btn>
             </v-card-actions>
         </v-card>
