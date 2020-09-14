@@ -1,6 +1,8 @@
 <template>
   <div class="signUp">
-    <h1>Sign up</h1>
+    <v-container>
+      <h1>Sign up</h1>
+    </v-container>
     <v-container>
       <v-row v-if="authError">
         <v-flex>

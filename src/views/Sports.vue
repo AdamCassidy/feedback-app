@@ -1,6 +1,10 @@
 <template>
   <div class="sports">
-    <h1>Sports</h1>
+    <v-container>
+      <v-container>
+        <h1>Sports</h1>
+      </v-container>
+    </v-container>
     <v-container>
       <v-row>
         <v-col v-for="post in posts" :key="post.id" cols="10">

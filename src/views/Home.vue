@@ -1,6 +1,10 @@
 <template>
-  <div class="my-4">
-    <h1 class="my-4">Second Opinion</h1>
+  <div>
+    <v-container>
+      <v-container>
+        <h1>Second Opinion</h1>
+      </v-container>
+    </v-container>
   </div>
 </template>
 

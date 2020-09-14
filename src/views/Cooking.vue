@@ -1,6 +1,8 @@
 <template>
   <div class="cooking">
-    <h1>Cooking</h1>
+    <v-container>
+      <h1>Cooking</h1>
+    </v-container>
     <v-container>
       <v-row>
         <v-col v-for="post in posts" :key="post.id" cols="10">
