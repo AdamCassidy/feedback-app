@@ -92,11 +92,11 @@ export const store = new Vuex.Store({
       let key;
       let imageURL;
 
-      firebase
+      return firebase
         .auth()
         .currentUser.getIdToken(true)
         .then((idToken) => {
-          fetch(
+          return fetch(
             "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
               idToken,
             {
@@ -141,12 +141,14 @@ export const store = new Vuex.Store({
                 id: key,
               });
               commit("setLoading", false);
+              return key;
             })
             .catch((error) => {
               commit("setLoading", false);
               console.log(error);
             });
         })
+
         .catch((error) => {
           console.log(error);
           commit("setLoading", false);

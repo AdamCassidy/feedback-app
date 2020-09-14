@@ -1,9 +1,7 @@
 <template>
   <div class="sports">
     <v-container>
-      <v-container>
-        <h1>Sports</h1>
-      </v-container>
+      <h1>Sports</h1>
     </v-container>
     <v-container>
       <v-row>
@@ -18,7 +16,7 @@
                 <v-card-subtitle class=".justify-start">{{ post.date | date }}</v-card-subtitle>
                 <v-spacer></v-spacer>
                 <v-card-actions>
-                  <v-btn :to="'./post/' + post.id">
+                  <v-btn :to="'.//' + post.id">
                     <v-icon left>arrow_forward</v-icon>View
                   </v-btn>
                 </v-card-actions>

@@ -128,7 +128,10 @@ export default {
         category: "placeholder",
       };
 
-      this.$store.dispatch("createPost", postData);
+      this.$store.dispatch("createPost", postData).then((postId) => {
+        this.$router.push("/" + postId);
+        return;
+      });
     },
     onDismissed() {
       this.$store.dispatch("clearAuthError");

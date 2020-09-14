@@ -17,6 +17,11 @@
         </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" temporary absolute>
+        <v-container>
+            <h1>
+                <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
+            </h1>
+        </v-container>
         <v-list flat>
             <v-list-item-group>
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
@@ -72,23 +77,12 @@ export default {
         },
         toolbarItems() {
             let toolbarItems = [{
-                    icon: "dynamic_feed",
-                    title: "Posts",
-                    link: "/posts",
-                },
-                {
-                    icon: "post_add",
-                    title: "Create Post",
-                    link: "/post/new",
-                },
-            ];
+                icon: "post_add",
+                title: "Create Post",
+                link: "/new",
+            }, ];
             if (!this.userIsAuthenticated) {
                 toolbarItems = [{
-                        icon: "dynamic_feed",
-                        title: "Posts",
-                        link: "/posts",
-                    },
-                    {
                         icon: "person_add",
                         title: "Sign up",
                         link: "/signup",
