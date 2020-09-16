@@ -2,7 +2,7 @@
 <div id="app">
     <v-toolbar>
         <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
-        <v-toolbar-title>
+        <v-toolbar-title class="hidden-xs-and-down">
             <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
@@ -18,12 +18,19 @@
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" temporary absolute>
         <v-container>
-            <h1>
-                <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
-            </h1>
+            <h1>Second Opinion</h1>
         </v-container>
         <v-list flat>
             <v-list-item-group>
+                <v-list-item to="/">
+                    <v-list-item-content>
+                        <v-list-item-icon>
+                            <v-icon>dynamic_feed</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>All Posts</v-list-item-title>
+                        <v-divider></v-divider>
+                    </v-list-item-content>
+                </v-list-item>
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
                     <v-list-item-content>
                         <v-list-item-icon>
