@@ -18,7 +18,13 @@
     </v-toolbar>
     <v-navigation-drawer v-model="openDrawer" temporary absolute>
         <v-container>
+<<<<<<< HEAD
             <h1>Second Opinion</h1>
+=======
+            <h1>
+                <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
+            </h1>
+>>>>>>> a6bb546705bf493e2dd2e24e2bb88a7b13fc5e72
         </v-container>
         <v-list flat>
             <v-list-item-group>
