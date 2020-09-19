@@ -1,5 +1,5 @@
 <template>
-  <div class="homeProjects">
+  <v-app>
     <v-container>
       <h1>Home Projects</h1>
     </v-container>
@@ -26,7 +26,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>

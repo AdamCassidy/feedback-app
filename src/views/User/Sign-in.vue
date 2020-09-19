@@ -1,5 +1,5 @@
 <template>
-  <div class="signIn">
+  <v-app>
     <v-container>
       <h1>Sign in</h1>
     </v-container>
@@ -37,7 +37,7 @@
         </v-flex>
       </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>

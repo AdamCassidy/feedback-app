@@ -1,48 +1,53 @@
 <template>
-<div v-if="reply && !loading" class="ml-4">
+  <v-app v-if="reply && !loading" class="ml-4">
     <p>{{ reply.reply }}</p>
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
-    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :post="post"></comment-input>
-</div>
+    <comment-input
+      v-if="replying"
+      @send="(replyObj) => onSend(replyObj)"
+      @cancel="replying = false"
+      :post="post"
+    ></comment-input>
+  </v-app>
 </template>
 
 <script>
 export default {
-    props: {
-        post: {
-            type: Object,
-            required: true,
-        },
-        id: {
-            type: String,
-            required: true,
-        },
-        commentId: {
-            type: String,
-            required: true,
-        },
+  props: {
+    post: {
+      type: Object,
+      required: true,
     },
-    computed: {
-        loading() {
-            return this.$store.getters.loading;
-        },
-        comment() {
-            return this.$store.getters.comment(this.commentId);
-        },
-        reply() {
-            return this.$store.getters.reply(this.id);
-        },
+    id: {
+      type: String,
+      required: true,
     },
-    data() {
-        return {
-            replying: false,
-        };
+    commentId: {
+      type: String,
+      required: true,
     },
-    methods: {
-        onSend(replyObj) {
-            replyObj.commentId = this.commentId;
-            this.$emit("send", replyObj);
-        },
+  },
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
     },
+    comment() {
+      return this.$store.getters.comment(this.commentId);
+    },
+    reply() {
+      return this.$store.getters.reply(this.id);
+    },
+  },
+  data() {
+    return {
+      replying: false,
+    };
+  },
+  methods: {
+    onSend(replyObj) {
+      replyObj.commentId = this.commentId;
+      this.$emit("send", replyObj);
+    },
+  },
 };
 </script>

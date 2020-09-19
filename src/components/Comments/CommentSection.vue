@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post && !loading">
+  <v-app v-if="post && !loading">
     <comment-input @send="(commentObj) => onSend(commentObj)" :post="post"></comment-input>
     <v-divider class="my-4"></v-divider>
     <div v-if="comments">
@@ -11,7 +11,7 @@
         @send="(replyObj) => onReplySend(replyObj)"
       ></comment>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>

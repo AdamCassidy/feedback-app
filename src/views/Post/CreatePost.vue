@@ -1,5 +1,5 @@
 <template>
-  <div class="createPost">
+  <v-app>
     <v-container>
       <h1>Create Post</h1>
     </v-container>
@@ -47,7 +47,7 @@
                         accept="image/*"
                         @change="onFilePicked"
                       ></v-file-input>
-                      <v-img :src="imageURL" aspect-ratio="1"></v-img>
+                      <v-img :src="imageURL"></v-img>
                       <v-btn type="submit" :loading="loading" :disabled="!validForm || loading">
                         Create Post
                         <template v-slot:loader>
@@ -66,7 +66,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </v-app>
 </template>
 
 <script>

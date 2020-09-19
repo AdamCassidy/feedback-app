@@ -1,9 +1,9 @@
 <template>
-<v-container>
+<v-app>
     <v-container>
-        <h1>Second Opinion</h1>
+        <h1 style="font-size: 37px">Second Opinion</h1>
     </v-container>
-    <v-row>
+    <v-row justify="center">
         <v-col v-for="post in posts" :key="post.id" cols="10">
             <v-card>
                 <v-row>
@@ -11,11 +11,10 @@
                         <v-img :src="post.imageURL"></v-img>
                     </v-col>
                     <v-col xs="6" sm="7" md="8">
-                        <v-card-title v-text="post.title"></v-card-title>
-                        <v-card-subtitle class=".justify-start">{{ post.date | date }}</v-card-subtitle>
-                        <v-spacer></v-spacer>
+                        <v-card-title class="bold" style="font-size: 2.3rem" justify="start">{{post.title}}</v-card-title>
+                        <v-card-title justify="start">{{post.date | date}}</v-card-title>
                         <v-card-actions>
-                            <v-btn :to="'./post/' + post.id">
+                            <v-btn :to="'./' + post.id">
                                 <v-icon left>arrow_forward</v-icon>View
                             </v-btn>
                         </v-card-actions>
@@ -24,7 +23,7 @@
             </v-card>
         </v-col>
     </v-row>
-</v-container>
+</v-app>
 </template>
 
 <script>
