@@ -16,7 +16,7 @@
             </v-btn>
         </v-toolbar-items>
     </v-app-bar>
-    <v-navigation-drawer v-model="openDrawer" temporary absolute app>
+    <v-navigation-drawer v-model="openDrawer" temporary app>
         <h1>
             <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
         </h1>
