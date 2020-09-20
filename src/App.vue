@@ -2,7 +2,7 @@
 <v-app id="app">
     <v-app-bar app>
         <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
-        <v-toolbar-title class="hidden-xs-and-down">
+        <v-toolbar-title class="hidden-sm-and-down">
             <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>

@@ -5,16 +5,17 @@
             <v-card>
                 <v-row>
                     <v-col>
-                        <v-card-title style="font-size: 23rem, max-height: 20px">
-                            {{post.title}}
-                            <template>
+                        <v-card-title>
+                            <h1>{{post.title}}</h1>
+                            <template v-if="userIsCreator">
                                 <v-spacer></v-spacer>
                                 <edit-post-dialog :post="post"></edit-post-dialog>
                             </template>
                         </v-card-title>
-                        <v-card-subtitle>{{ post.date | date }}</v-card-subtitle>
-                        <v-card-text v-text="post.context"></v-card-text>
-                        <v-img class="mx-auto" width="400px" :src="post.imageURL"></v-img>
+
+                        <v-card-text class="text-start" style="font-size: 1.3rem">{{post.date | date}}</v-card-text>
+                        <v-card-text class="text-start" style="font-size: 1.3rem">{{post.context}}</v-card-text>
+                        <v-img style="margin: 25px;" :src="post.imageURL"></v-img>
                         <comment-section :post="post"></comment-section>
                     </v-col>
                 </v-row>
@@ -50,3 +51,9 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+.hidden {
+    visibility: hidden;
+}
+</style>

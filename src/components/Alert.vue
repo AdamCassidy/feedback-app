@@ -1,7 +1,5 @@
 <template>
-  <v-container>
-    <v-alert prominent type="error" dismissible @input="onClose" :value="true">{{ text }}</v-alert>
-  </v-container>
+  <v-alert prominent type="error" dismissible @input="onClose" :value="true">{{ text }}</v-alert>
 </template>
 
 <script>
