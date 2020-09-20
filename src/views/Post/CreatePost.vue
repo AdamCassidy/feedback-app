@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-container>
     <v-container>
       <h1>Create Post</h1>
     </v-container>
@@ -66,7 +66,7 @@
         </v-col>
       </v-row>
     </v-container>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

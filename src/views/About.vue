@@ -1,7 +1,7 @@
 <template>
-  <v-app>
+  <v-container>
     <v-container>
       <h1>This is an about page</h1>
     </v-container>
-  </v-app>
+  </v-container>
 </template>

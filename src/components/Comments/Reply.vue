@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="reply && !loading" class="ml-4">
+  <v-container v-if="reply && !loading" class="ml-4">
     <p>{{ reply.reply }}</p>
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
     <comment-input
@@ -8,7 +8,7 @@
       @cancel="replying = false"
       :post="post"
     ></comment-input>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

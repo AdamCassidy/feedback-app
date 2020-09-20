@@ -1,5 +1,5 @@
 <template>
-  <v-app v-if="comment && !loading">
+  <v-container v-if="comment && !loading">
     <p>{{comment.comment}}</p>
     <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
     <v-btn v-if="!loadReplies" @click="loadReplies = true">Load Replies</v-btn>
@@ -13,7 +13,7 @@
     <div v-if="loadReplies" class="ml-4">
       <reply v-for="reply in replies" :key="reply.id" :id="reply.id" :post="post" :commentId="id"></reply>
     </div>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

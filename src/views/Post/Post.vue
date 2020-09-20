@@ -1,5 +1,5 @@
 <template>
-<v-app>
+<v-container>
     <v-row v-if="!loading && post">
         <v-col>
             <v-card>
@@ -21,7 +21,7 @@
             </v-card>
         </v-col>
     </v-row>
-</v-app>
+</v-container>
 </template>
 
 <script>

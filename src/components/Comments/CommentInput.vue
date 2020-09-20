@@ -1,9 +1,9 @@
 <template>
-  <v-app v-if="post && !loading">
+  <v-container v-if="post && !loading">
     <v-text-field v-model="comment" label="Comment"></v-text-field>
     <v-btn v-if="$listeners['cancel']" @click="$emit('cancel')">Cancel</v-btn>
     <v-btn @click="onSubmit">Submit</v-btn>
-  </v-app>
+  </v-container>
 </template>
 
 <script>

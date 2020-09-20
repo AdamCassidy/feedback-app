@@ -1,8 +1,6 @@
 <template>
-<v-app>
-    <v-container>
-        <h1 style="font-size: 37px">Second Opinion</h1>
-    </v-container>
+<v-container>
+    <h1 style="font-size: 37px">Second Opinion</h1>
     <v-row justify="center">
         <v-col v-for="post in posts" :key="post.id" cols="10">
             <v-card>
@@ -23,7 +21,7 @@
             </v-card>
         </v-col>
     </v-row>
-</v-app>
+</v-container>
 </template>
 
 <script>
