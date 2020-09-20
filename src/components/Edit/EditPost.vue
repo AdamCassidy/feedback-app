@@ -15,7 +15,7 @@
         </v-card-text>
         <v-card-actions>
             <v-btn @click="dialog = false">Cancel</v-btn>
-            <v-btn type="save" @click="onSave">Save</v-btn>
+            <v-btn @click="onSave">Save</v-btn>
         </v-card-actions>
     </v-card>
 </v-dialog>
@@ -37,6 +37,7 @@ export default {
             var editedObj = {
                 title: this.editedTitle.trim(),
                 context: this.editedContext.trim(),
+                id: this.post.id,
             };
             this.$store.dispatch("updatePost", editedObj);
         },
