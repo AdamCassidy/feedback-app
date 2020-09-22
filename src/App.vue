@@ -3,7 +3,7 @@
     <v-app-bar app>
         <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
         <v-toolbar-title class="hidden-sm-and-down">
-            <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
+            <router-link to="/" tag="span" style="cursor: pointer; color: purple">Second Opinion</router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -31,7 +31,7 @@
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
                     <v-list-item-content>
                         <v-list-item-icon>
-                            <v-icon v-text="item.icon" style="color: {item.color}"></v-icon>
+                            <v-icon v-text="item.icon" :style="'color: '+ item.color + ';'"></v-icon>
                             <v-list-item-title>{{ item.title}}</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
@@ -57,7 +57,13 @@ export default {
                     icon: "house",
                     title: "Home Projects",
                     link: "/homeProjects",
-                    color: "beige",
+                    color: "red",
+                },
+                {
+                    icon: "drive_eta",
+                    title: "Automotive",
+                    link: "/automotive",
+                    color: "blue",
                 },
                 {
                     icon: "sports_basketball",
@@ -70,12 +76,6 @@ export default {
                     title: "Cooking",
                     link: "/cooking",
                     color: "silver",
-                },
-                {
-                    icon: "drive_eta",
-                    title: "Automotive",
-                    link: "/automotive",
-                    color: "blue",
                 },
             ],
         };
@@ -123,7 +123,11 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: purple;
+}
+
+.primary {
+    color: purple;
 }
 
 .custom-loader {

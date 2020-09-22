@@ -5,9 +5,9 @@
             <v-card>
                 <v-row>
                     <v-col class="text-start">
-                        <v-card-title>
-                            <h1>{{post.title}}</h1>
-                            <template v-if="userIsCreator">
+                        <v-card-title style="flex-wrap: wrap-reverse;">
+                            <h1 style="color: purple">{{post.title}}</h1>
+                            <template v-if=" userIsCreator">
                                 <v-spacer></v-spacer>
                                 <edit-post-dialog :post="post"></edit-post-dialog>
                             </template>
@@ -15,7 +15,7 @@
 
                         <v-card-text class="text-start" style="font-size: 1.3rem">{{post.date | date}}</v-card-text>
                         <v-card-text class="text-start" style="font-size: 1.3rem">{{post.context}}</v-card-text>
-                        <v-chip v-for="tag in post.tags" :key="tag.key" class="me-4, ms-4" style="font-size: 21px">{{tag}}</v-chip>
+                        <v-chip dark v-for="tag in post.tags" :key="tag.key" color="purple" class="ma-2" style="font-size: 21px">{{tag}}</v-chip>
                         <v-img style="margin: 15px;" :src="post.imageURL"></v-img>
                         <comment-section :post="post"></comment-section>
                     </v-col>
