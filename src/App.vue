@@ -17,26 +17,23 @@
         </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer v-model="openDrawer" temporary app>
-        <h1>
-            <router-link to="/" tag="span" style="cursor: pointer">Second Opinion</router-link>
-        </h1>
+        <h1>Second Opinion</h1>
         <v-list flat>
             <v-list-item-group>
                 <v-list-item to="/">
                     <v-list-item-content>
                         <v-list-item-icon>
                             <v-icon>dynamic_feed</v-icon>
+                            <v-list-item-title>All Posts</v-list-item-title>
                         </v-list-item-icon>
-                        <v-list-item-title>All Posts</v-list-item-title>
-                        <v-divider></v-divider>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
                     <v-list-item-content>
                         <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
+                            <v-icon v-text="item.icon" style="color: {item.color}"></v-icon>
+                            <v-list-item-title>{{ item.title}}</v-list-item-title>
                         </v-list-item-icon>
-                        <v-list-item-title>{{ item.title}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
             </v-list-item-group>
@@ -60,21 +57,25 @@ export default {
                     icon: "house",
                     title: "Home Projects",
                     link: "/homeProjects",
+                    color: "beige",
                 },
                 {
                     icon: "sports_basketball",
                     title: "Sports",
                     link: "/sports",
+                    color: "orange",
                 },
                 {
                     icon: "restaurant",
                     title: "Cooking",
                     link: "/cooking",
+                    color: "silver",
                 },
                 {
                     icon: "drive_eta",
                     title: "Automotive",
                     link: "/automotive",
+                    color: "blue",
                 },
             ],
         };

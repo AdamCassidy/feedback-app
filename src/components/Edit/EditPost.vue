@@ -14,6 +14,9 @@
             <v-text-field v-model="editedContext"></v-text-field>
         </v-card-text>
         <v-card-actions>
+            <div class="text-start">
+                <v-select v-model="tagsPicked" value="post.tags" :items="tags" chips label="Tags" multiple outlined></v-select>
+            </div>
             <v-btn @click="dialog = false">Cancel</v-btn>
             <v-btn @click="onSave">Save</v-btn>
         </v-card-actions>
@@ -26,6 +29,8 @@ export default {
     props: ["post"],
     data() {
         return {
+            tags: ["Home Projects", "Sports", "Cooking", "Automotive"],
+            tagsPicked: this.post.tags,
             dialog: false,
             editedTitle: this.post.title,
             editedContext: this.post.context,
@@ -38,6 +43,7 @@ export default {
                 title: this.editedTitle.trim(),
                 context: this.editedContext.trim(),
                 id: this.post.id,
+                tags: this.tagsPicked,
             };
             this.$store.dispatch("updatePost", editedObj);
         },

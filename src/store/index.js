@@ -35,6 +35,9 @@ export const store = new Vuex.Store({
       if (payload.context) {
         post.context = payload.context;
       }
+      if (payload.tags) {
+        post.tags = payload.tags;
+      }
     },
     setUser(state, payload) {
       state.user = payload;
