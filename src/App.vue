@@ -21,18 +21,18 @@
         <v-list flat>
             <v-list-item-group>
                 <v-list-item to="/">
-                    <v-list-item-content>
+                    <v-list-item-content class="text-start">
                         <v-list-item-icon>
                             <v-icon>dynamic_feed</v-icon>
-                            <v-list-item-title>All Posts</v-list-item-title>
+                            <v-list-item-title class="ms-6">All Posts</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
                 </v-list-item>
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
-                    <v-list-item-content>
+                    <v-list-item-content class="text-start">
                         <v-list-item-icon>
                             <v-icon v-text="item.icon" :style="'color: '+ item.color + ';'"></v-icon>
-                            <v-list-item-title>{{ item.title}}</v-list-item-title>
+                            <v-list-item-title class="ms-6">{{ item.title}}</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
                 </v-list-item>
