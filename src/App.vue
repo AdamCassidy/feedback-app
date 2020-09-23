@@ -17,7 +17,7 @@
         </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer v-model="openDrawer" temporary app>
-        <h1>Second Opinion</h1>
+        <h1 class="ms-2">Second Opinion</h1>
         <v-list flat>
             <v-list-item-group>
                 <v-list-item to="/">
@@ -57,19 +57,19 @@ export default {
                     icon: "house",
                     title: "Home Projects",
                     link: "/homeProjects",
-                    color: "red",
+                    color: "#ff4d4d",
                 },
                 {
                     icon: "drive_eta",
                     title: "Automotive",
                     link: "/automotive",
-                    color: "blue",
+                    color: "#4d4dff",
                 },
                 {
                     icon: "sports_basketball",
                     title: "Sports",
                     link: "/sports",
-                    color: "orange",
+                    color: "#ffad33",
                 },
                 {
                     icon: "restaurant",
