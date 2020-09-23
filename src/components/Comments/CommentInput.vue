@@ -29,8 +29,10 @@ export default {
       const date = new Date();
       const commentObj = {
         date: date,
-        comment: this.$store.getters.user + " " + this.comment,
+        comment: this.comment,
         postId: this.post.id,
+        photoURL: this.$store.getters.user.photoURL,
+        userName: this.$store.getters.user.name,
       };
       this.$emit("send", commentObj);
     },

@@ -1,10 +1,20 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import * as firebase from "firebase";
+import createPersistedState from "vuex-persistedstate";
+import * as Cookies from "js-cookie";
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
+  plugins: [
+    createPersistedState({
+      getState: (key) => Cookies.getJSON(key),
+      setState: (key, state) =>
+        Cookies.set(key, state, { expires: 3, secure: true }),
+    }),
+  ],
+
   state: {
     comments: [],
     replies: [],
@@ -53,6 +63,13 @@ export const store = new Vuex.Store({
     },
     clearUser(state) {
       state.user = null;
+    },
+    deletePost(state, payload) {
+      const index = state.posts.findIndex((post) => {
+        return payload === post.id;
+      });
+
+      state.posts.splice(index, 1);
     },
   },
 
@@ -166,7 +183,13 @@ export const store = new Vuex.Store({
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
         postId: payload.postId,
+        userName: payload.userName,
       };
+
+      if (payload.photoURL != null && payload.photoURL != undefined) {
+        comment.photoURL = payload.photoURL;
+      }
+
       let key;
       firebase
         .auth()
@@ -213,7 +236,12 @@ export const store = new Vuex.Store({
         creatorId: getters.user.id,
         postId: payload.postId,
         commentId: payload.commentId,
+        userName: payload.userName,
       };
+      if (payload.photoURL != null && payload.photoURL != undefined) {
+        reply.photoURL = payload.photoURL;
+      }
+
       let key;
       firebase
         .auth()
@@ -256,22 +284,83 @@ export const store = new Vuex.Store({
       commit("setLoading", true);
       commit("clearAuthError");
 
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((userCredential) => {
-          commit("setLoading", false);
-          const newUser = {
-            id: userCredential.user.uid,
-            posts: [],
-          };
-          commit("setUser", newUser);
-        })
-        .catch((error) => {
-          commit("setLoading", false);
-          commit("setAuthError", error);
-          console.log(error);
-        });
+      let key;
+      let user;
+
+      if (payload.image === null || payload.image === undefined) {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .then((userCredential) => {
+            user = userCredential.user;
+            key = user.uid;
+            user
+              .updateProfile({
+                displayName: payload.name,
+              })
+              .then(() => {
+                const newUser = {
+                  id: user.uid,
+                  name: user.displayName,
+                };
+                commit("setUser", newUser);
+                commit("setLoading", false);
+              })
+              .catch((error) => {
+                commit("setLoading", false);
+                commit("setAuthError", error);
+                console.log(error);
+              });
+          })
+          .catch((error) => {
+            commit("setLoading", false);
+            commit("setAuthError", error);
+            console.log(error);
+          });
+      } else {
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(payload.email, payload.password)
+          .then((userCredential) => {
+            const filename = payload.image.name;
+            const ext = filename.slice(filename.lastIndexOf(".") + 1);
+
+            user = userCredential.user;
+            key = user.uid;
+
+            return firebase
+              .storage()
+              .ref("users/" + key + "." + ext)
+              .put(payload.image);
+          })
+          .then((fileData) => fileData.ref.getDownloadURL())
+          .then((URL) => {
+            user
+              .updateProfile({
+                displayName: payload.name,
+                photoURL: URL,
+              })
+              .then(() => {
+                const newUser = {
+                  id: user.uid,
+                  name: user.displayName,
+                  photoURL: user.photoURL,
+                };
+                commit("setUser", newUser);
+                commit("setLoading", false);
+              })
+              .catch((error) => {
+                commit("setLoading", false);
+                commit("setAuthError", error);
+                console.log(error);
+              });
+          })
+          .catch((error) => {
+            commit("setLoading", false);
+            commit("setAuthError", error);
+            console.log(error);
+          });
+      }
     },
     signIn({ commit }, payload) {
       commit("setLoading", true);
@@ -280,10 +369,11 @@ export const store = new Vuex.Store({
         .signInWithEmailAndPassword(payload.email, payload.password)
         .then((userCredential) => {
           commit("setLoading", false);
-
+          let user = userCredential.user;
           const newUser = {
-            id: userCredential.user.uid,
-            posts: [],
+            id: user.uid,
+            name: user.displayName,
+            photoURL: user.photoURL,
           };
           commit("setUser", newUser);
         })
@@ -299,6 +389,21 @@ export const store = new Vuex.Store({
     signOut({ commit }) {
       firebase.auth().signOut();
       commit("clearUser");
+    },
+    deletePost({ commit }, payload) {
+      firebase
+        .database()
+        .ref("posts")
+        .child(payload)
+        .remove()
+        .then(() => {
+          commit("setLoading", false);
+          commit("deletePost", payload);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
     },
   },
   getters: {
