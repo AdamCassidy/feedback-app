@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container @onLoad="loadPosts">
     <h1 style="font-size: 37px">
       <v-avatar class="mb-2">
         <img src="../logo/logo.png" />
@@ -41,6 +41,11 @@ export default {
   computed: {
     posts() {
       return this.$store.getters.posts;
+    },
+  },
+  methods: {
+    loadPosts() {
+      this.$store.dispatch("loadPosts");
     },
   },
 };

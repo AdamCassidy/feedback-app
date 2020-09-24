@@ -71,6 +71,12 @@ export const store = new Vuex.Store({
 
       state.posts.splice(index, 1);
     },
+    loadPosts(state, payload) {
+      let obj;
+      for (obj in payload) {
+        state.posts.push(obj);
+      }
+    },
   },
 
   actions: {
@@ -399,6 +405,42 @@ export const store = new Vuex.Store({
         .then(() => {
           commit("setLoading", false);
           commit("deletePost", payload);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    loadPosts({ commit }) {
+      commit("setLoading", true);
+
+      return firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then((idToken) => {
+          return fetch(
+            "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+              idToken,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          )
+            .then((res) => {
+              if (!res.ok) {
+                throw new Error("Error: Can't retrieve from database.");
+              }
+              return res.json();
+            })
+            .then((data) => {
+              commit("loadPosts", data);
+            })
+            .catch((error) => {
+              commit("setLoading", false);
+              console.log(error);
+            });
         })
         .catch((error) => {
           console.log(error);
