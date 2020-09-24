@@ -1,6 +1,11 @@
 <template>
 <v-container>
-    <h1 style="font-size: 37px">Second Opinion</h1>
+    <h1 style="font-size: 37px">
+        <v-avatar class="mb-2">
+            <img src="../logo/logo.png" />
+        </v-avatar>nd Opinion
+    </h1>
+
     <v-divider></v-divider>
     <h3>Home Projects</h3>
     <v-divider></v-divider>
@@ -16,7 +21,7 @@
 
                         <v-card-title>{{post.date | date}}</v-card-title>
                         <div class="text-start">
-                            <v-chip v-for="tag in post.tags" :key="tag.key" color="purple" class="ma-2" text-color="white">{{tag}}</v-chip>
+                            <v-chip v-for="tag in post.tags" :key="tag.key" color="#701487" class="ma-2" text-color="white">{{tag}}</v-chip>
                         </div>
                     </v-col>
                 </v-row>

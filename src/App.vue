@@ -3,7 +3,11 @@
     <v-app-bar app>
         <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
         <v-toolbar-title class="hidden-sm-and-down">
-            <router-link to="/" tag="span" style="cursor: pointer; color: purple">Second Opinion</router-link>
+            <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
+                <v-avatar>
+                    <img src="./logo/logo.png" />
+                </v-avatar>
+            </router-link>
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -17,7 +21,11 @@
         </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer v-model="openDrawer" temporary app>
-        <h1 class="ms-2">Second Opinion</h1>
+        <h1 style="font-size:27px">
+            <v-avatar class="mb-2">
+                <img src="./logo/logo.png" />
+            </v-avatar>nd Opinion
+        </h1>
         <v-list flat>
             <v-list-item-group>
                 <v-list-item to="/">
@@ -123,11 +131,11 @@ export default {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: purple;
+    color: #701487;
 }
 
 .primary {
-    color: purple;
+    color: #701487;
 }
 
 .custom-loader {

@@ -1,63 +1,70 @@
 <template>
-<v-container>
+  <v-container>
     <v-row v-if="!loading && post">
-        <v-col>
-            <v-card>
-                <v-row>
-                    <v-col class="text-start">
-                        <v-card-title style="flex-wrap: wrap-reverse;">
-                            <h1 style="color: purple">{{post.title}}</h1>
-                            <template v-if=" userIsCreator">
-                                <v-spacer></v-spacer>
-                                <edit-post-dialog :post="post"></edit-post-dialog>
-                            </template>
-                        </v-card-title>
+      <v-col>
+        <v-card>
+          <v-row>
+            <v-col class="text-start">
+              <v-card-title style="flex-wrap: wrap-reverse;">
+                <h1 style="color: #701487">{{post.title}}</h1>
+                <template v-if=" userIsCreator">
+                  <v-spacer></v-spacer>
+                  <edit-post-dialog :post="post"></edit-post-dialog>
+                </template>
+              </v-card-title>
 
-                        <v-card-text class="text-start" style="font-size: 1.3rem">{{post.date | date}}</v-card-text>
-                        <v-card-text class="text-start" style="font-size: 1.3rem">{{post.context}}</v-card-text>
-                        <div class="ms-2">
-                            <v-chip dark v-for="tag in post.tags" :key="tag.key" color="purple" class="ma-2" style="font-size: 21px">{{tag}}</v-chip>
-                        </div>
+              <v-card-text class="text-start" style="font-size: 1.3rem">{{post.date | date}}</v-card-text>
+              <v-card-text class="text-start" style="font-size: 1.3rem">{{post.context}}</v-card-text>
+              <div class="ms-2">
+                <v-chip
+                  dark
+                  v-for="tag in post.tags"
+                  :key="tag.key"
+                  color="#701487"
+                  class="ma-2"
+                  style="font-size: 21px"
+                >{{tag}}</v-chip>
+              </div>
 
-                        <v-img style="margin: 15px;" :src="post.imageURL"></v-img>
-                        <comment-section :post="post"></comment-section>
-                    </v-col>
-                </v-row>
-            </v-card>
-        </v-col>
+              <v-img style="margin: 15px;" :src="post.imageURL"></v-img>
+              <comment-section :post="post"></comment-section>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
     </v-row>
-</v-container>
+  </v-container>
 </template>
 
 <script>
 export default {
-    props: ["id"],
-    computed: {
-        loading() {
-            return this.$store.getters.loading;
-        },
-        post() {
-            return this.$store.getters.post(this.id);
-        },
-        userIsAuthenticated() {
-            return (
-                this.$store.getters.user !== null &&
-                this.$store.getters.user !== undefined
-            );
-        },
-        userIsCreator() {
-            if (!this.userIsAuthenticated) {
-                return false;
-            }
-
-            return this.$store.getters.user.id === this.post.creatorId;
-        },
+  props: ["id"],
+  computed: {
+    loading() {
+      return this.$store.getters.loading;
     },
+    post() {
+      return this.$store.getters.post(this.id);
+    },
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+    userIsCreator() {
+      if (!this.userIsAuthenticated) {
+        return false;
+      }
+
+      return this.$store.getters.user.id === this.post.creatorId;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 .hidden {
-    visibility: hidden;
+  visibility: hidden;
 }
 </style>
