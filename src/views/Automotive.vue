@@ -55,8 +55,9 @@
 <script>
 export default {
   computed: {
-    posts() {
-      return this.$store.getters.posts;
+    categorizedPosts() {
+      return this.$store.getters.categorizedPosts("Automotive");
+    },
     },
   },
   methods: {
