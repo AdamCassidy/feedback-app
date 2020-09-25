@@ -110,14 +110,17 @@ export const store = new Vuex.Store({
       const post = {
         title: payload.title,
         context: payload.context,
-        image: payload.image,
         date: payload.date.toISOString(),
         creatorId: getters.user.id,
         tags: payload.tags,
       };
+      if (payload.image != null && payload.image != undefined) {
+        post.image = payload.image;
+      }
       let key;
       let imageURL;
 
+      if (post.image != null && post.image != undefined) {
       return firebase
         .auth()
         .currentUser.getIdToken(true)
@@ -161,11 +164,12 @@ export const store = new Vuex.Store({
                 .update({ imageURL: imageURL });
             })
             .then(() => {
+                post.imageURL = imageURL;
               commit("createPost", {
                 ...post,
-                imageURL: imageURL,
                 id: key,
               });
+
               commit("setLoading", false);
               return key;
             })
@@ -179,6 +183,52 @@ export const store = new Vuex.Store({
           console.log(error);
           commit("setLoading", false);
         });
+      } else {
+        return firebase
+          .auth()
+          .currentUser.getIdToken(true)
+          .then((idToken) => {
+            return fetch(
+              "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+                idToken,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+    },
+                body: JSON.stringify(post),
+              }
+            )
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("Error: Can't post to database.");
+                }
+                return res.json();
+              })
+              .then((data) => {
+                key = data.name;
+                return key;
+              })
+              .then((key) => {
+                commit("createPost", {
+                  ...post,
+                  id: key,
+                });
+
+                commit("setLoading", false);
+                return key;
+              })
+              .catch((error) => {
+                commit("setLoading", false);
+                console.log(error);
+              });
+          })
+
+          .catch((error) => {
+            console.log(error);
+            commit("setLoading", false);
+          });
+      }
     },
 
     createComment({ commit, getters }, payload) {

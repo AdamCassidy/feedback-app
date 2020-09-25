@@ -11,11 +11,27 @@
     <v-row justify="center">
       <v-col v-for="post in posts" :key="post.id" cols="12">
         <v-card :to="'./' + post.id" style="cursor: pointer">
-          <v-row>
+          <v-row v-if="post.imageURL != undefined || post.imageURL != null">
             <v-col xs="5" sm="4" md="3">
               <v-img :src="post.imageURL"></v-img>
             </v-col>
             <v-col xs="7" sm="8" md="9">
+              <v-card-title class="bold" style="font-size: 2.3rem; cursor: pointer">{{post.title}}</v-card-title>
+
+              <v-card-title>{{post.date | date}}</v-card-title>
+              <div class="text-start">
+                <v-chip
+                  v-for="tag in post.tags"
+                  :key="tag.key"
+                  color="#701487"
+                  class="ma-2"
+                  text-color="white"
+                >{{tag}}</v-chip>
+              </div>
+            </v-col>
+          </v-row>
+          <v-row v-else>
+            <v-col>
               <v-card-title class="bold" style="font-size: 2.3rem; cursor: pointer">{{post.title}}</v-card-title>
 
               <v-card-title>{{post.date | date}}</v-card-title>
