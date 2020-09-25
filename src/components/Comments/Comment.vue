@@ -10,7 +10,7 @@
       <p class="ma-2">{{comment.date | date}}</p>
       <p class="ma-2">{{comment.comment}}</p>
     </v-row>
-    <v-btn v-if="!replying" @click="replying = true">Reply</v-btn>
+    <v-btn v-if="!replying && user" @click="replying = true">Reply</v-btn>
     <v-btn v-if="!loadReplies" @click="loadReplies = true">Load Replies</v-btn>
     <v-btn v-if="loadReplies" @click="loadReplies = false">Close Replies</v-btn>
     <comment-input
@@ -59,6 +59,9 @@ export default {
     },
     replies() {
       return this.$store.getters.replies(this.id);
+    },
+    user() {
+      return this.$store.getters.user;
     },
   },
   methods: {
