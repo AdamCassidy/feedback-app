@@ -66,10 +66,20 @@ export const store = new Vuex.Store({
     },
     deletePost(state, payload) {
       const index = state.posts.findIndex((post) => {
-        return payload === post.id;
+        return payload.id === post.id;
       });
 
       state.posts.splice(index, 1);
+    },
+    deletePostComments(state, payload) {
+      state.comments = state.comments.filter((comment) => {
+        return comment.postId != payload.id;
+      });
+    },
+    deletePostReplies(state, payload) {
+      state.replies = state.replies.filter((reply) => {
+        return reply.postId != payload.id;
+      });
     },
     loadPosts(state, payload) {
       state.posts = [];
@@ -122,68 +132,68 @@ export const store = new Vuex.Store({
       let imageURL;
 
       if (post.image != null && post.image != undefined) {
-      return firebase
-        .auth()
-        .currentUser.getIdToken(true)
-        .then((idToken) => {
-          return fetch(
-            "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
-              idToken,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(post),
-            }
-          )
-            .then((res) => {
-              if (!res.ok) {
-                throw new Error("Error: Can't post to database.");
+        return firebase
+          .auth()
+          .currentUser.getIdToken(true)
+          .then((idToken) => {
+            return fetch(
+              "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+                idToken,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(post),
               }
-              return res.json();
-            })
-            .then((data) => {
-              key = data.name;
-              return key;
-            })
-            .then((key) => {
-              const filename = payload.image.name;
-              const ext = filename.slice(filename.lastIndexOf(".") + 1);
-              return firebase
-                .storage()
-                .ref("posts/" + key + "." + ext)
-                .put(payload.image);
-            })
-            .then((fileData) => fileData.ref.getDownloadURL())
-            .then((URL) => {
-              imageURL = URL;
-              firebase
-                .database()
-                .ref()
-                .child("posts/" + key)
-                .update({ imageURL: imageURL });
-            })
-            .then(() => {
+            )
+              .then((res) => {
+                if (!res.ok) {
+                  throw new Error("Error: Can't post to database.");
+                }
+                return res.json();
+              })
+              .then((data) => {
+                key = data.name;
+                return key;
+              })
+              .then((key) => {
+                const filename = payload.image.name;
+                const ext = filename.slice(filename.lastIndexOf(".") + 1);
+                return firebase
+                  .storage()
+                  .ref("posts/" + key + "." + ext)
+                  .put(payload.image);
+              })
+              .then((fileData) => fileData.ref.getDownloadURL())
+              .then((URL) => {
+                imageURL = URL;
+                firebase
+                  .database()
+                  .ref()
+                  .child("posts/" + key)
+                  .update({ imageURL: imageURL });
+              })
+              .then(() => {
                 post.imageURL = imageURL;
-              commit("createPost", {
-                ...post,
-                id: key,
+                commit("createPost", {
+                  ...post,
+                  id: key,
+                });
+
+                commit("setLoading", false);
+                return key;
+              })
+              .catch((error) => {
+                commit("setLoading", false);
+                console.log(error);
               });
+          })
 
-              commit("setLoading", false);
-              return key;
-            })
-            .catch((error) => {
-              commit("setLoading", false);
-              console.log(error);
-            });
-        })
-
-        .catch((error) => {
-          console.log(error);
-          commit("setLoading", false);
-        });
+          .catch((error) => {
+            console.log(error);
+            commit("setLoading", false);
+          });
       } else {
         return firebase
           .auth()
@@ -196,7 +206,7 @@ export const store = new Vuex.Store({
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-    },
+                },
                 body: JSON.stringify(post),
               }
             )
@@ -452,14 +462,59 @@ export const store = new Vuex.Store({
       commit("setLoading", false);
     },
     deletePost({ commit }, payload) {
+      if (payload.imageURL != undefined && payload.imageURL != null) {
+        firebase
+          .storage()
+          .refFromURL(payload.imageURL)
+          .delete()
+          .then()
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+
       firebase
         .database()
-        .ref("posts")
-        .child(payload)
-        .remove()
+        .ref("replies")
+        .once("value", (snap) => {
+          snap.forEach((replyNode) => {
+            if (replyNode.val().postId === payload.id) {
+              firebase
+                .database()
+                .ref("replies")
+                .child(replyNode.key)
+                .remove();
+            }
+          });
+        })
         .then(() => {
-          commit("setLoading", false);
+          commit("deletePostReplies", payload);
+          firebase
+            .database()
+            .ref("comments")
+            .once("value", (snap) => {
+              snap.forEach((commentNode) => {
+                if (commentNode.val().postId === payload.id) {
+                  firebase
+                    .database()
+                    .ref("comments")
+                    .child(commentNode.key)
+                    .remove();
+                }
+              });
+            });
+        })
+        .then(() => {
+          commit("deletePostComments", payload);
+          firebase
+            .database()
+            .ref("posts")
+            .child(payload.id)
+            .remove();
+        })
+        .then(() => {
           commit("deletePost", payload);
+          commit("setLoading", false);
         })
         .catch((error) => {
           console.log(error);
@@ -494,10 +549,10 @@ export const store = new Vuex.Store({
               title: obj[key].title,
               context: obj[key].context,
             });
-              }
+          }
           commit("loadPosts", posts);
           commit("setLoading", false);
-            })
+        })
         .catch((error) => {
           commit("setLoading", false);
           console.log(error);
@@ -509,7 +564,7 @@ export const store = new Vuex.Store({
         .database()
         .ref("comments")
         .once("value")
-            .then((data) => {
+        .then((data) => {
           let comments = [];
           let obj = data.val();
           let key;
@@ -533,11 +588,11 @@ export const store = new Vuex.Store({
           }
           commit("loadcomments", comments);
           commit("setLoading", false);
-            })
-            .catch((error) => {
-              commit("setLoading", false);
-              console.log(error);
-            });
+        })
+        .catch((error) => {
+          commit("setLoading", false);
+          console.log(error);
+        });
     },
     loadReplies({ commit }) {
       commit("setLoading", true);

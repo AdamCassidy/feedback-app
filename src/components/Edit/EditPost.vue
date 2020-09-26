@@ -56,7 +56,7 @@ export default {
     },
     onDelete() {
       this.dialog = false;
-      this.$store.dispatch("deletePost", this.post.id);
+      this.$store.dispatch("deletePost", this.post);
     },
   },
 };
