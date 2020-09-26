@@ -276,6 +276,7 @@ export const store = new Vuex.Store({
             })
             .catch((error) => {
               console.log(error);
+              commit("setLoading", false);
             });
         })
         .catch((error) => {
@@ -328,6 +329,7 @@ export const store = new Vuex.Store({
             })
             .catch((error) => {
               console.log(error);
+              commit("setLoading", false);
             });
         })
         .catch((error) => {
@@ -443,8 +445,10 @@ export const store = new Vuex.Store({
       commit("clearAuthError");
     },
     signOut({ commit }) {
+      commit("setLoading", true);
       firebase.auth().signOut();
       commit("clearUser");
+      commit("setLoading", false);
     },
     deletePost({ commit }, payload) {
       firebase
