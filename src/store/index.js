@@ -72,6 +72,7 @@ export const store = new Vuex.Store({
       state.posts.splice(index, 1);
     },
     loadPosts(state, payload) {
+      state.posts = [];
       let obj;
       for (obj in payload) {
         state.posts.push(obj);
@@ -468,37 +469,110 @@ export const store = new Vuex.Store({
     loadPosts({ commit }) {
       commit("setLoading", true);
 
-      return firebase
-        .auth()
-        .currentUser.getIdToken(true)
-        .then((idToken) => {
-          return fetch(
-            "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
-              idToken,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-              },
+      firebase
+        .database()
+        .ref("posts")
+        .once("value")
+        .then((data) => {
+          let posts = [];
+          let obj = data.val();
+          let key;
+
+          for (key in obj) {
+            let newObj;
+            if (obj[key].tags != undefined && obj[key].tags != null) {
+              newObj.tags = obj[key].tags;
             }
-          )
-            .then((res) => {
-              if (!res.ok) {
-                throw new Error("Error: Can't retrieve from database.");
+            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
+              newObj.imageURL = obj[key].imageURL;
+            }
+            posts.push({
+              ...newObj,
+              id: key,
+              creatorId: obj[key].creatorId,
+              date: obj[key].date,
+              title: obj[key].title,
+              context: obj[key].context,
+            });
               }
-              return res.json();
+          commit("loadPosts", posts);
+          commit("setLoading", false);
             })
+        .catch((error) => {
+          commit("setLoading", false);
+          console.log(error);
+        });
+    },
+    loadComments({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("comments")
+        .once("value")
             .then((data) => {
-              commit("loadPosts", data);
+          let comments = [];
+          let obj = data.val();
+          let key;
+
+          for (key in obj) {
+            let newObj;
+            if (obj[key].tags != undefined && obj[key].tags != null) {
+              newObj.tags = obj[key].tags;
+            }
+            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
+              newObj.imageURL = obj[key].imageURL;
+            }
+            comments.push({
+              ...newObj,
+              id: key,
+              creatorId: obj[key].creatorId,
+              date: obj[key].date,
+              title: obj[key].title,
+              context: obj[key].context,
+            });
+          }
+          commit("loadcomments", comments);
+          commit("setLoading", false);
             })
             .catch((error) => {
               commit("setLoading", false);
               console.log(error);
             });
+    },
+    loadReplies({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("replies")
+        .once("value")
+        .then((data) => {
+          let replies = [];
+          let obj = data.val();
+          let key;
+
+          for (key in obj) {
+            let newObj;
+            if (obj[key].tags != undefined && obj[key].tags != null) {
+              newObj.tags = obj[key].tags;
+            }
+            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
+              newObj.imageURL = obj[key].imageURL;
+            }
+            replies.push({
+              ...newObj,
+              id: key,
+              creatorId: obj[key].creatorId,
+              date: obj[key].date,
+              title: obj[key].title,
+              context: obj[key].context,
+            });
+          }
+          commit("loadreplies", replies);
+          commit("setLoading", false);
         })
         .catch((error) => {
-          console.log(error);
           commit("setLoading", false);
+          console.log(error);
         });
     },
   },
