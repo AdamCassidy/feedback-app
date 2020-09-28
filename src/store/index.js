@@ -28,6 +28,9 @@ export const store = new Vuex.Store({
     createPost(state, payload) {
       state.posts.push(payload);
     },
+    addPostToUser(state, payload) {
+      state.user.posts.push(payload);
+    },
     createComment(state, payload) {
       state.comments.push(payload);
     },
@@ -176,6 +179,15 @@ export const store = new Vuex.Store({
               })
               .then(() => {
                 post.imageURL = imageURL;
+                firebase
+                  .database()
+                  .ref("users")
+                  .child(getters.user.id)
+                  .child("posts")
+                  .push({
+                    key: key,
+                  });
+                commit("addPostToUser", key);
                 commit("createPost", {
                   ...post,
                   id: key,
@@ -221,6 +233,15 @@ export const store = new Vuex.Store({
                 return key;
               })
               .then((key) => {
+                firebase
+                  .database()
+                  .ref("users")
+                  .child(getters.user.id)
+                  .child("posts")
+                  .push({
+                    key: key,
+                  });
+                commit("addPostToUser", key);
                 commit("createPost", {
                   ...post,
                   id: key,
@@ -371,6 +392,7 @@ export const store = new Vuex.Store({
                 const newUser = {
                   id: user.uid,
                   name: user.displayName,
+                  posts: [],
                 };
                 commit("setUser", newUser);
                 commit("setLoading", false);
@@ -414,6 +436,7 @@ export const store = new Vuex.Store({
                   id: user.uid,
                   name: user.displayName,
                   photoURL: user.photoURL,
+                  posts: [],
                 };
                 commit("setUser", newUser);
                 commit("setLoading", false);
