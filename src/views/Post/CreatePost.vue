@@ -6,7 +6,10 @@
     <v-container>
       <v-row v-if="authError">
         <v-col>
-          <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+          <authError-alert
+            @dismissed="onDismissed"
+            :text="authError.message"
+          ></authError-alert>
         </v-col>
       </v-row>
       <v-row>
@@ -17,8 +20,17 @@
                 <form @submit.prevent="onCreatePost">
                   <v-row>
                     <v-col>
-                      <v-text-field v-model="title" label="Title" single-line required></v-text-field>
-                      <v-textarea v-model="context" label="Context" auto-grow></v-textarea>
+                      <v-text-field
+                        v-model="title"
+                        label="Title"
+                        single-line
+                        required
+                      ></v-text-field>
+                      <v-textarea
+                        v-model="context"
+                        label="Context"
+                        auto-grow
+                      ></v-textarea>
                       <div class="text-start">
                         <v-select
                           v-model="tagsPicked"
@@ -38,7 +50,13 @@
                         @change="onFilePick"
                       ></v-file-input>
                       <v-img :src="imageURL"></v-img>
-                      <v-btn type="submit" :loading="loading" :disabled="!validForm || loading">
+                      <v-btn
+                        type="submit"
+                        v-on="on"
+                        v-bind="attrs"
+                        :loading="loading"
+                        :disabled="!validForm || loading"
+                      >
                         Create Post
                         <template v-slot:loader>
                           <span class="custom-loader">
@@ -92,6 +110,9 @@ export default {
 
       return titles;
     },
+    user() {
+      return this.$store.getters.user;
+    },
   },
 
   methods: {
@@ -107,10 +128,13 @@ export default {
         tags: this.tagsPicked,
       };
 
-      this.$store.dispatch("createPost", postData).then((postId) => {
-        this.$router.push("/" + postId);
-        return;
-      });
+      if (this.user) {
+        this.$store.dispatch("createPost", postData).then((postId) => {
+          this.$router.push("/" + postId);
+        });
+      } else {
+        this.$router.push("/signin");
+      }
     },
     onDismissed() {
       this.$store.dispatch("clearAuthError");
