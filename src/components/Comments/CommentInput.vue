@@ -37,7 +37,11 @@ export default {
         photoURL: this.$store.getters.user.photoURL,
         userName: this.$store.getters.user.name,
       };
-      this.$emit("send", commentObj);
+      if (this.user) {
+        this.$emit("send", commentObj);
+      } else {
+        this.$router.push("/signin");
+      }
     },
   },
 };
