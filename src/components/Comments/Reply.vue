@@ -1,14 +1,18 @@
 <template>
   <v-container v-if="reply && !loading" class="ml-4">
-    <v-row>
+    <v-row class="ms-2">
       <v-avatar>
         <img v-if="reply.photoURL" :src="reply.photoURL" />
         <v-icon v-else>mdi-account-circle</v-icon>
       </v-avatar>
 
-      <h5 class="ma-2">{{reply.userName}}</h5>
-      <p class="ma-2">{{reply.date | date}}</p>
-      <p class="ma-2">({{comment.userName}}) {{reply.reply}}</p>
+      <v-col>
+        <h5>{{ reply.userName }}</h5>
+        <p style="font-size: 9px">{{ reply.date | date }}</p>
+      </v-col>
+    </v-row>
+    <v-row class="ms-2">
+      <p class="ms-2">({{ comment.userName }}) {{ reply.reply }}</p>
     </v-row>
     <v-btn v-if="!replying && user" @click="replying = true">Reply</v-btn>
     <comment-input
