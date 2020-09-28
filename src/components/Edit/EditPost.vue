@@ -43,6 +43,18 @@ export default {
       editedContext: this.post.context,
     };
   },
+  computed: {
+    computedPost() {
+      return this.$store.getters.post(this.post.id);
+    },
+  },
+  watch: {
+    computedPost() {
+      if (!this.computedPost) {
+        this.$router.push("/");
+      }
+    },
+  },
   methods: {
     onSave() {
       this.dialog = false;
@@ -56,7 +68,9 @@ export default {
     },
     onDelete() {
       this.dialog = false;
-      this.$store.dispatch("deletePost", this.post);
+      this.$store.dispatch("deletePost", this.post).then(() => {
+        this.$router.push("/");
+      });
     },
   },
 };
