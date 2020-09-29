@@ -23,7 +23,7 @@ Vue.component("comment-section", CommentSection);
 Vue.component("comment", Comment);
 Vue.component("reply", Reply);
 
-new Vue({
+const app = new Vue({
   vuetify,
   router,
   store,
@@ -39,10 +39,11 @@ new Vue({
       appId: "1:624112482142:web:776f42503fa6f7d41d01cf",
     };
     firebase.initializeApp(firebaseConfig);
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (!user) {
-        this.$store.dispatch("signOut");
-      }
-    });
   },
-}).$mount("#app");
+});
+firebase.auth().onAuthStateChanged(function(user) {
+  if (!user) {
+    store.dispatch("signOut");
+  }
+});
+app.$mount("#app");

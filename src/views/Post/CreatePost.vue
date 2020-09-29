@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-container>
+  <v-container onLoad="checkForUser">
+    <v-container onLoad="checkForUser">
       <h1>Create Post</h1>
     </v-container>
     <v-container>
@@ -52,8 +52,6 @@
                       <v-img :src="imageURL"></v-img>
                       <v-btn
                         type="submit"
-                        v-on="on"
-                        v-bind="attrs"
                         :loading="loading"
                         :disabled="!validForm || loading"
                       >
@@ -114,8 +112,20 @@ export default {
       return this.$store.getters.user;
     },
   },
+  watch: {
+    user(value) {
+      if (value === null || value === undefined) {
+        this.$router.push("/signin");
+      }
+    },
+  },
 
   methods: {
+    checkForUser() {
+      if (this.user === null || this.user === undefined) {
+        this.$router.push("/signin");
+      }
+    },
     onCreatePost() {
       if (!this.validForm) {
         return;
@@ -128,7 +138,7 @@ export default {
         tags: this.tagsPicked,
       };
 
-      if (this.user) {
+      if (this.user != null && this.user != undefined) {
         this.$store.dispatch("createPost", postData).then((postId) => {
           this.$router.push("/" + postId);
         });

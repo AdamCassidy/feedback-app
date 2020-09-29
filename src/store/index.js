@@ -119,8 +119,13 @@ export const store = new Vuex.Store({
         });
     },
 
-    createPost({ commit, getters }, payload) {
+    createPost({ commit, dispatch, getters }, payload) {
       commit("setLoading", true);
+      firebase
+        .auth()
+        .currentUser.getIdToken(true)
+        .then((idToken) => {
+          if (idToken != null && idToken != undefined) {
       const post = {
         title: payload.title,
         context: payload.context,
@@ -261,6 +266,12 @@ export const store = new Vuex.Store({
             commit("setLoading", false);
           });
       }
+          } else {
+            dispatch("signOut");
+            commit("setLoading", false);
+            this.$router.push("/signin");
+          }
+        });
     },
 
     createComment({ commit, getters }, payload) {

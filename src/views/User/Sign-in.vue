@@ -6,7 +6,10 @@
     <v-container>
       <v-row v-if="authError">
         <v-flex>
-          <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+          <authError-alert
+            @dismissed="onDismissed"
+            :text="authError.message"
+          ></authError-alert>
         </v-flex>
       </v-row>
       <v-row>
@@ -17,9 +20,23 @@
                 <form @submit.prevent="onSignIn">
                   <v-row>
                     <v-flex>
-                      <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
-                      <v-text-field v-model="password" label="Password" required type="password"></v-text-field>
-                      <v-btn type="submit" :loading="loading" :disabled="loading">
+                      <v-text-field
+                        v-model="email"
+                        label="E-mail"
+                        required
+                        type="email"
+                      ></v-text-field>
+                      <v-text-field
+                        v-model="password"
+                        label="Password"
+                        required
+                        type="password"
+                      ></v-text-field>
+                      <v-btn
+                        type="submit"
+                        :loading="loading"
+                        :disabled="loading"
+                      >
                         Sign In
                         <template v-slot:loader>
                           <span class="custom-loader">
@@ -62,7 +79,7 @@ export default {
   watch: {
     user(value) {
       if (value !== undefined && value !== null) {
-        this.$router.push("/");
+        this.$router.go(-1);
       }
     },
   },
