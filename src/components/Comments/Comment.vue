@@ -14,7 +14,16 @@
       <p>{{ comment.comment }}</p>
     </v-row>
     <v-btn v-if="!replying && user" @click="replying = true">Reply</v-btn>
-    <v-btn v-if="!loadReplies" @click="loadReplies = true">Load Replies</v-btn>
+    <v-btn
+      v-if="
+        !loadReplies &&
+        replies !== null &&
+        replies !== undefined &&
+        replies.length !== 0
+      "
+      @click="loadReplies = true"
+      >Load Replies</v-btn
+    >
     <v-btn v-if="loadReplies" @click="loadReplies = false">Close Replies</v-btn>
     <comment-input
       v-if="replying"
