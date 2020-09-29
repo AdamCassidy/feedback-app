@@ -42,7 +42,7 @@
                         v-model="confirmPassword"
                         label="Confirm Password"
                         type="password"
-                        :rules="[comparePasswords]"
+                        :rules="[comparePasswords || 'Passwords do not match.']"
                       ></v-text-field>
                       <v-row cols="12">
                         <v-col xs="5" sm="4" lg="3">
@@ -109,7 +109,7 @@ export default {
   computed: {
     validForm() {
       return (
-        this.comparePasswords === "" &&
+        this.comparePasswords &&
         this.name !== "" &&
         this.password !== "" &&
         this.confirmPassword !== "" &&
@@ -117,9 +117,7 @@ export default {
       );
     },
     comparePasswords() {
-      return this.password !== this.confirmPassword
-        ? "Passwords do not match"
-        : "";
+      return this.password === this.confirmPassword;
     },
     authError() {
       return this.$store.getters.authError;
