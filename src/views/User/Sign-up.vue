@@ -132,7 +132,7 @@ export default {
   watch: {
     user(value) {
       if (value !== undefined && value !== null) {
-        this.$router.go(-1);
+        this.$router.push("/");
       }
     },
   },
