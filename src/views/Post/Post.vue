@@ -47,6 +47,7 @@
                 contain
                 :src="post.imageURL"
               ></v-img>
+              <v-divider></v-divider>
               <comment-section :post="post"></comment-section>
             </v-col>
           </v-row>

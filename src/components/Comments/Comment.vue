@@ -10,8 +10,8 @@
         <p style="font-size: 9px">{{ comment.date | date }}</p>
       </v-col>
     </v-row>
-    <v-row class="ms-2">
-      <p class="ms-2">{{ comment.comment }}</p>
+    <v-row class="ms-4">
+      <p>{{ comment.comment }}</p>
     </v-row>
     <v-btn v-if="!replying && user" @click="replying = true">Reply</v-btn>
     <v-btn v-if="!loadReplies" @click="loadReplies = true">Load Replies</v-btn>

@@ -333,6 +333,7 @@ export const store = new Vuex.Store({
         postId: payload.postId,
         commentId: payload.commentId,
         userName: payload.userName,
+        replyingTo: payload.replyingTo,
       };
       if (payload.photoURL != null && payload.photoURL != undefined) {
         reply.photoURL = payload.photoURL;
