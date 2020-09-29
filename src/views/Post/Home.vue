@@ -82,10 +82,14 @@ export default {
       return this.$store.getters.loading;
     },
   },
-  methods: {
-    loadPosts() {
+  created() {
+    if (
+      this.posts === null ||
+      this.posts === undefined ||
+      this.posts.length === 0
+    ) {
       this.$store.dispatch("loadPosts");
-    },
+    }
   },
 };
 </script>

@@ -73,19 +73,33 @@ export const store = new Vuex.Store({
     },
     deletePostComments(state, payload) {
       state.comments = state.comments.filter((comment) => {
-        return comment.postId != payload.id;
+        return comment.postId !== payload.id;
       });
     },
     deletePostReplies(state, payload) {
       state.replies = state.replies.filter((reply) => {
-        return reply.postId != payload.id;
+        return reply.postId !== payload.id;
       });
     },
     loadPosts(state, payload) {
       state.posts = [];
       let obj;
-      for (obj in payload) {
+      for (obj of payload) {
         state.posts.push(obj);
+      }
+    },
+    loadComments(state, payload) {
+      state.comments = [];
+      let obj;
+      for (obj of payload) {
+        state.comments.push(obj);
+      }
+    },
+    loadReplies(state, payload) {
+      state.replies = [];
+      let obj;
+      for (obj of payload) {
+        state.replies.push(obj);
       }
     },
   },
@@ -122,7 +136,7 @@ export const store = new Vuex.Store({
         .auth()
         .currentUser.getIdToken(true)
         .then((idToken) => {
-          if (idToken != null && idToken != undefined) {
+          if (idToken !== null && idToken !== undefined) {
             const post = {
               title: payload.title,
               context: payload.context,
@@ -130,13 +144,13 @@ export const store = new Vuex.Store({
               creatorId: getters.user.id,
               tags: payload.tags,
             };
-            if (payload.image != null && payload.image != undefined) {
+            if (payload.image !== null && payload.image !== undefined) {
               post.image = payload.image;
             }
             let key;
             let imageURL;
 
-            if (post.image != null && post.image != undefined) {
+            if (post.image !== null && post.image !== undefined) {
               return firebase
                 .auth()
                 .currentUser.getIdToken(true)
@@ -281,7 +295,7 @@ export const store = new Vuex.Store({
         userName: payload.userName,
       };
 
-      if (payload.photoURL != null && payload.photoURL != undefined) {
+      if (payload.photoURL !== null && payload.photoURL !== undefined) {
         comment.photoURL = payload.photoURL;
       }
 
@@ -335,7 +349,7 @@ export const store = new Vuex.Store({
         userName: payload.userName,
         replyingTo: payload.replyingTo,
       };
-      if (payload.photoURL != null && payload.photoURL != undefined) {
+      if (payload.photoURL !== null && payload.photoURL !== undefined) {
         reply.photoURL = payload.photoURL;
       }
 
@@ -493,7 +507,7 @@ export const store = new Vuex.Store({
       commit("setLoading", false);
     },
     deletePost({ commit }, payload) {
-      if (payload.imageURL != undefined && payload.imageURL != null) {
+      if (payload.imageURL !== undefined && payload.imageURL !== null) {
         firebase
           .storage()
           .refFromURL(payload.imageURL)
@@ -564,12 +578,15 @@ export const store = new Vuex.Store({
           let obj = data.val();
           let key;
 
+          let newObj;
+
           for (key in obj) {
-            let newObj;
-            if (obj[key].tags != undefined && obj[key].tags != null) {
+            newObj = {};
+
+            if (obj[key].tags !== undefined && obj[key].tags !== null) {
               newObj.tags = obj[key].tags;
             }
-            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
+            if (obj[key].imageURL !== undefined && obj[key].imageURL !== null) {
               newObj.imageURL = obj[key].imageURL;
             }
             posts.push({
@@ -599,25 +616,26 @@ export const store = new Vuex.Store({
           let comments = [];
           let obj = data.val();
           let key;
+          let newObj;
 
           for (key in obj) {
-            let newObj;
-            if (obj[key].tags != undefined && obj[key].tags != null) {
-              newObj.tags = obj[key].tags;
+            newObj = {};
+
+            if (obj[key].photoURL !== undefined && obj[key].photoURL !== null) {
+              newObj.photoURL = obj[key].photoURL;
             }
-            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
-              newObj.imageURL = obj[key].imageURL;
-            }
+
             comments.push({
               ...newObj,
               id: key,
               creatorId: obj[key].creatorId,
               date: obj[key].date,
-              title: obj[key].title,
-              context: obj[key].context,
+              userName: obj[key].userName,
+              comment: obj[key].comment,
+              postId: obj[key].postId,
             });
           }
-          commit("loadcomments", comments);
+          commit("loadComments", comments);
           commit("setLoading", false);
         })
         .catch((error) => {
@@ -635,25 +653,33 @@ export const store = new Vuex.Store({
           let replies = [];
           let obj = data.val();
           let key;
+          let newObj;
 
           for (key in obj) {
-            let newObj;
-            if (obj[key].tags != undefined && obj[key].tags != null) {
-              newObj.tags = obj[key].tags;
+            newObj = {};
+
+            if (obj[key].photoURL !== undefined && obj[key].photoURL !== null) {
+              newObj.photoURL = obj[key].photoURL;
             }
-            if (obj[key].imageURL != undefined && obj[key].imageURL != null) {
-              newObj.imageURL = obj[key].imageURL;
+            if (
+              obj[key].replyingTo !== undefined &&
+              obj[key].replyingTo !== null
+            ) {
+              newObj.replyingTo = obj[key].replyingTo;
             }
+
             replies.push({
               ...newObj,
               id: key,
               creatorId: obj[key].creatorId,
               date: obj[key].date,
-              title: obj[key].title,
-              context: obj[key].context,
+              userName: obj[key].userName,
+              commentId: obj[key].commentId,
+              reply: obj[key].reply,
+              postId: obj[key].postId,
             });
           }
-          commit("loadreplies", replies);
+          commit("loadReplies", replies);
           commit("setLoading", false);
         })
         .catch((error) => {

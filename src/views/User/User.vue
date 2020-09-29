@@ -1,5 +1,5 @@
 <template>
-  <v-container @onLoad="loadPosts">
+  <v-container>
     <h1 style="font-size: 37px">
       <v-avatar class="mb-2"> <img src="../../logo/logo.png" /> </v-avatar>nd
       Opinion
@@ -96,10 +96,14 @@ export default {
       return this.$store.getters.user;
     },
   },
-  methods: {
-    loadPosts() {
+  created() {
+    if (
+      this.posts === null ||
+      this.posts === undefined ||
+      this.posts.length === 0
+    ) {
       this.$store.dispatch("loadPosts");
-    },
+    }
   },
 };
 </script>

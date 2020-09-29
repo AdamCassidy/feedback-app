@@ -1,5 +1,5 @@
 <template>
-  <v-container onload="load">
+  <v-container>
     <v-row>
       <v-col>
         <v-progress-circular
@@ -89,12 +89,28 @@ export default {
       }
     },
   },
-  methods: {
-    load() {
+  created() {
+    if (
+      this.posts === null ||
+      this.posts === undefined ||
+      this.posts.length === 0
+    ) {
       this.$store.dispatch("loadPosts");
+    }
+    if (
+      this.comments === null ||
+      this.comments === undefined ||
+      this.comments.length === 0
+    ) {
       this.$store.dispatch("loadComments");
+    }
+    if (
+      this.replies === null ||
+      this.replies === undefined ||
+      this.replies.length === 0
+    ) {
       this.$store.dispatch("loadReplies");
-    },
+    }
   },
 };
 </script>
