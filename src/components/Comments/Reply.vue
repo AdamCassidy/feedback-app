@@ -13,7 +13,7 @@
     </v-row>
 
     <v-row
-      v-if="reply.replyingTo !== null && reply.replyingTo != undefined"
+      v-if="reply.replyingTo !== null && reply.replyingTo !== undefined"
       class="ms-4"
     >
       <p>({{ reply.replyingTo }}) {{ reply.reply }}</p>
