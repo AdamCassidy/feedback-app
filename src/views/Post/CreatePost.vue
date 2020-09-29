@@ -49,7 +49,7 @@
                         accept="image/*"
                         @change="onFilePick"
                       ></v-file-input>
-                      <v-img :src="imageURL"></v-img>
+                      <v-img :src="imageURL" max-height="400" contain></v-img>
                       <v-btn
                         type="submit"
                         :loading="loading"

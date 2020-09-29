@@ -15,14 +15,15 @@
         <v-card>
           <v-row>
             <v-col class="text-start">
-              <v-card-title style="flex-wrap: wrap-reverse">
-                <h1 style="color: #701487">{{ post.title }}</h1>
+              <v-card-title style="flex-wrap: wrap-reverse; word-break: normal">
+                <h1 style="color: #701487">
+                  {{ post.title }}
+                </h1>
                 <template v-if="userIsCreator">
                   <v-spacer></v-spacer>
                   <edit-post-dialog :post="post"></edit-post-dialog>
                 </template>
               </v-card-title>
-
               <v-card-text class="text-start" style="font-size: 1.3rem">{{
                 post.date | date
               }}</v-card-text>
