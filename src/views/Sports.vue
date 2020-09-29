@@ -1,9 +1,8 @@
 <template>
   <v-container @onLoad="loadPosts">
     <h1 style="font-size: 37px">
-      <v-avatar class="mb-2">
-        <img src="../logo/logo.png" /> </v-avatar
-      >nd Opinion
+      <v-avatar class="mb-2"> <img src="../logo/logo.png" /> </v-avatar>nd
+      Opinion
     </h1>
     <v-divider></v-divider>
     <h3>Sports</h3>
@@ -21,9 +20,12 @@
     <v-row v-if="!loading" justify="center">
       <v-col v-for="post in posts" :key="post.id" cols="12">
         <v-card :to="'./' + post.id" style="cursor: pointer">
-          <v-row v-if="post.imageURL != undefined || post.imageURL != null">
+          <v-row
+            v-if="post.imageURL !== undefined || post.imageURL !== null"
+            class="text-start"
+          >
             <v-col xs="5" sm="4" md="3">
-              <v-img :src="post.imageURL"></v-img>
+              <v-img :src="post.imageURL" max-height="150" contain></v-img>
             </v-col>
             <v-col xs="7" sm="8" md="9">
               <v-card-title
@@ -32,8 +34,9 @@
                 >{{ post.title }}</v-card-title
               >
 
-              <v-card-title>{{ post.date | date }}</v-card-title>
-              <div class="text-start">
+              <p class="ms-4">{{ post.date | date }}</p>
+
+              <div class="ms-2">
                 <v-chip
                   v-for="tag in post.tags"
                   :key="tag.key"
@@ -45,7 +48,7 @@
               </div>
             </v-col>
           </v-row>
-          <v-row v-else>
+          <v-row v-else class="text-start">
             <v-col>
               <v-card-title
                 class="bold"
@@ -53,8 +56,8 @@
                 >{{ post.title }}</v-card-title
               >
 
-              <v-card-title>{{ post.date | date }}</v-card-title>
-              <div class="text-start">
+              <p class="ms-4">{{ post.date | date }}</p>
+              <div class="ms-2">
                 <v-chip
                   v-for="tag in post.tags"
                   :key="tag.key"

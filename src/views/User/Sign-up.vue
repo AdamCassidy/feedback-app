@@ -48,7 +48,7 @@
                         <v-col xs="5" sm="4" lg="3">
                           <v-avatar size="200px">
                             <img
-                              v-if="image != null && image != undefined"
+                              v-if="image !== null && image !== undefined"
                               :src="imageURL"
                             />
                             <img v-else src="../../logo/logo.png" />
@@ -110,14 +110,14 @@ export default {
     validForm() {
       return (
         this.comparePasswords === "" &&
-        this.name != "" &&
-        this.password != "" &&
-        this.confirmPassword != "" &&
-        this.email != ""
+        this.name !== "" &&
+        this.password !== "" &&
+        this.confirmPassword !== "" &&
+        this.email !== ""
       );
     },
     comparePasswords() {
-      return this.password != this.confirmPassword
+      return this.password !== this.confirmPassword
         ? "Passwords do not match"
         : "";
     },

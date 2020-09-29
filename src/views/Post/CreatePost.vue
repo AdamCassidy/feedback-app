@@ -92,7 +92,7 @@ export default {
 
   computed: {
     validForm() {
-      return this.title != "" && this.context != "";
+      return this.title !== "" && this.context !== "";
     },
     loading() {
       return this.$store.getters.loading;
@@ -134,7 +134,7 @@ export default {
         tags: this.tagsPicked,
       };
 
-      if (this.user != null && this.user != undefined) {
+      if (this.user !== null && this.user !== undefined) {
         this.$store.dispatch("createPost", postData).then((postId) => {
           this.postId = postId;
         });

@@ -41,7 +41,12 @@
                 >
               </div>
 
-              <v-img style="margin: 15px" :src="post.imageURL"></v-img>
+              <v-img
+                style="margin: 15px"
+                max-height="400"
+                contain
+                :src="post.imageURL"
+              ></v-img>
               <comment-section :post="post"></comment-section>
             </v-col>
           </v-row>
