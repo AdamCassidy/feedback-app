@@ -1,6 +1,6 @@
 <template>
-  <v-container onLoad="checkForUser">
-    <v-container onLoad="checkForUser">
+  <v-container>
+    <v-container>
       <h1>Create Post</h1>
     </v-container>
     <v-container>
@@ -86,6 +86,7 @@ export default {
       tags: ["Home Projects", "Automotive", "Sports", "Cooking"],
       tagPicked: false,
       tagsPicked: [],
+      postId: "",
     };
   },
 
@@ -113,19 +114,14 @@ export default {
     },
   },
   watch: {
-    user(value) {
-      if (value === null || value === undefined) {
-        this.$router.push("/signin");
+    postId(value) {
+      if (value !== null && value !== undefined) {
+        this.$router.push("/" + value);
       }
     },
   },
 
   methods: {
-    checkForUser() {
-      if (this.user === null || this.user === undefined) {
-        this.$router.push("/signin");
-      }
-    },
     onCreatePost() {
       if (!this.validForm) {
         return;
@@ -140,7 +136,7 @@ export default {
 
       if (this.user != null && this.user != undefined) {
         this.$store.dispatch("createPost", postData).then((postId) => {
-          this.$router.push("/" + postId);
+          this.postId = postId;
         });
       } else {
         this.$router.push("/signin");

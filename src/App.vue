@@ -32,7 +32,7 @@
           <v-list-item to="/">
             <v-list-item-content class="text-start">
               <v-list-item-icon>
-                <v-icon color="black">pages</v-icon>
+                <v-icon color="#701487">pages</v-icon>
                 <v-list-item-title class="ms-6">All Posts</v-list-item-title>
               </v-list-item-icon>
             </v-list-item-content>
@@ -40,7 +40,7 @@
           <v-list-item v-if="userIsAuthenticated" :to="'/users/' + user.id">
             <v-list-item-content class="text-start">
               <v-list-item-icon>
-                <v-icon color="black">account_box</v-icon>
+                <v-icon color="#701487">account_box</v-icon>
                 <v-list-item-title class="ms-6">Your Posts</v-list-item-title>
               </v-list-item-icon>
             </v-list-item-content>
@@ -55,7 +55,7 @@
               <v-list-item-icon>
                 <v-icon
                   v-text="item.icon"
-                  :style="'color: ' + item.color + ';'"
+                  :style="'color: ' + '#701487' + ';'"
                 ></v-icon>
                 <v-list-item-title class="ms-6">{{
                   item.title

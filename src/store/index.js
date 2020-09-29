@@ -118,7 +118,7 @@ export const store = new Vuex.Store({
 
     createPost({ commit, dispatch, getters }, payload) {
       commit("setLoading", true);
-      firebase
+      return firebase
         .auth()
         .currentUser.getIdToken(true)
         .then((idToken) => {
@@ -265,6 +265,7 @@ export const store = new Vuex.Store({
             dispatch("signOut");
             commit("setLoading", false);
             this.$router.push("/signin");
+            return "";
           }
         });
     },
