@@ -195,14 +195,6 @@ export const store = new Vuex.Store({
                     })
                     .then(() => {
                       post.imageURL = imageURL;
-                      firebase
-                        .database()
-                        .ref("users")
-                        .child(getters.user.id)
-                        .child("posts")
-                        .push({
-                          key: key,
-                        });
                       commit("createPost", {
                         ...post,
                         id: key,
@@ -248,14 +240,6 @@ export const store = new Vuex.Store({
                       return key;
                     })
                     .then((key) => {
-                      firebase
-                        .database()
-                        .ref("users")
-                        .child(getters.user.id)
-                        .child("posts")
-                        .push({
-                          key: key,
-                        });
                       commit("createPost", {
                         ...post,
                         id: key,
