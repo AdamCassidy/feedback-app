@@ -1,9 +1,13 @@
 <template>
-  <v-container @onload="loadPosts">
+  <v-container @onLoad="loadPosts">
     <h1 style="font-size: 37px">
-      <v-avatar class="mb-2"> <img src="../../logo/logo.png" /> </v-avatar>nd
-      Opinion
+      <v-avatar class="mb-2">
+        <img src="../../logo/logo.png" /> </v-avatar
+      >nd Opinion
     </h1>
+    <v-divider></v-divider>
+    <h3 v-if="userIsAuthenticated">{{ user.name }}</h3>
+    <v-divider></v-divider>
     <v-row>
       <v-col>
         <v-progress-circular
@@ -70,12 +74,22 @@
 
 <script>
 export default {
+  props: ["id"],
   computed: {
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
     posts() {
-      return this.$store.getters.posts;
+      return this.$store.getters.userPosts;
     },
     loading() {
       return this.$store.getters.loading;
+    },
+    user() {
+      return this.$store.getters.user;
     },
   },
   methods: {

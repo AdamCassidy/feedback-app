@@ -66,6 +66,12 @@ const routes = [
     props: true,
     component: () => import("../views/Post/Post.vue"),
   },
+  {
+    path: "/users/:id",
+    name: "user",
+    props: true,
+    component: () => import("../views/User/User.vue"),
+  },
 ];
 
 const router = new VueRouter({

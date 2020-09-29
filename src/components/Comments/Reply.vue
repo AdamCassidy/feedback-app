@@ -3,7 +3,7 @@
     <v-row class="ms-2">
       <v-avatar>
         <img v-if="reply.photoURL" :src="reply.photoURL" />
-        <v-icon v-else>mdi-account-circle</v-icon>
+        <img v-else src="../../logo/logo.png" />
       </v-avatar>
 
       <v-col>

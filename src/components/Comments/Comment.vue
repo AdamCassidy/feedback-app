@@ -3,7 +3,7 @@
     <v-row class="ms-2">
       <v-avatar>
         <img v-if="comment.photoURL" :src="comment.photoURL" />
-        <v-icon v-else>mdi-account-circle</v-icon>
+        <img v-else src="../../logo/logo.png" />
       </v-avatar>
       <v-col>
         <h5>{{ comment.userName }}</h5>

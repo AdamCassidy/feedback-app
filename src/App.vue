@@ -1,7 +1,9 @@
 <template>
   <v-app id="app">
     <v-app-bar app>
-      <v-app-bar-nav-icon @click="openDrawer = !openDrawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        @click="openDrawer = !openDrawer"
+      ></v-app-bar-nav-icon>
       <v-toolbar-title class="hidden-sm-and-down">
         <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
           <v-avatar>
@@ -21,26 +23,43 @@
       </v-toolbar-items>
     </v-app-bar>
     <v-navigation-drawer v-model="openDrawer" temporary app>
-      <h1 style="font-size:27px">
-        <v-avatar class="mb-2">
-          <img src="./logo/logo.png" />
-        </v-avatar>nd Opinion
+      <h1 style="font-size: 27px">
+        <v-avatar class="mb-2"> <img src="./logo/logo.png" /> </v-avatar>nd
+        Opinion
       </h1>
       <v-list flat>
         <v-list-item-group>
           <v-list-item to="/">
             <v-list-item-content class="text-start">
               <v-list-item-icon>
-                <v-icon>dynamic_feed</v-icon>
+                <v-icon color="black">pages</v-icon>
                 <v-list-item-title class="ms-6">All Posts</v-list-item-title>
               </v-list-item-icon>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
+          <v-list-item v-if="userIsAuthenticated" :to="'/users/' + user.id">
             <v-list-item-content class="text-start">
               <v-list-item-icon>
-                <v-icon v-text="item.icon" :style="'color: '+ item.color + ';'"></v-icon>
-                <v-list-item-title class="ms-6">{{ item.title}}</v-list-item-title>
+                <v-icon color="black">account_box</v-icon>
+                <v-list-item-title class="ms-6">Your Posts</v-list-item-title>
+              </v-list-item-icon>
+            </v-list-item-content>
+          </v-list-item>
+          <v-divider></v-divider>
+          <v-list-item
+            v-for="item in drawerItems"
+            :key="item.key"
+            :to="item.link"
+          >
+            <v-list-item-content class="text-start">
+              <v-list-item-icon>
+                <v-icon
+                  v-text="item.icon"
+                  :style="'color: ' + item.color + ';'"
+                ></v-icon>
+                <v-list-item-title class="ms-6">{{
+                  item.title
+                }}</v-list-item-title>
               </v-list-item-icon>
             </v-list-item-content>
           </v-list-item>
@@ -119,6 +138,9 @@ export default {
         ];
       }
       return toolbarItems;
+    },
+    user() {
+      return this.$store.getters.user;
     },
   },
   methods: {

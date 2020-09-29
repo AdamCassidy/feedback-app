@@ -28,9 +28,6 @@ export const store = new Vuex.Store({
     createPost(state, payload) {
       state.posts.push(payload);
     },
-    addPostToUser(state, payload) {
-      state.user.posts.push(payload);
-    },
     createComment(state, payload) {
       state.comments.push(payload);
     },
@@ -126,146 +123,144 @@ export const store = new Vuex.Store({
         .currentUser.getIdToken(true)
         .then((idToken) => {
           if (idToken != null && idToken != undefined) {
-      const post = {
-        title: payload.title,
-        context: payload.context,
-        date: payload.date.toISOString(),
-        creatorId: getters.user.id,
-        tags: payload.tags,
-      };
-      if (payload.image != null && payload.image != undefined) {
-        post.image = payload.image;
-      }
-      let key;
-      let imageURL;
+            const post = {
+              title: payload.title,
+              context: payload.context,
+              date: payload.date.toISOString(),
+              creatorId: getters.user.id,
+              tags: payload.tags,
+            };
+            if (payload.image != null && payload.image != undefined) {
+              post.image = payload.image;
+            }
+            let key;
+            let imageURL;
 
-      if (post.image != null && post.image != undefined) {
-        return firebase
-          .auth()
-          .currentUser.getIdToken(true)
-          .then((idToken) => {
-            return fetch(
-              "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
-                idToken,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(post),
-              }
-            )
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error("Error: Can't post to database.");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                key = data.name;
-                return key;
-              })
-              .then((key) => {
-                const filename = payload.image.name;
-                const ext = filename.slice(filename.lastIndexOf(".") + 1);
-                return firebase
-                  .storage()
-                  .ref("posts/" + key + "." + ext)
-                  .put(payload.image);
-              })
-              .then((fileData) => fileData.ref.getDownloadURL())
-              .then((URL) => {
-                imageURL = URL;
-                firebase
-                  .database()
-                  .ref()
-                  .child("posts/" + key)
-                  .update({ imageURL: imageURL });
-              })
-              .then(() => {
-                post.imageURL = imageURL;
-                firebase
-                  .database()
-                  .ref("users")
-                  .child(getters.user.id)
-                  .child("posts")
-                  .push({
-                    key: key,
-                  });
-                commit("addPostToUser", key);
-                commit("createPost", {
-                  ...post,
-                  id: key,
+            if (post.image != null && post.image != undefined) {
+              return firebase
+                .auth()
+                .currentUser.getIdToken(true)
+                .then((idToken) => {
+                  return fetch(
+                    "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+                      idToken,
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(post),
+                    }
+                  )
+                    .then((res) => {
+                      if (!res.ok) {
+                        throw new Error("Error: Can't post to database.");
+                      }
+                      return res.json();
+                    })
+                    .then((data) => {
+                      key = data.name;
+                      return key;
+                    })
+                    .then((key) => {
+                      const filename = payload.image.name;
+                      const ext = filename.slice(filename.lastIndexOf(".") + 1);
+                      return firebase
+                        .storage()
+                        .ref("posts/" + key + "." + ext)
+                        .put(payload.image);
+                    })
+                    .then((fileData) => fileData.ref.getDownloadURL())
+                    .then((URL) => {
+                      imageURL = URL;
+                      firebase
+                        .database()
+                        .ref()
+                        .child("posts/" + key)
+                        .update({ imageURL: imageURL });
+                    })
+                    .then(() => {
+                      post.imageURL = imageURL;
+                      firebase
+                        .database()
+                        .ref("users")
+                        .child(getters.user.id)
+                        .child("posts")
+                        .push({
+                          key: key,
+                        });
+                      commit("createPost", {
+                        ...post,
+                        id: key,
+                      });
+
+                      commit("setLoading", false);
+                      return key;
+                    })
+                    .catch((error) => {
+                      commit("setLoading", false);
+                      console.log(error);
+                    });
+                })
+
+                .catch((error) => {
+                  console.log(error);
+                  commit("setLoading", false);
                 });
+            } else {
+              return firebase
+                .auth()
+                .currentUser.getIdToken(true)
+                .then((idToken) => {
+                  return fetch(
+                    "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
+                      idToken,
+                    {
+                      method: "POST",
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: JSON.stringify(post),
+                    }
+                  )
+                    .then((res) => {
+                      if (!res.ok) {
+                        throw new Error("Error: Can't post to database.");
+                      }
+                      return res.json();
+                    })
+                    .then((data) => {
+                      key = data.name;
+                      return key;
+                    })
+                    .then((key) => {
+                      firebase
+                        .database()
+                        .ref("users")
+                        .child(getters.user.id)
+                        .child("posts")
+                        .push({
+                          key: key,
+                        });
+                      commit("createPost", {
+                        ...post,
+                        id: key,
+                      });
 
-                commit("setLoading", false);
-                return key;
-              })
-              .catch((error) => {
-                commit("setLoading", false);
-                console.log(error);
-              });
-          })
+                      commit("setLoading", false);
+                      return key;
+                    })
+                    .catch((error) => {
+                      commit("setLoading", false);
+                      console.log(error);
+                    });
+                })
 
-          .catch((error) => {
-            console.log(error);
-            commit("setLoading", false);
-          });
-      } else {
-        return firebase
-          .auth()
-          .currentUser.getIdToken(true)
-          .then((idToken) => {
-            return fetch(
-              "https://feedback-project-20f04.firebaseio.com/posts.json?auth=" +
-                idToken,
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(post),
-              }
-            )
-              .then((res) => {
-                if (!res.ok) {
-                  throw new Error("Error: Can't post to database.");
-                }
-                return res.json();
-              })
-              .then((data) => {
-                key = data.name;
-                return key;
-              })
-              .then((key) => {
-                firebase
-                  .database()
-                  .ref("users")
-                  .child(getters.user.id)
-                  .child("posts")
-                  .push({
-                    key: key,
-                  });
-                commit("addPostToUser", key);
-                commit("createPost", {
-                  ...post,
-                  id: key,
+                .catch((error) => {
+                  console.log(error);
+                  commit("setLoading", false);
                 });
-
-                commit("setLoading", false);
-                return key;
-              })
-              .catch((error) => {
-                commit("setLoading", false);
-                console.log(error);
-              });
-          })
-
-          .catch((error) => {
-            console.log(error);
-            commit("setLoading", false);
-          });
-      }
+            }
           } else {
             dispatch("signOut");
             commit("setLoading", false);
@@ -697,8 +692,8 @@ export const store = new Vuex.Store({
           .filter((comment) => {
             return comment.postId === postId;
           })
-          .sort((replyA, commentB) => {
-            return replyA.date > commentB.date;
+          .sort((commentA, commentB) => {
+            return commentA.date > commentB.date;
           });
       };
     },
@@ -735,6 +730,15 @@ export const store = new Vuex.Store({
     },
     authError(state) {
       return state.authError;
+    },
+    userPosts(state) {
+      return state.posts
+        .filter((post) => {
+          return post.creatorId === state.user.id;
+        })
+        .sort((postA, postB) => {
+          return postA.date > postB.date;
+        });
     },
   },
 });
