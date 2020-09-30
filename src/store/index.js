@@ -676,9 +676,11 @@ export const store = new Vuex.Store({
       return (tag) => {
         return state.posts
           .filter((post) => {
-            return post.tags.find((postTag) => {
-              return postTag === tag;
-            });
+            if (post.tags !== null && post.tags !== undefined) {
+              return post.tags.find((postTag) => {
+                return postTag === tag;
+              });
+            }
           })
           .sort((postA, postB) => {
             return postA.date < postB.date;

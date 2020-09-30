@@ -131,8 +131,13 @@ export default {
         context: this.context,
         image: this.image,
         date: new Date(),
-        tags: this.tagsPicked,
       };
+
+      if (this.tagsPicked !== undefined && this.tagsPicked !== null) {
+        postData.tags = this.tagsPicked;
+      } else {
+        postData.tags = [];
+      }
 
       if (this.user !== null && this.user !== undefined) {
         this.$store.dispatch("createPost", postData).then((postId) => {
