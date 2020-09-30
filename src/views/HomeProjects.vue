@@ -31,7 +31,7 @@
             <v-col xs="7" sm="8" md="9">
               <v-card-title
                 class="bold"
-                style="font-size: 2.3rem; cursor: pointer"
+                style="font-size: 2.3rem; cursor: pointer; word-break: normal"
                 >{{ post.title }}</v-card-title
               >
 
@@ -53,7 +53,7 @@
             <v-col>
               <v-card-title
                 class="bold"
-                style="font-size: 2.3rem; cursor: pointer"
+                style="font-size: 2.3rem; cursor: pointer; word-break: normal"
                 >{{ post.title }}</v-card-title
               >
 

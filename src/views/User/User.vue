@@ -19,7 +19,10 @@
     </v-row>
     <v-row v-if="!loading" justify="center">
       <v-col v-for="post in posts" :key="post.id" cols="12">
-        <v-card :to="'./' + post.id" style="cursor: pointer">
+        <v-card
+          :to="'./' + post.id"
+          style="cursor: pointer; word-break: normal"
+        >
           <v-row
             v-if="post.imageURL !== undefined || post.imageURL !== null"
             class="text-start"
@@ -30,7 +33,7 @@
             <v-col xs="7" sm="8" md="9">
               <v-card-title
                 class="bold"
-                style="font-size: 2.3rem; cursor: pointer"
+                style="font-size: 2.3rem; cursor: pointer; word-break: normal"
                 >{{ post.title }}</v-card-title
               >
 
@@ -52,7 +55,7 @@
             <v-col>
               <v-card-title
                 class="bold"
-                style="font-size: 2.3rem; cursor: pointer"
+                style="font-size: 2.3rem; cursor: pointer; word-break: normal"
                 >{{ post.title }}</v-card-title
               >
 
