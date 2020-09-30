@@ -682,13 +682,13 @@ export const store = new Vuex.Store({
             });
           })
           .sort((postA, postB) => {
-            return postA.date > postB.date;
+            return postA.date < postB.date;
           });
       };
     },
     posts(state) {
       return state.posts.sort((postA, postB) => {
-        return postA.date > postB.date;
+        return postA.date < postB.date;
       });
     },
     post(state) {
@@ -705,7 +705,7 @@ export const store = new Vuex.Store({
             return comment.postId === postId;
           })
           .sort((commentA, commentB) => {
-            return commentA.date > commentB.date;
+            return commentA.date < commentB.date;
           });
       };
     },
@@ -749,7 +749,7 @@ export const store = new Vuex.Store({
           return post.creatorId === state.user.id;
         })
         .sort((postA, postB) => {
-          return postA.date > postB.date;
+          return postA.date < postB.date;
         });
     },
   },
