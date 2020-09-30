@@ -21,7 +21,7 @@
       <v-col v-for="post in posts" :key="post.id" cols="12">
         <v-card :to="'./' + post.id" style="cursor: pointer">
           <v-row
-            v-if="post.imageURL !== undefined || post.imageURL !== null"
+            v-if="post.imageURL !== undefined && post.imageURL !== null"
             class="text-start"
           >
             <v-col xs="5" sm="4" md="3">
@@ -85,8 +85,14 @@ export default {
       return this.$store.getters.loading;
     },
   },
-  beforeCreate() {
-    this.$store.dispatch("loadPosts");
+  created() {
+    if (
+      this.posts === null ||
+      this.posts === undefined ||
+      this.posts.length === 0
+    ) {
+      this.$store.dispatch("loadPosts");
+    }
   },
 };
 </script>

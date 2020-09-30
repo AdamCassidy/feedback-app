@@ -24,7 +24,7 @@
           style="cursor: pointer; word-break: normal"
         >
           <v-row
-            v-if="post.imageURL !== undefined || post.imageURL !== null"
+            v-if="post.imageURL !== undefined && post.imageURL !== null"
             class="text-start"
           >
             <v-col xs="5" sm="4" md="3">
@@ -77,7 +77,6 @@
     </v-row>
   </v-container>
 </template>
-
 
 <script>
 export default {

@@ -566,7 +566,6 @@ export const store = new Vuex.Store({
 
           for (key in obj) {
             newObj = {};
-
             if (obj[key].tags !== undefined && obj[key].tags !== null) {
               newObj.tags = obj[key].tags;
             }

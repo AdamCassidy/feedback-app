@@ -22,7 +22,7 @@
       <v-col v-for="post in posts" :key="post.id" cols="12">
         <v-card :to="'./' + post.id" style="cursor: pointer">
           <v-row
-            v-if="post.imageURL !== undefined || post.imageURL !== null"
+            v-if="post.imageURL !== undefined && post.imageURL !== null"
             class="text-start"
           >
             <v-col xs="5" sm="4" md="3">
