@@ -143,6 +143,11 @@ export default {
       return this.$store.getters.user;
     },
   },
+  watch: {
+    $route(to) {
+      document.title = to.meta.title || "2nd Opinion";
+    },
+  },
   methods: {
     onSignOut() {
       this.$store.dispatch("signOut");

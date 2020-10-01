@@ -24,6 +24,7 @@
                   <edit-post-dialog :post="post"></edit-post-dialog>
                 </template>
               </v-card-title>
+
               <v-card-text class="text-start" style="font-size: 1.3rem">{{
                 post.date | date
               }}</v-card-text>
