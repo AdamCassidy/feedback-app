@@ -48,6 +48,43 @@ export const store = new Vuex.Store({
       if (payload.tags) {
         post.tags = payload.tags;
       }
+
+      const index = state.posts.findIndex((post) => {
+        return payload.id === post.id;
+      });
+
+      state.posts.splice(index, 1);
+      state.posts.push(post);
+    },
+    updateComment(state, payload) {
+      const comment = state.comments.find((comment) => {
+        return payload.id === comment.id;
+      });
+
+      if (payload.comment) {
+        comment.comment = payload.comment;
+      }
+      const index = state.comments.findIndex((comment) => {
+        return payload.id === comment.id;
+      });
+
+      state.comments.splice(index, 1);
+      state.comments.push(comment);
+    },
+    updateReply(state, payload) {
+      const reply = state.replies.find((reply) => {
+        return payload.id === reply.id;
+      });
+
+      if (payload.reply) {
+        reply.reply = payload.reply;
+      }
+      const index = state.replies.findIndex((reply) => {
+        return payload.id === reply.id;
+      });
+
+      state.replies.splice(index, 1);
+      state.replies.push(reply);
     },
     setUser(state, payload) {
       state.user = payload;
@@ -80,6 +117,25 @@ export const store = new Vuex.Store({
       state.replies = state.replies.filter((reply) => {
         return reply.postId !== payload.id;
       });
+    },
+    deleteComment(state, payload) {
+      const index = state.comments.findIndex((comment) => {
+        return payload.id === comment.id;
+      });
+
+      state.comments.splice(index, 1);
+    },
+    deleteCommentReplies(state, payload) {
+      state.replies = state.replies.filter((reply) => {
+        return reply.postId !== payload.id;
+      });
+    },
+    deleteReply(state, payload) {
+      const index = state.replies.findIndex((reply) => {
+        return payload.id === reply.id;
+      });
+
+      state.replies.splice(index, 1);
     },
     loadPosts(state, payload) {
       state.posts = [];
@@ -117,12 +173,54 @@ export const store = new Vuex.Store({
 
       firebase
         .database()
-        .ref("posts")
+        .ref("comments")
         .child(payload.id)
         .update(updateObj)
         .then(() => {
           commit("setLoading", false);
-          commit("updatePost", payload);
+          commit("updateComment", payload);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    updateComment({ commit }, payload) {
+      commit("setLoading", true);
+      var updateObj = {};
+      if (payload.comment) {
+        updateObj.comment = payload.comment;
+      }
+
+      firebase
+        .database()
+        .ref("comments")
+        .child(payload.id)
+        .update(updateObj)
+        .then(() => {
+          commit("setLoading", false);
+          commit("updateComment", payload);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    updateReply({ commit }, payload) {
+      commit("setLoading", true);
+      var updateObj = {};
+      if (payload.reply) {
+        updateObj.reply = payload.reply;
+      }
+
+      firebase
+        .database()
+        .ref("replies")
+        .child(payload.id)
+        .update(updateObj)
+        .then(() => {
+          commit("setLoading", false);
+          commit("updateReply", payload);
         })
         .catch((error) => {
           console.log(error);
@@ -491,6 +589,7 @@ export const store = new Vuex.Store({
       commit("setLoading", false);
     },
     deletePost({ commit }, payload) {
+      commit("setLoading", true);
       if (payload.imageURL !== undefined && payload.imageURL !== null) {
         firebase
           .storage()
@@ -549,6 +648,51 @@ export const store = new Vuex.Store({
           console.log(error);
           commit("setLoading", false);
         });
+    },
+    deleteComment({ commit }, payload) {
+      commit("setLoading", true);
+
+      firebase
+        .database()
+        .ref("replies")
+        .once("value", (snap) => {
+          snap.forEach((replyNode) => {
+            if (replyNode.val().commentId === payload.id) {
+              firebase
+                .database()
+                .ref("replies")
+                .child(replyNode.key)
+                .remove();
+            }
+          });
+        })
+        .then(() => {
+          commit("deleteComment", payload);
+          firebase
+            .database()
+            .ref("comments")
+            .child(payload.id)
+            .remove();
+        })
+        .then(() => {
+          commit("deleteComment", payload);
+          commit("setLoading", false);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
+    deleteReply({ commit }, payload) {
+      commit("setLoading", true);
+
+      firebase
+        .database()
+        .ref("replies")
+        .child(payload.id)
+        .remove();
+      commit("deleteReply", payload);
+      commit("setLoading", false);
     },
     loadPosts({ commit }) {
       commit("setLoading", true);

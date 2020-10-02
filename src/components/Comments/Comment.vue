@@ -13,7 +13,9 @@
     <v-row class="ms-4">
       <p>{{ comment.comment }}</p>
     </v-row>
-    <v-btn v-if="!replying && user" @click="replying = true">Reply</v-btn>
+    <v-btn v-if="!replying && user && !userIsCreator" @click="replying = true"
+      >Reply</v-btn
+    >
     <v-btn
       v-if="
         !loadReplies &&
@@ -25,6 +27,9 @@
       >Load Replies</v-btn
     >
     <v-btn v-if="loadReplies" @click="loadReplies = false">Close Replies</v-btn>
+    <template v-if="userIsCreator">
+      <edit-comment-dialog :comment="comment"></edit-comment-dialog>
+    </template>
     <comment-input
       v-if="replying"
       @send="(replyObj) => onSend(replyObj)"
@@ -63,6 +68,19 @@ export default {
     };
   },
   computed: {
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+    userIsCreator() {
+      if (!this.userIsAuthenticated) {
+        return false;
+      }
+
+      return this.$store.getters.user.id === this.comment.creatorId;
+    },
     loading() {
       return this.$store.getters.loading;
     },
