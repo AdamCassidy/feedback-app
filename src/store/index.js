@@ -19,6 +19,7 @@ export const store = new Vuex.Store({
     comments: [],
     replies: [],
     posts: [],
+    users: [],
     user: null,
     loading: false,
     authError: null,
@@ -89,6 +90,9 @@ export const store = new Vuex.Store({
     setUser(state, payload) {
       state.user = payload;
     },
+    addUser(state, payload) {
+      state.users.push(payload);
+    },
     setLoading(state, payload) {
       state.loading = payload;
     },
@@ -156,6 +160,13 @@ export const store = new Vuex.Store({
       let obj;
       for (obj of payload) {
         state.replies.push(obj);
+      }
+    },
+    loadUsers(state, payload) {
+      state.users = [];
+      let obj;
+      for (obj of payload) {
+        state.users.push(obj);
       }
     },
   },
@@ -241,6 +252,7 @@ export const store = new Vuex.Store({
               date: payload.date.toISOString(),
               creatorId: getters.user.id,
               tags: payload.tags,
+              displayUser: payload.displayUser,
             };
             if (payload.image !== null && payload.image !== undefined) {
               post.image = payload.image;
@@ -495,9 +507,43 @@ export const store = new Vuex.Store({
               .then(() => {
                 const newUser = {
                   id: user.uid,
-                  name: user.displayName,
-                  posts: [],
+                  userName: user.displayName,
                 };
+
+                firebase
+                  .auth()
+                  .currentUser.getIdToken(true)
+                  .then((idToken) => {
+                    fetch(
+                      "https://feedback-project-20f04.firebaseio.com/users.json?auth=" +
+                        idToken,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(newUser),
+                      }
+                    )
+                      .then((res) => {
+                        if (!res.ok) {
+                          throw new Error("Error: Can't post to database.");
+                        }
+                        return res.json();
+                      })
+                      .then(() => {
+                        commit("addUser", newUser);
+                        commit("setLoading", false);
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                        commit("setLoading", false);
+                      });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    commit("setLoading", false);
+                  });
                 commit("setUser", newUser);
                 commit("setLoading", false);
               })
@@ -538,10 +584,44 @@ export const store = new Vuex.Store({
               .then(() => {
                 const newUser = {
                   id: user.uid,
-                  name: user.displayName,
+                  userName: user.displayName,
                   photoURL: user.photoURL,
-                  posts: [],
                 };
+
+                firebase
+                  .auth()
+                  .currentUser.getIdToken(true)
+                  .then((idToken) => {
+                    fetch(
+                      "https://feedback-project-20f04.firebaseio.com/users.json?auth=" +
+                        idToken,
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(newUser),
+                      }
+                    )
+                      .then((res) => {
+                        if (!res.ok) {
+                          throw new Error("Error: Can't post to database.");
+                        }
+                        return res.json();
+                      })
+                      .then(() => {
+                        commit("addUser", newUser);
+                        commit("setLoading", false);
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                        commit("setLoading", false);
+                      });
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    commit("setLoading", false);
+                  });
                 commit("setUser", newUser);
                 commit("setLoading", false);
               })
@@ -568,7 +648,7 @@ export const store = new Vuex.Store({
           let user = userCredential.user;
           const newUser = {
             id: user.uid,
-            name: user.displayName,
+            userName: user.displayName,
             photoURL: user.photoURL,
           };
           commit("setUser", newUser);
@@ -723,6 +803,7 @@ export const store = new Vuex.Store({
               date: obj[key].date,
               title: obj[key].title,
               context: obj[key].context,
+              displayUser: obj[key].displayUser,
             });
           }
           commit("loadPosts", posts);
@@ -814,6 +895,39 @@ export const store = new Vuex.Store({
           console.log(error);
         });
     },
+    loadUsers({ commit }) {
+      commit("setLoading", true);
+      firebase
+        .database()
+        .ref("users")
+        .once("value")
+        .then((data) => {
+          let users = [];
+          let obj = data.val();
+          let key;
+          let newObj;
+
+          for (key in obj) {
+            newObj = {};
+
+            if (obj[key].photoURL !== undefined && obj[key].photoURL !== null) {
+              newObj.photoURL = obj[key].photoURL;
+            }
+
+            users.push({
+              ...newObj,
+              id: obj[key].id,
+              userName: obj[key].userName,
+            });
+          }
+          commit("loadUsers", users);
+          commit("setLoading", false);
+        })
+        .catch((error) => {
+          commit("setLoading", false);
+          console.log(error);
+        });
+    },
   },
   getters: {
     categorizedPosts(state) {
@@ -896,6 +1010,13 @@ export const store = new Vuex.Store({
         .sort((postA, postB) => {
           return postA.date < postB.date;
         });
+    },
+    postCreator(state) {
+      return (creatorId) => {
+        return state.users.find((user) => {
+          return user.id === creatorId;
+        });
+      };
     },
   },
 });

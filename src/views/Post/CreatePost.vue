@@ -50,6 +50,11 @@
                         @change="onFilePick"
                       ></v-file-input>
                       <v-img :src="imageURL" max-height="400" contain></v-img>
+                      <v-checkbox
+                        v-model="displayUser"
+                        label="Show my username with this post"
+                      >
+                      </v-checkbox>
                       <v-btn
                         type="submit"
                         :loading="loading"
@@ -87,6 +92,7 @@ export default {
       tagPicked: false,
       tagsPicked: [],
       postId: "",
+      displayUser: false,
     };
   },
 
@@ -131,6 +137,7 @@ export default {
         context: this.context,
         image: this.image,
         date: new Date(),
+        displayUser: this.displayUser,
       };
 
       if (this.tagsPicked !== undefined && this.tagsPicked !== null) {
