@@ -1,6 +1,6 @@
 <template>
   <v-container v-if="post && !loading">
-    <v-text-field v-model="comment" label="Comment"></v-text-field>
+    <v-text-field v-model="comment" :label="messageType"></v-text-field>
     <v-btn v-if="$listeners['cancel']" @click="$emit('cancel')">Cancel</v-btn>
     <v-btn v-if="user" @click="onSubmit">Submit</v-btn>
   </v-container>
@@ -12,6 +12,10 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+    messageType: {
+      type: String,
+      requuired: true,
     },
   },
   data() {
@@ -29,6 +33,9 @@ export default {
   },
   methods: {
     onSubmit() {
+      if (this.comment === "") {
+        return;
+      }
       const date = new Date();
       const commentObj = {
         date: date,
@@ -37,6 +44,7 @@ export default {
         photoURL: this.$store.getters.user.photoURL,
         userName: this.$store.getters.user.name,
       };
+
       if (this.user !== null && this.user !== undefined) {
         this.$emit("send", commentObj);
       } else {

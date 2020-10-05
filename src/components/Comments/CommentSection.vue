@@ -1,6 +1,10 @@
 <template>
   <v-container v-if="post && !loading" class="text-start">
-    <comment-input @send="(commentObj) => onSend(commentObj)" :post="post"></comment-input>
+    <comment-input
+      @send="(commentObj) => onSend(commentObj)"
+      :post="post"
+      messageType="Comment"
+    ></comment-input>
     <v-divider class="my-4"></v-divider>
     <div v-if="comments">
       <comment

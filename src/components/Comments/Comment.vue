@@ -35,6 +35,7 @@
       @send="(replyObj) => onSend(replyObj)"
       @cancel="replying = false"
       :post="post"
+      messageType="Reply"
     ></comment-input>
     <div v-if="loadReplies" class="ml-4">
       <reply
