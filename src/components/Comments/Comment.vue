@@ -6,7 +6,9 @@
         <img v-else src="../../logo/logo.png" />
       </v-avatar>
       <v-col>
-        <h5>{{ comment.userName }}</h5>
+        <h5 v-if="creator !== null && creator !== undefined">
+          {{ creator.userName }}
+        </h5>
         <p style="font-size: 9px">{{ comment.date | date }}</p>
       </v-col>
     </v-row>
@@ -43,6 +45,8 @@
         :key="reply.id"
         :id="reply.id"
         :post="post"
+        :comment="comment"
+        :reply="reply"
         :commentId="id"
         @send="(replyObj) => onSend(replyObj)"
       ></reply>
@@ -54,6 +58,10 @@
 export default {
   props: {
     post: {
+      type: Object,
+      required: true,
+    },
+    comment: {
       type: Object,
       required: true,
     },
@@ -85,14 +93,18 @@ export default {
     loading() {
       return this.$store.getters.loading;
     },
-    comment() {
-      return this.$store.getters.comment(this.id);
-    },
     replies() {
       return this.$store.getters.replies(this.id);
     },
     user() {
       return this.$store.getters.user;
+    },
+    creator() {
+      if (this.userIsCreator) {
+        return this.user;
+      } else {
+        return this.$store.getters.creator(this.comment.creatorId);
+      }
     },
   },
   methods: {

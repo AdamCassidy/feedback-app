@@ -7,7 +7,9 @@
       </v-avatar>
 
       <v-col>
-        <h5>{{ reply.userName }}</h5>
+        <h5 v-if="creator !== null && creator !== undefined">
+          {{ creator.userName }}
+        </h5>
         <p style="font-size: 9px">{{ reply.date | date }}</p>
       </v-col>
     </v-row>
@@ -45,6 +47,14 @@ export default {
       type: Object,
       required: true,
     },
+    comment: {
+      type: Object,
+      required: true,
+    },
+    reply: {
+      type: Object,
+      required: true,
+    },
     id: {
       type: String,
       required: true,
@@ -55,6 +65,13 @@ export default {
     },
   },
   computed: {
+    creator() {
+      if (this.userIsCreator) {
+        return this.user;
+      } else {
+        return this.$store.getters.creator(this.reply.creatorId);
+      }
+    },
     userIsAuthenticated() {
       return (
         this.$store.getters.user !== null &&
@@ -70,12 +87,6 @@ export default {
     },
     loading() {
       return this.$store.getters.loading;
-    },
-    comment() {
-      return this.$store.getters.comment(this.commentId);
-    },
-    reply() {
-      return this.$store.getters.reply(this.id);
     },
     user() {
       return this.$store.getters.user;

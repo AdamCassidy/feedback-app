@@ -1011,7 +1011,7 @@ export const store = new Vuex.Store({
           return postA.date < postB.date;
         });
     },
-    postCreator(state) {
+    creator(state) {
       return (creatorId) => {
         return state.users.find((user) => {
           return user.id === creatorId;

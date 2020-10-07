@@ -30,21 +30,16 @@
               }}</v-card-text>
               <v-row
                 v-if="
-                  post.displayUser &&
-                  postCreator !== null &&
-                  postCreator !== undefined
+                  post.displayUser && creator !== null && creator !== undefined
                 "
                 class="ms-2"
               >
                 <v-avatar>
-                  <img
-                    v-if="postCreator.photoURL"
-                    :src="postCreator.photoURL"
-                  />
+                  <img v-if="creator.photoURL" :src="creator.photoURL" />
                   <img v-else src="../../logo/logo.png" />
                 </v-avatar>
                 <v-col>
-                  <h5>{{ postCreator.userName }}</h5>
+                  <h5>{{ creator.userName }}</h5>
                 </v-col>
               </v-row>
               <v-card-text class="text-start" style="font-size: 1.3rem">{{
@@ -81,12 +76,14 @@
 <script>
 export default {
   props: ["id"],
-  data() {
-    return {
-      postCreator: null,
-    };
-  },
   computed: {
+    creator() {
+      if (this.userIsCreator) {
+        return this.user;
+      } else {
+        return this.$store.getters.creator(this.post.creatorId);
+      }
+    },
     loading() {
       return this.$store.getters.loading;
     },
@@ -107,24 +104,8 @@ export default {
       return this.$store.getters.user.id === this.post.creatorId;
     },
   },
-  watch: {
-    post(value) {
-      if (value === null || value === undefined) {
-        this.$router.push("/");
-      }
-      if (this.userIsCreator) {
-        this.postCreator = this.user;
-      } else {
-        this.postCreator = this.$store.getters.postCreator(value.creatorId);
-      }
-    },
-  },
   created() {
-    if (
-      this.posts === null ||
-      this.posts === undefined ||
-      this.posts.length === 0
-    ) {
+    if (this.post === null || this.post === undefined) {
       this.$store.dispatch("loadPosts");
     }
     if (

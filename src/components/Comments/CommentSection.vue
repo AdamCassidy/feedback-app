@@ -12,6 +12,7 @@
         :key="comment.id"
         :id="comment.id"
         :post="post"
+        :comment="comment"
         @send="(replyObj) => onReplySend(replyObj)"
       ></comment>
     </div>
