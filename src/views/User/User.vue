@@ -1,8 +1,10 @@
 <template>
   <v-container>
     <h1 style="font-size: 37px">
-      <v-avatar class="mb-2"> <img src="../../logo/logo.png" /> </v-avatar>nd
-      Opinion
+      <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
+        <v-avatar class="mb-2"> <img src="../../logo/logo.png" /> </v-avatar>nd
+        Opinion
+      </router-link>
     </h1>
     <v-divider></v-divider>
     <h3 v-if="userIsAuthenticated">{{ user.name }}</h3>
