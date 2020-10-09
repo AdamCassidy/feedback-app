@@ -28,12 +28,12 @@
               <v-card-text class="text-start" style="font-size: 1.3rem">{{
                 post.date | date
               }}</v-card-text>
-              <v-row
-                v-if="
+                        <div class="ms-2; mb-2">
+                            <v-chip dark v-for="tag in post.tags" :key="tag.key" color="#701487" class="ma-2" style="font-size: 21px">{{ tag }}</v-chip>
+                        </div>
+                        <v-row v-if="
                   post.displayUser && creator !== null && creator !== undefined
-                "
-                class="ms-2"
-              >
+                " class="ms-2">
                 <v-avatar>
                   <img v-if="creator.photoURL" :src="creator.photoURL" />
                   <img v-else src="../../logo/logo.png" />
@@ -45,17 +45,6 @@
               <v-card-text class="text-start" style="font-size: 1.3rem">{{
                 post.context
               }}</v-card-text>
-              <div class="ms-2">
-                <v-chip
-                  dark
-                  v-for="tag in post.tags"
-                  :key="tag.key"
-                  color="#701487"
-                  class="ma-2"
-                  style="font-size: 21px"
-                  >{{ tag }}</v-chip
-                >
-              </div>
 
               <v-img
                 style="margin: 15px"
