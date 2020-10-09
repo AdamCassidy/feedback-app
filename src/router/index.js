@@ -85,7 +85,7 @@ const routes = [
     },
   },
   {
-    path: "/:id",
+    path: "/posts/:id",
     name: "post",
     props: true,
     component: () => import("../views/Post/Post.vue"),
@@ -101,6 +101,11 @@ const routes = [
     meta: {
       title: "User Post",
     },
+  },
+  {
+    path: "*",
+    name: "missing",
+    component: () => import("../views/Missing.vue"),
   },
 ];
 
