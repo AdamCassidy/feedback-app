@@ -12,7 +12,7 @@
           v-if="loading"
           :size="50"
           indeterminate
-          color="purple"
+          color="primary"
         ></v-progress-circular>
       </v-col>
     </v-row>
