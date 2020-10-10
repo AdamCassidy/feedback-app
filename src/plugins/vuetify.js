@@ -8,6 +8,9 @@ export default new Vuetify({
     themes: {
       light: {
         primary: "#701487",
+        secondary: "#AE1556",
+        tertiary: "#431D8C",
+        complement: "#BBC919",
       },
     },
   },
