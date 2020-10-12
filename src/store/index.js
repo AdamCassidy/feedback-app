@@ -11,7 +11,7 @@ export const store = new Vuex.Store({
     createPersistedState({
       getState: (key) => Cookies.getJSON(key),
       setState: (key, state) =>
-        Cookies.set(key, state, { expires: 1, secure: true }),
+        Cookies.set(key, { user: state.user }, { expires: 1, secure: true }),
     }),
   ],
 
