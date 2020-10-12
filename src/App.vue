@@ -23,7 +23,7 @@
                 <v-list-item to="/">
                     <v-list-item-content class="text-start">
                         <v-list-item-icon>
-                            <v-icon color="#701487">pages</v-icon>
+                            <v-icon color="primary">pages</v-icon>
                             <v-list-item-title class="ms-6">All Posts</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
@@ -31,7 +31,7 @@
                 <v-list-item v-if="userIsAuthenticated" :to="'/users/' + user.id">
                     <v-list-item-content class="text-start">
                         <v-list-item-icon>
-                            <v-icon color="#701487">account_box</v-icon>
+                            <v-icon color="primary">account_box</v-icon>
                             <v-list-item-title class="ms-6">Your Posts</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
@@ -39,7 +39,7 @@
                 <v-list-item to="/about">
                     <v-list-item-content class="text-start">
                         <v-list-item-icon>
-                            <v-icon color="#701487">subject</v-icon>
+                            <v-icon color="primary">subject</v-icon>
                             <v-list-item-title class="ms-6">About</v-list-item-title>
                         </v-list-item-icon>
                     </v-list-item-content>
@@ -48,7 +48,7 @@
                 <v-list-item v-for="item in drawerItems" :key="item.key" :to="item.link">
                     <v-list-item-content class="text-start">
                         <v-list-item-icon>
-                            <v-icon v-text="item.icon" :style="'color: ' + '#701487' + ';'"></v-icon>
+                            <v-icon v-text="item.icon" color="primary"></v-icon>
                             <v-list-item-title class="ms-6">{{
                   item.title
                 }}</v-list-item-title>
@@ -63,6 +63,23 @@
             <router-view></router-view>
         </v-container>
     </v-main>
+    <v-footer>
+        <v-row justify="center" no-gutters>
+            <v-btn to="/" text>Home</v-btn>
+            <v-btn to="/about" text>About</v-btn>
+            <v-col cols="12">
+                <v-btn v-for="media in socialMedia" :key="media.icon" text :to="media.link">
+                    <v-icon>{{ media.icon }}</v-icon>
+                </v-btn>
+            </v-col>
+            <v-col cols="12">
+                <strong style="font-size: 11px">
+                    <v-icon>copyright</v-icon>
+                    2020 - Second Opinion Forum. All Rights Reserved.
+                </strong>
+            </v-col>
+        </v-row>
+    </v-footer>
 </v-app>
 </template>
 
@@ -96,6 +113,26 @@ export default {
                     link: "/cooking",
                     color: "silver",
                 },
+            ],
+            socialMedia: [{
+                    icon: "mdi-gmail",
+                    link: "https://mail.google.com/mail/?view=cm&fs=1&to=2ndopinionforum@gmail.com",
+                },
+                {
+                    icon: "mdi-facebook",
+                    link: "https://www.facebook.com/2ndOpinionForum/",
+                    color: "#3b5998",
+                },
+                {
+                    icon: "mdi-twitter",
+                    link: "https://twitter.com/2ndForum",
+                    color: "#00acee",
+                },
+                /*{
+                                    icon: "mdi-linkedin",
+                                    link: "",
+                                    color: "#0e76a8",
+                                },*/
             ],
         };
     },
