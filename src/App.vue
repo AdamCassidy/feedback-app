@@ -68,7 +68,7 @@
             <v-btn to="/" text>Home</v-btn>
             <v-btn to="/about" text>About</v-btn>
             <v-col cols="12">
-                <v-btn v-for="media in socialMedia" :key="media.icon" text><a :href="media.link">
+                <v-btn v-for="media in socialMedia" :key="media.icon" text><a :href="media.link" style="text-decoration: none">
                         <v-icon> {{ media.icon }}</v-icon>
                     </a>
                 </v-btn>
@@ -130,10 +130,10 @@ export default {
                     color: "#00acee",
                 },
                 /*{
-                                                            icon: "mdi-linkedin",
-                                                            link: "",
-                                                            color: "#0e76a8",
-                                                        },*/
+                                                                    icon: "mdi-linkedin",
+                                                                    link: "",
+                                                                    color: "#0e76a8",
+                                                                },*/
             ],
         };
     },
