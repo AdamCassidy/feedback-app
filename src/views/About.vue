@@ -17,7 +17,7 @@
             <v-col>
                 <h2 class="white--text">See through a different lens<br /></h2>
                 <p class="white--text" style="font-size: 14px">
-                    A forum where you can gather opinions on whatever you share<br />
+                    A forum to gather opinions on whatever you share<br />
                 </p>
                 <v-btn v-if="!userIsAuthenticated" class="secondary" to="/signup">Join</v-btn>
             </v-col>
