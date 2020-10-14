@@ -31,7 +31,7 @@
                 <v-row justify="center">
                     <h3 class="white--text mt-6">Share:&nbsp;&nbsp;</h3>
 
-                    <v-btn v-for="item in shareItems" color="primary" :key="item.key" fab class="ma-2" transistion="scroll - y - reverse - transition">
+                    <v-btn v-for="item in shareItems" color="secondary" :key="item.key" fab class="ma-2" transistion="scroll - y - reverse - transition">
                         <a :href="item.link">
                             <v-icon color="white">{{ item.icon }}</v-icon>
                         </a>
@@ -108,6 +108,6 @@ export default {
 }
 
 .gradient {
-    @include gradient(#bbc919, #ae1556, horizontal);
+    @include gradient(#701487, #bbc919, horizontal);
 }
 </style>
