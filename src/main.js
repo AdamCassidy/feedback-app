@@ -14,6 +14,9 @@ import CommentInput from "./components/Comments/CommentInput.vue";
 import CommentSection from "./components/Comments/CommentSection.vue";
 import Comment from "./components/Comments/Comment.vue";
 import Reply from "./components/Comments/Reply.vue";
+import VueSocialSharing from "vue-social-sharing";
+
+Vue.use(VueSocialSharing);
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);

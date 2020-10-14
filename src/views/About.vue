@@ -25,11 +25,51 @@
         </v-row>
         <v-row></v-row>
     </v-parallax>
+    <v-row v-if="!loading" justify="center">
+        <v-col cols="12">
+            <v-banner color="gradient">
+                <v-row justify="center">
+                    <h3 class="white--text mt-6">Share:&nbsp;&nbsp;</h3>
+
+                    <v-btn v-for="item in shareItems" color="primary" :key="item.key" fab class="ma-2" transistion="scroll - y - reverse - transition">
+                        <a :href="item.link">
+                            <v-icon color="white">{{ item.icon }}</v-icon>
+                        </a>
+                    </v-btn>
+                </v-row>
+            </v-banner>
+        </v-col>
+    </v-row>
 </v-container>
 </template>
 
 <script>
 export default {
+    data: () => {
+        return {
+            shareItems: [{
+                    icon: "mdi-facebook",
+                    link: "https://www.facebook.com/2ndOpinionForum/",
+                    color: "#3b5998",
+                },
+                {
+                    icon: "mdi-twitter",
+                    link: "https://twitter.com/intent/tweet?text=Check%20out%20this%20forum.&url=https%3a%2f%2fsecondopinionforum.com",
+                    color: "#00acee",
+                },
+                {
+                    icon: "mdi-reddit",
+                    link: "https://www.reddit.com/submit?title=Check%20out%20this%20forum.%20&url=https%3A%2F%2Fsecondopinionforum.com",
+                    color: "#FF4500",
+                },
+                {
+                    icon: "mdi-whatsapp",
+                    link: "https://wa.me/?text=Check%20out%20this%20forum.%20https%3A%2F%2Fsecondopinionforum.com",
+                    color: "#25d366",
+                },
+            ],
+        };
+    },
     computed: {
         loading() {
             return this.$store.getters.loading;
@@ -43,3 +83,31 @@ export default {
     },
 };
 </script>
+
+<style lang="scss">
+@mixin gradient($start-color, $end-color, $orientation) {
+    background: $start-color;
+
+    @if $orientation=="vertical" {
+        background: -webkit-linear-gradient(top, $start-color, $end-color);
+        background: linear-gradient(to bottom, $start-color, $end-color);
+    }
+
+    @else if $orientation=="horizontal" {
+        background: -webkit-linear-gradient(left, $start-color, $end-color);
+        background: linear-gradient(to right, $start-color, $end-color);
+    }
+
+    @else {
+        background: -webkit-radial-gradient(center,
+                ellipse cover,
+                $start-color,
+                $end-color);
+        background: radial-gradient(ellipse at center, $start-color, $end-color);
+    }
+}
+
+.gradient {
+    @include gradient(#bbc919, #ae1556, horizontal);
+}
+</style>
