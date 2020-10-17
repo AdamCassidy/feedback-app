@@ -23,11 +23,22 @@ export const store = new Vuex.Store({
     user: null,
     loading: false,
     authError: null,
+    lastDoc: null,
   },
 
   mutations: {
+    setLastDoc(state, payload) {
+      state.lastDoc = payload;
+    },
+
     createPost(state, payload) {
-      state.posts.push(payload);
+      if (state.posts.length) {
+        if (payload.date !== state.posts[state.posts.length - 1].date) {
+          state.posts.push(payload);
+        }
+      } else {
+        state.posts.push(payload);
+      }
     },
     createComment(state, payload) {
       state.comments.push(payload);
@@ -140,13 +151,6 @@ export const store = new Vuex.Store({
       });
 
       state.replies.splice(index, 1);
-    },
-    loadPosts(state, payload) {
-      state.posts = [];
-      let obj;
-      for (obj of payload) {
-        state.posts.push(obj);
-      }
     },
     loadComments(state, payload) {
       state.comments = [];
@@ -774,45 +778,84 @@ export const store = new Vuex.Store({
       commit("deleteReply", payload);
       commit("setLoading", false);
     },
-    loadPosts({ commit }) {
+    loadPosts({ commit, getters }) {
       commit("setLoading", true);
+      let lastDoc = getters.lastDoc;
+      let lastDocSet = false;
 
-      firebase
-        .database()
-        .ref("posts")
-        .once("value")
-        .then((data) => {
-          let posts = [];
-          let obj = data.val();
-          let key;
+      if (lastDoc !== null && lastDoc !== undefined) {
+        firebase
+          .database()
+          .ref("posts")
 
-          let newObj;
+          .orderByChild("date")
+          .limitToLast(10)
 
-          for (key in obj) {
+          .endAt(lastDoc.val().date)
+          .on("child_added", (snap) => {
+            if (snap.val().date != lastDoc.val().date) {
+              let obj = snap.val();
+              let newObj;
+              newObj = {};
+              if (obj.tags !== undefined && obj.tags !== null) {
+                newObj.tags = obj.tags;
+              }
+              if (obj.imageURL !== undefined && obj.imageURL !== null) {
+                newObj.imageURL = obj.imageURL;
+              }
+              newObj.id = snap.key;
+              newObj.creatorId = obj.creatorId;
+              newObj.date = obj.date;
+              newObj.title = obj.title;
+              newObj.context = obj.context;
+              newObj.displayUser = obj.displayUser;
+              if (!lastDocSet) {
+                commit("setLastDoc", snap);
+                lastDocSet = true;
+              }
+              commit("createPost", newObj);
+            }
+          });
+      } else {
+        firebase
+          .database()
+          .ref("posts")
+          .orderByChild("date")
+          .limitToLast(10)
+          .on("child_added", (snap) => {
+            let obj = snap.val();
+            let newObj;
+            let lastObj;
+
             newObj = {};
-            if (obj[key].tags !== undefined && obj[key].tags !== null) {
-              newObj.tags = obj[key].tags;
+            if (obj.tags !== undefined && obj.tags !== null) {
+              newObj.tags = obj.tags;
             }
-            if (obj[key].imageURL !== undefined && obj[key].imageURL !== null) {
-              newObj.imageURL = obj[key].imageURL;
+            if (obj.imageURL !== undefined && obj.imageURL !== null) {
+              newObj.imageURL = obj.imageURL;
             }
-            posts.push({
-              ...newObj,
-              id: key,
-              creatorId: obj[key].creatorId,
-              date: obj[key].date,
-              title: obj[key].title,
-              context: obj[key].context,
-              displayUser: obj[key].displayUser,
-            });
-          }
-          commit("loadPosts", posts);
-          commit("setLoading", false);
-        })
-        .catch((error) => {
-          commit("setLoading", false);
-          console.log(error);
-        });
+            newObj.id = snap.key;
+            newObj.creatorId = obj.creatorId;
+            newObj.date = obj.date;
+            newObj.title = obj.title;
+            newObj.context = obj.context;
+            newObj.displayUser = obj.displayUser;
+            if (!lastDocSet) {
+              commit("setLastDoc", snap);
+              lastDocSet = true;
+            }
+            if (lastObj) {
+              if (newObj.date !== lastObj.date) {
+                commit("createPost", newObj);
+              }
+            } else {
+              commit("createPost", newObj);
+            }
+            lastObj = newObj;
+          });
+      }
+
+      commit("setLoading", false);
     },
     loadComments({ commit }) {
       commit("setLoading", true);
@@ -1017,6 +1060,9 @@ export const store = new Vuex.Store({
           return user.id === creatorId;
         });
       };
+    },
+    lastDoc(state) {
+      return state.lastDoc;
     },
   },
 });
