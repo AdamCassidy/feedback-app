@@ -23,10 +23,7 @@ Vue.component("edit-post-dialog", EditPost);
 Vue.component("edit-comment-dialog", EditComment);
 Vue.component("edit-reply-dialog", EditReply);
 
-Vue.component("comment-input", CommentInput);
 Vue.component("comment-section", CommentSection);
-Vue.component("comment", Comment);
-Vue.component("reply", Reply);
 
 const app = new Vue({
   vuetify,

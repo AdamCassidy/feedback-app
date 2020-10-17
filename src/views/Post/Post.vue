@@ -9,17 +9,17 @@
     <v-row>
       <v-col>
         <v-progress-circular
-          v-if="loading"
+          v-if="loading && (post === undefined || post === null)"
           :size="50"
           indeterminate
           color="primary"
         ></v-progress-circular>
       </v-col>
     </v-row>
-    <v-row v-if="!loading && post">
+    <v-row v-if="post !== undefined && post !== null">
       <v-col>
         <v-card>
-          <v-row>
+          <v-row justify="center">
             <v-col class="text-start">
               <v-card-title style="flex-wrap: wrap-reverse; word-break: normal">
                 <h1 style="color: #701487">

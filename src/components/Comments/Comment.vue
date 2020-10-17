@@ -26,9 +26,9 @@
     <template v-if="userIsCreator">
         <edit-comment-dialog :comment="comment"></edit-comment-dialog>
     </template>
-    <comment-input v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :post="post" messageType="Reply"></comment-input>
+    <CommentInput v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :post="post" messageType="Reply"></CommentInput>
     <div v-if="loadReplies" class="ml-4">
-        <reply v-for="reply in replies" :key="reply.id" :id="reply.id" :post="post" :comment="comment" :reply="reply" :commentId="id" @send="(replyObj) => onSend(replyObj)"></reply>
+        <Reply v-for="reply in replies" :key="reply.id" :id="reply.id" :post="post" :comment="comment" :reply="reply" :commentId="id" @send="(replyObj) => onSend(replyObj)"></Reply>
     </div>
 </v-container>
 </template>
@@ -92,6 +92,12 @@ export default {
             replyObj.commentId = this.comment.id;
             this.$emit("send", replyObj);
         },
+    },
+
+    components: {
+        Reply: () => import( /* webpackChunkName: "Reply" */ "./Reply.vue"),
+        CommentInput: () =>
+            import( /* webpackChunkName: "Comment" */ "./CommentInput.vue"),
     },
 };
 </script>
