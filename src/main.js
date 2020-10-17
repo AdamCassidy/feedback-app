@@ -10,10 +10,10 @@ import EditPost from "./components/Edit/EditPost.vue";
 import EditComment from "./components/Edit/EditComment.vue";
 import EditReply from "./components/Edit/EditReply.vue";
 import DateFilter from "./components/filters/date.js";
-import CommentInput from "./components/Comments/CommentInput.vue";
 import CommentSection from "./components/Comments/CommentSection.vue";
-import Comment from "./components/Comments/Comment.vue";
-import Reply from "./components/Comments/Reply.vue";
+import VueObserveVisibility from "vue-observe-visibility";
+
+Vue.use(VueObserveVisibility);
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
