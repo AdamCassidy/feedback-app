@@ -18,7 +18,7 @@
         <p>({{ reply.replyingTo }}) {{ reply.reply }}</p>
     </v-row>
     <v-row v-else class="ms-4">
-        <p>({{ comment.userName }}) {{ reply.reply }}</p>
+        <p>({{ commentCreator.userName }}) {{ reply.reply }}</p>
     </v-row>
 
     <v-btn v-if="!replying && user && !userIsCreator" @click="replying = true">Reply</v-btn>
@@ -60,6 +60,9 @@ export default {
             } else {
                 return this.$store.getters.creator(this.reply.creatorId);
             }
+        },
+        commentCreator() {
+            return this.$store.getters.creator(this.comment.creatorId);
         },
         userIsAuthenticated() {
             return (
