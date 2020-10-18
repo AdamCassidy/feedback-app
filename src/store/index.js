@@ -142,7 +142,7 @@ export const store = new Vuex.Store({
     },
     deleteCommentReplies(state, payload) {
       state.replies = state.replies.filter((reply) => {
-        return reply.postId !== payload.id;
+        return reply.commentId !== payload.id;
       });
     },
     deleteReply(state, payload) {
@@ -751,7 +751,7 @@ export const store = new Vuex.Store({
           });
         })
         .then(() => {
-          commit("deleteComment", payload);
+          commit("deleteCommentReplies", payload);
           firebase
             .database()
             .ref("comments")
