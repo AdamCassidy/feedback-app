@@ -74,6 +74,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <div v-observe-visibility="loadPosts"></div>
   </v-container>
 </template>
 
