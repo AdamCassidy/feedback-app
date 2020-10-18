@@ -23,7 +23,7 @@
 
     <v-btn v-if="!replying && user && !userIsCreator" @click="replying = true">Reply</v-btn>
     <template v-if="userIsCreator">
-        <edit-reply-dialog :reply="reply"></edit-reply-dialog>
+        <EditReplyDialog :reply="reply"></EditReplyDialog>
     </template>
     <CommentInput v-if="replying" @send="(replyObj) => onSend(replyObj)" @cancel="replying = false" :reply="reply" :post="post" messageType="Reply"></CommentInput>
 </v-container>
@@ -99,6 +99,11 @@ export default {
     components: {
         CommentInput: () =>
             import( /* webpackChunkName: "CommentInput" */ "./CommentInput.vue"),
+        EditReplyDialog: () =>
+            import(
+                /* webpackChunkName: "EditReplyDialog" */
+                "../Edit/EditReply.vue"
+            ),
     },
 };
 </script>

@@ -50,7 +50,7 @@ export default {
   components: {
     Comment: () => import(/* webpackChunkName: "Comment" */ "./Comment.vue"),
     CommentInput: () =>
-      import(/* webpackChunkName: "Comment" */ "./CommentInput.vue"),
+      import(/* webpackChunkName: "CommentInput" */ "./CommentInput.vue"),
   },
 };
 </script>

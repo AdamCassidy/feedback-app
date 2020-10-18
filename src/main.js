@@ -5,12 +5,7 @@ import vuetify from "./plugins/vuetify";
 import router from "./router";
 import * as firebase from "firebase";
 import { store } from "./store";
-import AlertCmp from "./components/Alert.vue";
-import EditPost from "./components/Edit/EditPost.vue";
-import EditComment from "./components/Edit/EditComment.vue";
-import EditReply from "./components/Edit/EditReply.vue";
 import DateFilter from "./components/filters/date.js";
-import CommentSection from "./components/Comments/CommentSection.vue";
 import VueObserveVisibility from "vue-observe-visibility";
 import Meta from "vue-meta";
 
@@ -19,13 +14,6 @@ Vue.use(Meta);
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);
-
-Vue.component("authError-alert", AlertCmp);
-Vue.component("edit-post-dialog", EditPost);
-Vue.component("edit-comment-dialog", EditComment);
-Vue.component("edit-reply-dialog", EditReply);
-
-Vue.component("comment-section", CommentSection);
 
 const app = new Vue({
   vuetify,

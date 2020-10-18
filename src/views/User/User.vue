@@ -16,7 +16,7 @@
     </v-row>
     <v-row v-if="!loading" justify="center">
         <v-col v-for="post in posts" :key="post.id" cols="12">
-            <v-card :to="'./' + post.id" style="cursor: pointer; word-break: normal">
+            <v-card :to="'./posts/' + post.id" style="cursor: pointer; word-break: normal">
                 <v-row v-if="post.imageURL !== undefined && post.imageURL !== null" class="text-start">
                     <v-col xs="5" sm="4" md="3">
                         <v-img :src="post.imageURL" max-height="150"></v-img>
@@ -45,11 +45,7 @@
         </v-col>
     </v-row>
     <div v-observe-visibility="loadPosts"></div>
-<<<<<<< HEAD
-  </v-container>
-=======
 </v-container>
->>>>>>> 5920327684ff1457ccc8228910f9586046eef572
 </template>
 
 <script>
@@ -81,20 +77,16 @@ export default {
             this.$store.dispatch("loadPosts");
         }
     },
-<<<<<<< HEAD
     loading() {
-      return this.$store.getters.loading;
+        return this.$store.getters.loading;
     },
     user() {
-      return this.$store.getters.user;
+        return this.$store.getters.user;
     },
-  },
-  methods: {
-    loadPosts() {
-      this.$store.dispatch("loadPosts");
+    methods: {
+        loadPosts() {
+            this.$store.dispatch("loadPosts");
+        },
     },
-  },
-=======
->>>>>>> 5920327684ff1457ccc8228910f9586046eef572
 };
 </script>

@@ -6,7 +6,7 @@
     <v-container>
         <v-row v-if="authError">
             <v-col>
-                <authError-alert @dismissed="onDismissed" :text="authError.message"></authError-alert>
+                <AuthErrorAlert @dismissed="onDismissed" :text="authError.message"></AuthErrorAlert>
             </v-col>
         </v-row>
         <v-row>
@@ -132,5 +132,10 @@ export default {
             fileReader.readAsDataURL(this.image);
         },
     },
+    components: {
+
+        AuthErrorAlert: () =>
+            import( /* webpackChunkName: "AuthErrorAlert" */ "../../components/Alert.vue"),
+    }
 };
 </script>

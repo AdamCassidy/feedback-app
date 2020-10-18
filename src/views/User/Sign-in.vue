@@ -6,10 +6,10 @@
     <v-container>
       <v-row v-if="authError">
         <v-flex>
-          <authError-alert
+          <AuthErrorAlert
             @dismissed="onDismissed"
             :text="authError.message"
-          ></authError-alert>
+          ></AuthErrorAlert>
         </v-flex>
       </v-row>
       <v-row>
@@ -93,6 +93,12 @@ export default {
     onDismissed() {
       this.$store.dispatch("clearAuthError");
     },
+  },
+  components: {
+    AuthErrorAlert: () =>
+      import(
+        /* webpackChunkName: "AuthErrorAlert" */ "../../components/Alert.vue"
+      ),
   },
 };
 </script>
