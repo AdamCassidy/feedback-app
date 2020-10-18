@@ -58,10 +58,21 @@ export default {
             return this.$store.getters.loading;
         },
     },
+<<<<<<< HEAD
     methods: {
         loadPosts() {
             this.$store.dispatch("loadPosts");
         },
+=======
+    created() {
+        if (
+            this.posts === null ||
+            this.posts === undefined ||
+            this.posts.length === 0
+        ) {
+            this.$store.dispatch("loadPosts");
+        }
+>>>>>>> 5920327684ff1457ccc8228910f9586046eef572
     },
 };
 </script>
