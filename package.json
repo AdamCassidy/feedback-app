@@ -13,6 +13,7 @@
     "js-cookie": "^2.2.1",
     "material-design-icons-iconfont": "^5.0.1",
     "vue": "^2.6.12",
+    "vue-meta": "^2.4.0",
     "vue-observe-visibility": "^0.4.6",
     "vue-router": "^3.4.5",
     "vuetify": "^2.3.10",

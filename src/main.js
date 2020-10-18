@@ -12,8 +12,10 @@ import EditReply from "./components/Edit/EditReply.vue";
 import DateFilter from "./components/filters/date.js";
 import CommentSection from "./components/Comments/CommentSection.vue";
 import VueObserveVisibility from "vue-observe-visibility";
+import Meta from "vue-meta";
 
 Vue.use(VueObserveVisibility);
+Vue.use(Meta);
 
 Vue.config.productionTip = false;
 Vue.filter("date", DateFilter);

@@ -16,7 +16,11 @@ const routes = [
     name: "Home",
     component: Home,
     meta: {
-      title: "2nd Opinion",
+      name: "2nd Opinion",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
@@ -33,7 +37,12 @@ const routes = [
     name: "Home Projects",
     component: () => import("../views/HomeProjects.vue"),
     meta: {
-      title: "Home Projects",
+      name: "Home Projects",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this home project/ shed I built/\
+          color choice/ paint color\", this is the\
+          place to go.",
     },
   },
   {
@@ -41,7 +50,12 @@ const routes = [
     name: "Sports",
     component: () => import("../views/Sports.vue"),
     meta: {
-      title: "Sports",
+      name: "Sports",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on my backswing/ dunk/ slapshot/\
+          wristshot/ sprint\", this is the\
+          place to go.",
     },
   },
   {
@@ -49,7 +63,11 @@ const routes = [
     name: "Cooking",
     component: () => import("../views/Cooking.vue"),
     meta: {
-      title: "Cooking",
+      name: "Cooking",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this dish/ recipe/ meal prep idea\", this is the\
+          place to go.",
     },
   },
   {
@@ -57,7 +75,11 @@ const routes = [
     name: "Sign-up",
     component: () => import("../views/User/Sign-up.vue"),
     meta: {
-      title: "Sign Up",
+      name: "Sign Up",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
@@ -65,7 +87,11 @@ const routes = [
     name: "Sign-in",
     component: () => import("../views/User/Sign-in.vue"),
     meta: {
-      title: "Sign In",
+      name: "Sign In",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
@@ -73,7 +99,11 @@ const routes = [
     name: "Automotive",
     component: () => import("../views/Automotive.vue"),
     meta: {
-      title: "Automotive",
+      name: "Automotive",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this car/ truck/ vehicle/ lease\", this is the\
+          place to go.",
     },
   },
   {
@@ -81,7 +111,11 @@ const routes = [
     name: "createPost",
     component: () => import("../views/Post/CreatePost.vue"),
     meta: {
-      title: "Create Post",
+      name: "Create Post",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
@@ -90,7 +124,11 @@ const routes = [
     props: true,
     component: () => import("../views/Post/Post.vue"),
     meta: {
-      title: "Post",
+      name: "Post",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
@@ -99,7 +137,11 @@ const routes = [
     props: true,
     component: () => import("../views/User/User.vue"),
     meta: {
-      title: "User Post",
+      name: "User Post",
+      content:
+        "A social media forum that's focused on discussion of constructive feedback. It's a community where users can\
+          gather opinions on whatever they share. If you're saying, \"I need a second opinion on this\", this is the\
+          place to go.",
     },
   },
   {
