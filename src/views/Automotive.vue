@@ -74,6 +74,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <div v-observe-visibility="loadPosts"></div>
   </v-container>
 </template>
 <script>
@@ -86,14 +87,10 @@ export default {
       return this.$store.getters.loading;
     },
   },
-  created() {
-    if (
-      this.posts === null ||
-      this.posts === undefined ||
-      this.posts.length === 0
-    ) {
+  methods: {
+    loadPosts() {
       this.$store.dispatch("loadPosts");
-    }
+    },
   },
 };
 </script>
