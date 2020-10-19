@@ -32,13 +32,7 @@ export const store = new Vuex.Store({
     },
 
     createPost(state, payload) {
-      if (state.posts.length) {
-        if (payload.date !== state.posts[state.posts.length - 1].date) {
-          state.posts.push(payload);
-        }
-      } else {
-        state.posts.push(payload);
-      }
+      state.posts.push(payload);
     },
     createComment(state, payload) {
       state.comments.push(payload);

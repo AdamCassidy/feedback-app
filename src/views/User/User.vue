@@ -44,7 +44,7 @@
             </v-card>
         </v-col>
     </v-row>
-    <div v-observe-visibility="loadPosts"></div>
+    <div v-if="posts" v-observe-visibility="loadPosts"></div>
 </v-container>
 </template>
 
@@ -67,15 +67,6 @@ export default {
         user() {
             return this.$store.getters.user;
         },
-    },
-    created() {
-        if (
-            this.posts === null ||
-            this.posts === undefined ||
-            this.posts.length === 0
-        ) {
-            this.$store.dispatch("loadPosts");
-        }
     },
     loading() {
         return this.$store.getters.loading;
