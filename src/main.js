@@ -6,10 +6,10 @@ import router from "./router";
 import * as firebase from "firebase";
 import { store } from "./store";
 import DateFilter from "./components/filters/date.js";
-import VueObserveVisibility from "vue-observe-visibility";
 import Meta from "vue-meta";
+import { ObserveVisibility } from "vue-observe-visibility";
 
-Vue.use(VueObserveVisibility);
+Vue.directive("observe-visibility", ObserveVisibility);
 Vue.use(Meta);
 
 Vue.config.productionTip = false;
