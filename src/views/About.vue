@@ -11,7 +11,7 @@
             <v-progress-circular v-if="loading" :size="50" indeterminate color="primary"></v-progress-circular>
         </v-col>
     </v-row>
-    <v-parallax v-else class="mt-4" src="../assets/sunglassesWelcome.jpg">
+    <v-parallax v-else class="mt-4" :src="picURLs.about">
         <v-row></v-row>
         <v-row class="mb-20" justify="center">
             <v-col>
@@ -80,6 +80,12 @@ export default {
                 this.$store.getters.user !== undefined
             );
         },
+        picURLs() {
+            return this.$store.getters.picURLs;
+        },
+    },
+    created() {
+        this.$store.dispatch("getAboutPicURL");
     },
 };
 </script>

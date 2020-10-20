@@ -20,6 +20,7 @@ export const store = new Vuex.Store({
     replies: [],
     posts: [],
     users: [],
+    picURLs: {},
     user: null,
     loading: false,
     authError: null,
@@ -27,6 +28,12 @@ export const store = new Vuex.Store({
   },
 
   mutations: {
+    setURL(state, payload) {
+      state.picURLs = {
+        ...state.picURLs,
+        about: payload,
+      };
+    },
     setLastDoc(state, payload) {
       state.lastDoc = payload;
     },
@@ -965,6 +972,23 @@ export const store = new Vuex.Store({
           console.log(error);
         });
     },
+    getAboutPicURL({ commit }) {
+      commit("setLoading", true);
+
+      firebase
+        .storage()
+        .ref("assets/sunglassesAbout.jpeg")
+        .getDownloadURL()
+        .then((URL) => {
+          let imageURL = URL;
+          commit("setURL", imageURL);
+          commit("setLoading", false);
+        })
+        .catch((error) => {
+          console.log(error);
+          commit("setLoading", false);
+        });
+    },
   },
   getters: {
     categorizedPosts(state) {
@@ -1057,6 +1081,9 @@ export const store = new Vuex.Store({
     },
     lastDoc(state) {
       return state.lastDoc;
+    },
+    picURLs(state) {
+      return state.picURLs;
     },
   },
 });
