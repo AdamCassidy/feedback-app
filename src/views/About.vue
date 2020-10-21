@@ -14,7 +14,7 @@
     <v-parallax v-else class="mt-4" :src="picURLs.about">
         <v-row></v-row>
         <v-row class="mb-20" justify="center">
-            <v-col>
+            <v-col class="ms-7">
                 <h2 class="white--text">See through a different lens<br /></h2>
                 <p class="white--text" style="font-size: 14px">
                     A forum to gather opinions on whatever you post<br />
