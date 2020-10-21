@@ -788,10 +788,8 @@ export const store = new Vuex.Store({
         firebase
           .database()
           .ref("posts")
-
           .orderByChild("date")
           .limitToLast(10)
-
           .endAt(lastDoc.val().date)
           .on("child_added", (snap) => {
             if (snap.val().date != lastDoc.val().date) {

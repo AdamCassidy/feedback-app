@@ -59,9 +59,7 @@
         </v-list>
     </v-navigation-drawer>
     <v-main>
-        <v-container fluid>
-            <router-view></router-view>
-        </v-container>
+        <router-view></router-view>
     </v-main>
     <Footer></Footer>
 </v-app>

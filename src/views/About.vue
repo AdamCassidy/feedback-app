@@ -1,5 +1,5 @@
 <template>
-<v-container>
+<div>
     <h1 style="font-size: 37px">
         <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
             <v-avatar class="mb-1"> <img src="../logo/logo.png" /> </v-avatar>nd
@@ -28,8 +28,8 @@
     <v-row v-if="!loading" justify="center">
         <v-col cols="12">
             <v-banner color="gradient">
-                <v-row justify="center">
-                    <h3 class="white--text mt-6">Share:&nbsp;&nbsp;</h3>
+                <v-row justify="center" class="me-1">
+                    <h3 class="white--text mt-6 ms-1">Share:&nbsp;&nbsp;</h3>
 
                     <v-btn v-for="item in shareItems" color="secondary" :key="item.key" fab class="ma-2" transistion="scroll - y - reverse - transition">
                         <a :href="item.link">
@@ -40,7 +40,7 @@
             </v-banner>
         </v-col>
     </v-row>
-</v-container>
+</div>
 </template>
 
 <script>
