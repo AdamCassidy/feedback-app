@@ -11,7 +11,7 @@
             <v-progress-circular v-if="loading" :size="50" indeterminate color="primary"></v-progress-circular>
         </v-col>
     </v-row>
-    <v-parallax v-else class="mt-4" :src="picURLs.about">
+    <v-parallax v-else class="mt-4" src="../assets/sunglassesAbout.jpeg">
         <v-row></v-row>
         <v-row class="mb-20" justify="center">
             <v-col class="ms-7">
@@ -32,7 +32,7 @@
                     <h3 class="white--text mt-6 ms-1">Share:&nbsp;&nbsp;</h3>
 
                     <v-btn v-for="item in shareItems" color="secondary" :key="item.key" fab class="ma-2" transistion="scroll - y - reverse - transition">
-                        <a :href="item.link">
+                        <a :href="item.link" style="text-decoration: none">
                             <v-icon color="white">{{ item.icon }}</v-icon>
                         </a>
                     </v-btn>
@@ -79,9 +79,6 @@ export default {
                 this.$store.getters.user !== null &&
                 this.$store.getters.user !== undefined
             );
-        },
-        picURLs() {
-            return this.$store.getters.picURLs;
         },
     },
     created() {
