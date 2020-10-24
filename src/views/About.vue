@@ -34,7 +34,7 @@
     </v-parallax>
     <v-banner color="gradient">
       <h3 v-if="$vuetify.breakpoint.xs" class="white--text mt-6 ms-1">
-        Share:&nbsp;&nbsp;
+        Share&nbsp;&nbsp;
       </h3>
 
       <v-row justify="center" class="me-1">
