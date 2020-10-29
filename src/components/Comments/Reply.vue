@@ -2,8 +2,9 @@
 <v-container v-if="reply && !loading" class="ml-4">
     <v-row class="ms-2">
         <v-avatar>
-            <img v-if="reply.photoURL" :src="reply.photoURL" />
-            <img v-else src="../../logo/logo.png" />
+            <img v-if="reply.photoURL" :src="transformImg(reply.photoURL)" />
+            <img v-if="!creator.photoURL && webpSupported" src="../../logo/logo.webp" />
+            <img v-if="!creator.photoURL && !webpSupported" src="../../logo/logo.png" />
         </v-avatar>
 
         <v-col>
@@ -53,6 +54,11 @@ export default {
             required: true,
         },
     },
+    data() {
+        return {
+            replying: false,
+        };
+    },
     computed: {
         creator() {
             if (this.userIsCreator) {
@@ -84,16 +90,19 @@ export default {
             return this.$store.getters.user;
         },
     },
-    data() {
-        return {
-            replying: false,
-        };
-    },
+
     methods: {
         onSend(replyObj) {
             replyObj.commentId = this.commentId;
             replyObj.replyingTo = this.creator.userName;
             this.$emit("send", replyObj);
+        },
+        transformImg(url) {
+            if (this.webpSupported) {
+                return url.replace(/\.\w{1,5}$/, ".webp");
+            } else {
+                return url;
+            }
         },
     },
     components: {
@@ -104,6 +113,22 @@ export default {
                 /* webpackChunkName: "EditReplyDialog" */
                 "../Edit/EditReply.vue"
             ),
+    },
+    created() {
+        async () => {
+            if (!self.createImageBitmap) {
+                this.webpSupported = false;
+                return false;
+            }
+
+            const webpData =
+                "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
+            const blob = await fetch(webpData).then((r) => r.blob());
+            this.webpSupported = await createImageBitmap(blob).then(
+                () => true,
+                () => false
+            );
+        };
     },
 };
 </script>
