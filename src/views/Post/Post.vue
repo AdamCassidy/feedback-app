@@ -54,7 +54,14 @@
                 class="ms-2"
               >
                 <v-avatar>
+<<<<<<< HEAD
                   <img v-if="creator.photoURL" :src="creator.photoURL" />
+=======
+                  <img
+                    v-if="creator.photoURL"
+                    :src="transformImg(creator.photoURL)"
+                  />
+>>>>>>> 39aa9bc49fe6b767d030d94545272baa0de502a3
                   <img
                     v-if="!creator.photoURL && webpSupported"
                     src="../../logo/logo.webp"
@@ -73,12 +80,21 @@
               }}</v-card-text>
 
               <v-img
+<<<<<<< HEAD
                 style="margin: 15px"
                 max-height="400"
                 contain
                 :src="post.imageURL"
               >
               </v-img>
+=======
+                v-if="post.imageUrl"
+                style="margin: 15px"
+                max-height="400"
+                contain
+                :src="transformImg(post.imageURL)"
+              ></v-img>
+>>>>>>> 39aa9bc49fe6b767d030d94545272baa0de502a3
               <v-divider></v-divider>
               <CommentSection :post="post"></CommentSection>
             </v-col>
@@ -107,6 +123,7 @@ export default {
     },
     loading() {
       return this.$store.getters.loading;
+<<<<<<< HEAD
     },
     post() {
       return this.$store.getters.post(this.id);
@@ -124,6 +141,34 @@ export default {
 
       return this.$store.getters.user.id === this.post.creatorId;
     },
+=======
+    },
+    post() {
+      return this.$store.getters.post(this.id);
+    },
+    userIsAuthenticated() {
+      return (
+        this.$store.getters.user !== null &&
+        this.$store.getters.user !== undefined
+      );
+    },
+    userIsCreator() {
+      if (!this.userIsAuthenticated) {
+        return false;
+      }
+
+      return this.$store.getters.user.id === this.post.creatorId;
+    },
+  },
+  methods: {
+    transformImg(url) {
+      if (this.webpSupported) {
+        return url.replace(/\.\w{1,5}$/, ".webp");
+      } else {
+        return url;
+      }
+    },
+>>>>>>> 39aa9bc49fe6b767d030d94545272baa0de502a3
   },
   created() {
     if (this.postCreator === null || this.postCreator === undefined) {
