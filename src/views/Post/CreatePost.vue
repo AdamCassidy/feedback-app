@@ -49,11 +49,7 @@
                         accept="image/*"
                         @change="onFilePick"
                       ></v-file-input>
-                      <v-img
-                        :src="transformImg(imageURL)"
-                        max-height="400"
-                        contain
-                      ></v-img>
+                      <v-img :src="imageURL" max-height="400" contain></v-img>
                       <v-checkbox
                         v-model="displayUser"
                         label="Show my username with this post"
@@ -88,8 +84,6 @@
 export default {
   data() {
     return {
-      webpSupported: true,
-
       title: "",
       context: "",
       image: null,
@@ -134,13 +128,6 @@ export default {
   },
 
   methods: {
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
-    },
     onCreatePost() {
       if (!this.validForm) {
         return;
@@ -183,22 +170,6 @@ export default {
       import(
         /* webpackChunkName: "AuthErrorAlert" */ "../../components/Alert.vue"
       ),
-  },
-  created() {
-    async () => {
-      if (!self.createImageBitmap) {
-        this.webpSupported = false;
-        return false;
-      }
-
-      const webpData =
-        "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
-      const blob = await fetch(webpData).then((r) => r.blob());
-      this.webpSupported = await createImageBitmap(blob).then(
-        () => true,
-        () => false
-      );
-    };
   },
 };
 </script>

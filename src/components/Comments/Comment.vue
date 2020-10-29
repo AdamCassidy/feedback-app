@@ -2,15 +2,8 @@
   <v-container v-if="comment && !loading">
     <v-row class="ms-2">
       <v-avatar>
-        <img v-if="comment.photoURL" :src="transformImg(comment.photoURL)" />
-        <img
-          v-if="!creator.photoURL && webpSupported"
-          src="../../logo/logo.webp"
-        />
-        <img
-          v-if="!creator.photoURL && !webpSupported"
-          src="../../logo/logo.png"
-        />
+        <img v-if="comment.photoURL" :src="comment.photoURL" />
+        <img v-else src="../../logo/logo.png" />
       </v-avatar>
       <v-col>
         <h5 v-if="creator !== null && creator !== undefined">
@@ -120,13 +113,6 @@ export default {
       replyObj.commentId = this.comment.id;
       this.$emit("send", replyObj);
     },
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
-    },
   },
 
   components: {
@@ -138,22 +124,6 @@ export default {
         /* webpackChunkName: "EditCommentDialog" */
         "../Edit/EditComment.vue"
       ),
-  },
-  created() {
-    async () => {
-      if (!self.createImageBitmap) {
-        this.webpSupported = false;
-        return false;
-      }
-
-      const webpData =
-        "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
-      const blob = await fetch(webpData).then((r) => r.blob());
-      this.webpSupported = await createImageBitmap(blob).then(
-        () => true,
-        () => false
-      );
-    };
   },
 };
 </script>

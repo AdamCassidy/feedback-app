@@ -2,10 +2,8 @@
   <div>
     <h1 style="font-size: 37px">
       <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
-        <v-avatar class="mb-1">
-          <img v-if="webpSupported" src="../logo/logo.webp" />
-          <img v-else src="../logo/logo.png" /> </v-avatar
-        >nd Opinion
+        <v-avatar class="mb-1"> <img src="../logo/logo.png" /> </v-avatar>nd
+        Opinion
       </router-link>
     </h1>
     <v-row v-if="loading">
@@ -18,27 +16,7 @@
         ></v-progress-circular>
       </v-col>
     </v-row>
-    <v-parallax
-      v-if="!loading && webpSupported"
-      class="mt-4"
-      src="../assets/sunglassesAbout.webp"
-    >
-      <v-row></v-row>
-      <v-row class="mb-20" justify="center">
-        <v-col class="ms-7">
-          <h2 class="white--text">See through a different lens<br /></h2>
-          <p class="white--text" style="font-size: 14px">
-            A forum to gather opinions on whatever you post<br />
-          </p>
-          <v-btn v-if="!userIsAuthenticated" class="secondary" to="/signup"
-            >Join</v-btn
-          >
-        </v-col>
-        <v-col></v-col>
-      </v-row>
-      <v-row></v-row>
-    </v-parallax>
-    <v-parallax v-else src="../assets/sunglassesAbout.jpeg">
+    <v-parallax v-else class="mt-4" src="../assets/sunglassesAbout.jpeg">
       <v-row></v-row>
       <v-row class="mb-20" justify="center">
         <v-col class="ms-7">
@@ -85,8 +63,6 @@
 export default {
   data: () => {
     return {
-      webpSupported: true,
-
       shareItems: [
         {
           icon: "mdi-facebook",
@@ -125,30 +101,8 @@ export default {
       );
     },
   },
-  methods: {
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
-    },
-  },
   created() {
-    async () => {
-      if (!self.createImageBitmap) {
-        this.webpSupported = false;
-        return false;
-      }
-
-      const webpData =
-        "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
-      const blob = await fetch(webpData).then((r) => r.blob());
-      this.webpSupported = await createImageBitmap(blob).then(
-        () => true,
-        () => false
-      );
-    };
+    this.$store.dispatch("getAboutPicURL");
   },
 };
 </script>
