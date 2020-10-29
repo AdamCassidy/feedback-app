@@ -54,10 +54,7 @@
                 class="ms-2"
               >
                 <v-avatar>
-                  <img
-                    v-if="creator.photoURL"
-                    :src="transformImg(creator.photoURL)"
-                  />
+                  <img v-if="creator.photoURL" :src="creator.photoURL" />
                   <img
                     v-if="!creator.photoURL && webpSupported"
                     src="../../logo/logo.webp"
@@ -76,12 +73,12 @@
               }}</v-card-text>
 
               <v-img
-                v-if="post.imageUrl"
                 style="margin: 15px"
                 max-height="400"
                 contain
-                :src="transformImg(post.imageURL)"
-              ></v-img>
+                :src="post.imageURL"
+              >
+              </v-img>
               <v-divider></v-divider>
               <CommentSection :post="post"></CommentSection>
             </v-col>
@@ -126,15 +123,6 @@ export default {
       }
 
       return this.$store.getters.user.id === this.post.creatorId;
-    },
-  },
-  methods: {
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
     },
   },
   created() {

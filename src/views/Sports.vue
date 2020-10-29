@@ -29,10 +29,7 @@
             class="text-start"
           >
             <v-col xs="5" sm="4" md="3">
-              <v-img
-                :src="transformImg(post.imageURL)"
-                max-height="150"
-              ></v-img>
+              <v-img :src="post.imageURL" max-height="150"></v-img>
             </v-col>
             <v-col xs="7" sm="8" md="9">
               <v-card-title
@@ -101,13 +98,6 @@ export default {
   methods: {
     loadPosts() {
       this.$store.dispatch("loadPosts");
-    },
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
     },
   },
   created() {

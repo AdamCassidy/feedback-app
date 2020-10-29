@@ -2,7 +2,7 @@
   <v-container v-if="reply && !loading" class="ml-4">
     <v-row class="ms-2">
       <v-avatar>
-        <img v-if="reply.photoURL" :src="transformImg(reply.photoURL)" />
+        <img v-if="reply.photoURL" :src="reply.photoURL" />
         <img
           v-if="!creator.photoURL && webpSupported"
           src="../../logo/logo.webp"
@@ -114,13 +114,6 @@ export default {
       replyObj.commentId = this.commentId;
       replyObj.replyingTo = this.creator.userName;
       this.$emit("send", replyObj);
-    },
-    transformImg(url) {
-      if (this.webpSupported) {
-        return url.replace(/\.\w{1,5}$/, ".webp");
-      } else {
-        return url;
-      }
     },
   },
   components: {
