@@ -2,8 +2,10 @@
   <v-container>
     <h1 style="font-size: 37px">
       <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
-        <v-avatar class="mb-1"> <img src="../logo/logo.png" /> </v-avatar>nd
-        Opinion
+        <v-avatar class="mb-1">
+          <img v-if="webpSupported" src="../logo/logo.webp" />
+          <img v-else src="../logo/logo.png" /> </v-avatar
+        >nd Opinion
       </router-link>
     </h1>
     <v-divider></v-divider>
@@ -27,7 +29,10 @@
             class="text-start"
           >
             <v-col xs="5" sm="4" md="3">
-              <v-img :src="post.imageURL" max-height="150"></v-img>
+              <v-img
+                :src="transformImg(post.imageURL)"
+                max-height="150"
+              ></v-img>
             </v-col>
             <v-col xs="7" sm="8" md="9">
               <v-card-title
@@ -81,6 +86,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      webpSupported: true,
+    };
+  },
   computed: {
     posts() {
       return this.$store.getters.categorizedPosts("Cooking");
@@ -93,6 +103,29 @@ export default {
     loadPosts() {
       this.$store.dispatch("loadPosts");
     },
+    transformImg(url) {
+      if (this.webpSupported) {
+        return url.replace(/\.\w{1,5}$/, ".webp");
+      } else {
+        return url;
+      }
+    },
+  },
+  created() {
+    async () => {
+      if (!self.createImageBitmap) {
+        this.webpSupported = false;
+        return false;
+      }
+
+      const webpData =
+        "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
+      const blob = await fetch(webpData).then((r) => r.blob());
+      this.webpSupported = await createImageBitmap(blob).then(
+        () => true,
+        () => false
+      );
+    };
   },
 };
 </script>
