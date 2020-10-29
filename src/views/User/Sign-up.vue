@@ -140,15 +140,35 @@ export default {
     user() {
       return this.$store.getters.user;
     },
-    loading() {
-      return this.$store.getters.loading;
+    computed: {
+      validForm() {
+        return (
+          this.comparePasswords &&
+          this.name !== "" &&
+          this.password !== "" &&
+          this.confirmPassword !== "" &&
+          this.email !== ""
+        );
+      },
+      comparePasswords() {
+        return this.password === this.confirmPassword;
+      },
+      authError() {
+        return this.$store.getters.authError;
+      },
+      user() {
+        return this.$store.getters.user;
+      },
+      loading() {
+        return this.$store.getters.loading;
+      },
     },
-  },
-  watch: {
-    user(value) {
-      if (value !== undefined && value !== null) {
-        this.$router.push("/");
-      }
+    watch: {
+      user(value) {
+        if (value !== undefined && value !== null) {
+          this.$router.push("/");
+        }
+      },
     },
   },
   methods: {
@@ -167,15 +187,28 @@ export default {
         image: this.image,
       });
     },
-    onDismissed() {
-      this.$store.dispatch("clearAuthError");
+    components: {
+      AuthErrorAlert: () =>
+        import(
+          /* webpackChunkName: "AuthErrorAlert" */
+          "../../components/Alert.vue"
+        ),
     },
-    onFilePick() {
-      const fileReader = new FileReader();
-      fileReader.addEventListener("load", () => {
-        this.imageURL = fileReader.result;
-      });
-      fileReader.readAsDataURL(this.image);
+    created() {
+      async () => {
+        if (!self.createImageBitmap) {
+          this.webpSupported = false;
+          return false;
+        }
+
+        const webpData =
+          "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
+        const blob = await fetch(webpData).then((r) => r.blob());
+        this.webpSupported = await createImageBitmap(blob).then(
+          () => true,
+          () => false
+        );
+      };
     },
   },
   components: {
