@@ -3,13 +3,12 @@
     <v-row class="ms-2">
       <v-avatar>
         <img v-if="comment.photoURL" :src="comment.photoURL" />
-        <img v-if="comment.photoURL" :src="comment.photoURL" />
         <img
-          v-if="!creator.photoURL && webpSupported"
+          v-if="!comment.photoURL && webpSupported"
           src="../../logo/logo.webp"
         />
         <img
-          v-if="!creator.photoURL && !webpSupported"
+          v-if="!comment.photoURL && !webpSupported"
           src="../../logo/logo.png"
         />
       </v-avatar>

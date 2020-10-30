@@ -38,7 +38,11 @@
                                         <v-img :src="post.imageURL" max-height="150"></v-img>
                                     </v-col>
                                     <v-col xs="7" sm="8" md="9">
-                                        <v-card-title class="bold" style="font-size: 2.3rem; cursor: pointer; word-break: normal">{{ post.title }}</v-card-title>
+                                        <v-card-title class="bold" style="
+                          font-size: 2.3rem;
+                          cursor: pointer;
+                          word-break: normal;
+                        ">{{ post.title }}</v-card-title>
                                         <p class="ms-4">{{ post.date | date }}</p>
 
                                         <div class="ms-2">
@@ -48,7 +52,11 @@
                                 </v-row>
                                 <v-row v-else class="text-start">
                                     <v-col>
-                                        <v-card-title class="bold" style="font-size: 2.3rem; cursor: pointer; word-break: normal">{{ post.title }}</v-card-title>
+                                        <v-card-title class="bold" style="
+                          font-size: 2.3rem;
+                          cursor: pointer;
+                          word-break: normal;
+                        ">{{ post.title }}</v-card-title>
 
                                         <p class="ms-4">{{ post.date | date }}</p>
                                         <div class="ms-2">
@@ -58,8 +66,12 @@
                                 </v-row>
                             </v-card>
                         </v-col>
+                    </v-col>
                 </v-row>
-                <div v-if="posts" v-observe-visibility="loadPosts"></div>
+            </v-card>
+        </v-col>
+    </v-row>
+    <div v-if="posts" v-observe-visibility="loadPosts"></div>
 </v-container>
 </template>
 
@@ -88,32 +100,26 @@ export default {
             return this.$store.getters.user;
         },
     },
-    loading() {
-        return this.$store.getters.loading;
-    },
-    user() {
-        return this.$store.getters.user;
-    },
     methods: {
         loadPosts() {
             this.$store.dispatch("loadPosts");
         },
-        created() {
-            async () => {
-                if (!self.createImageBitmap) {
-                    this.webpSupported = false;
-                    return false;
-                }
+    },
+    created() {
+        async () => {
+            if (!self.createImageBitmap) {
+                this.webpSupported = false;
+                return false;
+            }
 
-                const webpData =
-                    "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
-                const blob = await fetch(webpData).then((r) => r.blob());
-                this.webpSupported = await createImageBitmap(blob).then(
-                    () => true,
-                    () => false
-                );
-            };
-        },
+            const webpData =
+                "data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoCAAEAAQAcJaQAA3AA/v3AgAA=";
+            const blob = await fetch(webpData).then((r) => r.blob());
+            this.webpSupported = await createImageBitmap(blob).then(
+                () => true,
+                () => false
+            );
+        };
     },
 };
 </script>
