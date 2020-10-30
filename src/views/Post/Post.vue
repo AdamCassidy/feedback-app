@@ -55,6 +55,7 @@
               >
                 <v-avatar>
                   <img v-if="creator.photoURL" :src="creator.photoURL" />
+                  <img v-if="creator.photoURL" :src="creator.photoURL" />
                   <img
                     v-if="!creator.photoURL && webpSupported"
                     src="../../logo/logo.webp"

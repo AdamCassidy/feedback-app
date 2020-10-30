@@ -81,6 +81,41 @@
                           ></v-file-input>
                         </v-col>
                       </v-row>
+        <v-row v-if="authError">
+            <v-col>
+                <AuthErrorAlert @dismissed="onDismissed" :text="authError.message"></AuthErrorAlert>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-card>
+                    <v-card-text>
+                        <v-container>
+                            <form @submit.prevent="onSignUp">
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field v-model="name" label="Name" required type="name"></v-text-field>
+                                        <v-text-field v-model="email" label="E-mail" required type="email"></v-text-field>
+                                        <v-text-field v-model="password" label="Password" required type="password"></v-text-field>
+                                        <v-text-field v-model="confirmPassword" label="Confirm Password" type="password" :rules="[comparePasswords || 'Passwords do not match.']"></v-text-field>
+                                        <v-row cols="12">
+                                            <v-col xs="5" sm="4" lg="3">
+                                                <v-avatar size="200px">
+                                                    <img v-if="image !== null && image !== undefined" :src="transformImg(imageURL)" />
+                                                    <img v-if="
+                                (image === null || image === undefined) &&
+                                webpSupported
+                              " src="../../logo/logo.webp" />
+                                                    <img v-if="
+                                (image === null || image === undefined) &&
+                                !webpSupported
+                              " src="../../logo/logo.png" />
+                                                </v-avatar>
+                                            </v-col>
+                                            <v-col xs="7" sm="8" lg="9">
+                                                <v-file-input class="ma-2" v-model="image" label="Upload Avatar" persistent-hint hint="Optional" outlined prepend-icon="mdi-camera" accept="image/*" @change="onFilePick"></v-file-input>
+                                            </v-col>
+                                        </v-row>
 
                       <v-btn
                         type="submit"
