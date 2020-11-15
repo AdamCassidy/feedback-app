@@ -116,6 +116,10 @@ export default {
                 image: this.image,
             });
         },
+
+        onDismissed() {
+            this.$store.dispatch("clearAuthError");
+        },
     },
     components: {
         AuthErrorAlert: () =>
