@@ -12,6 +12,7 @@
     "firebase": "^7.24.0",
     "js-cookie": "^2.2.1",
     "material-design-icons-iconfont": "^5.0.1",
+    "prerender-spa-plugin": "^3.4.0",
     "vue": "^2.6.12",
     "vue-meta": "^2.4.0",
     "vue-observe-visibility": "^0.4.6",
