@@ -185,7 +185,7 @@ export const store = new Vuex.Store({
   actions: {
     updatePost({ commit }, payload) {
       commit("setLoading", true);
-      var updateObj = {};
+      let updateObj = {};
       if (payload.title) {
         updateObj.title = payload.title;
       }
@@ -209,7 +209,7 @@ export const store = new Vuex.Store({
     },
     updateComment({ commit }, payload) {
       commit("setLoading", true);
-      var updateObj = {};
+      let updateObj = {};
       if (payload.comment) {
         updateObj.comment = payload.comment;
       }
@@ -230,7 +230,7 @@ export const store = new Vuex.Store({
     },
     updateReply({ commit }, payload) {
       commit("setLoading", true);
-      var updateObj = {};
+      let updateObj = {};
       if (payload.reply) {
         updateObj.reply = payload.reply;
       }

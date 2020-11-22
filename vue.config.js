@@ -1,5 +1,5 @@
-var PrerenderSpaPlugin = require("prerender-spa-plugin");
-var path = require("path");
+const PrerenderSpaPlugin = require("prerender-spa-plugin");
+const path = require("path");
 
 module.exports = {
   transpileDependencies: ["vuetify"],

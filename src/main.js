@@ -21,7 +21,7 @@ const app = new Vue({
   store,
   render: (h) => h(App),
   created() {
-    var firebaseConfig = {
+    const firebaseConfig = {
       apiKey: "AIzaSyDFQWaigSu1k-T2RVc7oOfKTJ4EmsLlwws",
       authDomain: "feedback-project-20f04.firebaseapp.com",
       databaseURL: "https://feedback-project-20f04.firebaseio.com",

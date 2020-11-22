@@ -30,7 +30,7 @@ export default {
   methods: {
     onSave() {
       this.dialog = false;
-      var editedObj = {
+      let editedObj = {
         comment: this.editedComment.trim(),
         id: this.comment.id,
       };
