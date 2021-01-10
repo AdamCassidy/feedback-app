@@ -4,6 +4,13 @@
       <v-app-bar-nav-icon
         @click="openDrawer = !openDrawer"
       ></v-app-bar-nav-icon>
+      <v-toolbar-title class="hidden-sm-and-down">
+        <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
+          <v-avatar>
+            <img src="./logo/logo.png" />
+          </v-avatar>
+        </router-link>
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn v-for="item in toolbarItems" :key="item.key" :to="item.link">
