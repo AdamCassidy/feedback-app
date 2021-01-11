@@ -5,7 +5,7 @@
         @click="openDrawer = !openDrawer"
       ></v-app-bar-nav-icon>
       <!-- Keep this so users can always intuitively navigate to homepage. -->
-      <v-toolbar-title class="hidden-sm-and-down">
+      <v-toolbar-title class="hidden-xs-only">
         <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
           <v-avatar>
             <img src="./logo/logo.png" />
