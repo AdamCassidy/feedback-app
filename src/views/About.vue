@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="font-size: 37px">
+    <h1 style="font-size: 37px; margin-top: 10px;">
       <router-link to="/" tag="span" style="cursor: pointer; color: #701487">
         <v-avatar class="mb-1">
           <img v-if="webpSupported" src="../logo/logo.webp" />
